@@ -1,0 +1,95 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Create release keystore
+        run: |
+          mkdir -p android/keystore
+          keytool -genkeypair -v \
+            -keystore android/keystore/release.keystore \
+            -alias aohc \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass aohc_open_source \
+            -keypass aohc_open_source \
+            -dname "CN=Age Of History Of Conquest, OU=Community, O=Open Source, L=Internet, S=Internet, C=TR"
+
+      - name: Build debug APK
+        id: debug
+        run: gradle :android:assembleDebug --stacktrace 2>&1 | tee debug-build.log
+
+      - name: Build release APK
+        id: release
+        run: gradle :android:assembleRelease --stacktrace 2>&1 | tee release-build.log
+
+      - name: Collect APK information
+        if: success()
+        run: |
+          mkdir -p output
+          find android/build/outputs/apk -name "*.apk" -exec cp {} output/ \;
+          ls -lh output
+
+      - name: Upload debug APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: android/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      - name: Upload release APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: android/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+
+      - name: Write error report
+        if: failure()
+        run: |
+          mkdir -p error-report
+          {
+            echo "Build failed for commit ${GITHUB_SHA}"
+            echo "Workflow run ${GITHUB_RUN_ID}"
+            echo ""
+            echo "===== DEBUG BUILD LOG ====="
+            if [ -f debug-build.log ]; then tail -n 400 debug-build.log; else echo "not produced"; fi
+            echo ""
+            echo "===== RELEASE BUILD LOG ====="
+            if [ -f release-build.log ]; then tail -n 400 release-build.log; else echo "not produced"; fi
+          } > error-report/error.txt
+
+      - name: Upload error report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-report
+          path: error-report/error.txt
+          if-no-files-found: warn

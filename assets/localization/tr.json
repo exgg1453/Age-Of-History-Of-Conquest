@@ -1,0 +1,23 @@
+{
+  "game.title": "Age Of History Of Conquest",
+  "menu.subtitle": "Açık kaynak strateji oyunu. Tamamen modlanabilir.",
+  "menu.play": "Oyna",
+  "menu.language": "Dil",
+  "menu.mods.count": "{0} mod yüklendi",
+  "scenario.year.unknown": "Bilinmeyen yıl",
+  "map.year": "Yıl {0}",
+  "map.noSelection": "Seçili il yok",
+  "map.sea": "Deniz",
+  "map.unclaimed": "Sahipsiz",
+  "map.provinceInfo": "Sahip: {0}\nNüfus: {1}   Ekonomi: {2}   Sınır: {3}",
+  "common.back": "Geri",
+  "common.close": "Kapat",
+  "editor.toggle": "Düzenleyici",
+  "editor.active": "Düzenleyici modu",
+  "editor.pickCountry": "Ülke seç",
+  "editor.noTarget": "Bir ülke seç, sonra illere dokunarak o ülkeye ver",
+  "editor.target": "Atanan ülke: {0}",
+  "editor.save": "Kaydet",
+  "editor.saved": "Senaryo {0} olarak kaydedildi",
+  "editor.saveFailed": "Senaryo kaydedilemedi"
+}

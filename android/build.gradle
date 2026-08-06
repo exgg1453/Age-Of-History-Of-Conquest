@@ -1,0 +1,106 @@
+apply plugin: "com.android.application"
+
+android {
+    namespace "com.nx.aohc"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.nx.aohc"
+        minSdk 21
+        targetSdk 34
+        versionCode rootProject.ext.appVersionCode
+        versionName rootProject.ext.appVersionName
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = [rootProject.file("assets")]
+            jniLibs.srcDirs = ["libs"]
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("keystore/release.keystore")
+            storePassword System.getenv("KEYSTORE_PASSWORD") ?: "aohc_open_source"
+            keyAlias System.getenv("KEY_ALIAS") ?: "aohc"
+            keyPassword System.getenv("KEY_PASSWORD") ?: "aohc_open_source"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ["META-INF/robovm/ios/robovm.xml", "META-INF/DEPENDENCIES", "META-INF/LICENSE", "META-INF/NOTICE"]
+        }
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+configurations { natives }
+
+dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+    implementation "androidx.core:core:1.12.0"
+    implementation "androidx.documentfile:documentfile:1.0.1"
+
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+
+    natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
+    natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
+}
+
+tasks.register("copyAndroidNatives") {
+    doFirst {
+        file("libs/armeabi-v7a/").mkdirs()
+        file("libs/arm64-v8a/").mkdirs()
+        file("libs/x86/").mkdirs()
+        file("libs/x86_64/").mkdirs()
+
+        configurations.natives.copy().files.each { jar ->
+            def outputDir = null
+            if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+            if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+            if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+            if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+            if (outputDir != null) {
+                copy {
+                    from zipTree(jar)
+                    into outputDir
+                    include "*.so"
+                }
+            }
+        }
+    }
+}
+
+tasks.configureEach { task ->
+    if (task.name.contains("merge") && task.name.contains("JniLibFolders")) {
+        task.dependsOn "copyAndroidNatives"
+    }
+}

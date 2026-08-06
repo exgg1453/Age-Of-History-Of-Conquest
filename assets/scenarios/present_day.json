@@ -1,0 +1,14 @@
+{
+ "id": "present_day",
+ "startYear": 2026,
+ "inheritDefaultOwnership": true,
+ "name": {
+  "en": "Present Day",
+  "tr": "Günümüz"
+ },
+ "description": {
+  "en": "The world as it is today. Every recognised state on the map.",
+  "tr": "Dünyanın bugünkü hâli. Haritadaki tüm tanınan devletler."
+ },
+ "countries": []
+}

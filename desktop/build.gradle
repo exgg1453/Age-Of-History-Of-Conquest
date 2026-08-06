@@ -1,0 +1,22 @@
+apply plugin: "java"
+apply plugin: "application"
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+mainClassName = "com.nx.aohc.DesktopLauncher"
+application.setMainClass(mainClassName)
+
+sourceSets.main.java.srcDirs = ["src/main/java"]
+
+dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+}
+
+run {
+    workingDir = rootProject.file("assets")
+    setIgnoreExitValue(true)
+}

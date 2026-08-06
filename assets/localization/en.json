@@ -1,0 +1,23 @@
+{
+  "game.title": "Age Of History Of Conquest",
+  "menu.subtitle": "Open source grand strategy. Fully moddable.",
+  "menu.play": "Play",
+  "menu.language": "Language",
+  "menu.mods.count": "{0} mods loaded",
+  "scenario.year.unknown": "Unknown year",
+  "map.year": "Year {0}",
+  "map.noSelection": "No province selected",
+  "map.sea": "Sea",
+  "map.unclaimed": "Unclaimed",
+  "map.provinceInfo": "Owner: {0}\nPopulation: {1}   Economy: {2}   Borders: {3}",
+  "common.back": "Back",
+  "common.close": "Close",
+  "editor.toggle": "Editor",
+  "editor.active": "Editor mode",
+  "editor.pickCountry": "Select country",
+  "editor.noTarget": "Select a country, then tap provinces to assign them",
+  "editor.target": "Assigning to: {0}",
+  "editor.save": "Save",
+  "editor.saved": "Scenario saved as {0}",
+  "editor.saveFailed": "Scenario could not be saved"
+}

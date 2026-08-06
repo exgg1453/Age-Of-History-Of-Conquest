@@ -1,0 +1,2128 @@
+{
+ "countries": [
+  {
+   "id": "FJI",
+   "name": "Fiji",
+   "color": [
+    91,
+    131,
+    229
+   ],
+   "population": 889953,
+   "economy": 5496,
+   "capital": 3
+  },
+  {
+   "id": "TZA",
+   "name": "Tanzania",
+   "color": [
+    141,
+    205,
+    51
+   ],
+   "population": 58005463,
+   "economy": 63177,
+   "capital": 15
+  },
+  {
+   "id": "ESH",
+   "name": "W. Sahara",
+   "color": [
+    181,
+    86,
+    169
+   ],
+   "population": 603253,
+   "economy": 907,
+   "capital": 34
+  },
+  {
+   "id": "CAN",
+   "name": "Canada",
+   "color": [
+    51,
+    158,
+    140
+   ],
+   "population": 37589262,
+   "economy": 1736425,
+   "capital": 37
+  },
+  {
+   "id": "USA",
+   "name": "United States of America",
+   "color": [
+    229,
+    182,
+    126
+   ],
+   "population": 328239523,
+   "economy": 21433226,
+   "capital": 223
+  },
+  {
+   "id": "KAZ",
+   "name": "Kazakhstan",
+   "color": [
+    113,
+    82,
+    205
+   ],
+   "population": 18513930,
+   "economy": 181665,
+   "capital": 367
+  },
+  {
+   "id": "UZB",
+   "name": "Uzbekistan",
+   "color": [
+    51,
+    181,
+    45
+   ],
+   "population": 33580650,
+   "economy": 57921,
+   "capital": 433
+  },
+  {
+   "id": "PNG",
+   "name": "Papua New Guinea",
+   "color": [
+    158,
+    75,
+    102
+   ],
+   "population": 8776109,
+   "economy": 24829,
+   "capital": 443
+  },
+  {
+   "id": "IDN",
+   "name": "Indonesia",
+   "color": [
+    74,
+    171,
+    229
+   ],
+   "population": 270625568,
+   "economy": 1119190,
+   "capital": 483
+  },
+  {
+   "id": "ARG",
+   "name": "Argentina",
+   "color": [
+    198,
+    205,
+    113
+   ],
+   "population": 44938712,
+   "economy": 445445,
+   "capital": 514
+  },
+  {
+   "id": "CHL",
+   "name": "Chile",
+   "color": [
+    159,
+    72,
+    181
+   ],
+   "population": 18952038,
+   "economy": 282318,
+   "capital": 558
+  },
+  {
+   "id": "COD",
+   "name": "Dem. Rep. Congo",
+   "color": [
+    39,
+    158,
+    98
+   ],
+   "population": 86790567,
+   "economy": 50400,
+   "capital": 595
+  },
+  {
+   "id": "SOM",
+   "name": "Somalia",
+   "color": [
+    229,
+    133,
+    109
+   ],
+   "population": 10192317,
+   "economy": 4719,
+   "capital": 636
+  },
+  {
+   "id": "KEN",
+   "name": "Kenya",
+   "color": [
+    66,
+    78,
+    205
+   ],
+   "population": 52573973,
+   "economy": 95503,
+   "capital": 648
+  },
+  {
+   "id": "SDN",
+   "name": "Sudan",
+   "color": [
+    130,
+    181,
+    100
+   ],
+   "population": 42813238,
+   "economy": 30513,
+   "capital": 685
+  },
+  {
+   "id": "TCD",
+   "name": "Chad",
+   "color": [
+    158,
+    63,
+    126
+   ],
+   "population": 15946876,
+   "economy": 11314,
+   "capital": 712
+  },
+  {
+   "id": "HTI",
+   "name": "Haiti",
+   "color": [
+    57,
+    222,
+    229
+   ],
+   "population": 11263077,
+   "economy": 14332,
+   "capital": 737
+  },
+  {
+   "id": "DOM",
+   "name": "Dominican Rep.",
+   "color": [
+    205,
+    178,
+    97
+   ],
+   "population": 10738958,
+   "economy": 88941,
+   "capital": 739
+  },
+  {
+   "id": "RUS",
+   "name": "Russia",
+   "color": [
+    115,
+    59,
+    181
+   ],
+   "population": 144373535,
+   "economy": 1699876,
+   "capital": 887
+  },
+  {
+   "id": "BHS",
+   "name": "Bahamas",
+   "color": [
+    86,
+    158,
+    98
+   ],
+   "population": 389482,
+   "economy": 13578,
+   "capital": 964
+  },
+  {
+   "id": "FLK",
+   "name": "Falkland Is.",
+   "color": [
+    229,
+    91,
+    109
+   ],
+   "population": 3398,
+   "economy": 282,
+   "capital": 966
+  },
+  {
+   "id": "NOR",
+   "name": "Norway",
+   "color": [
+    51,
+    116,
+    205
+   ],
+   "population": 5347896,
+   "economy": 403336,
+   "capital": 990
+  },
+  {
+   "id": "GRL",
+   "name": "Greenland",
+   "color": [
+    154,
+    181,
+    86
+   ],
+   "population": 56225,
+   "economy": 3051,
+   "capital": 1046
+  },
+  {
+   "id": "ATF",
+   "name": "Fr. S. Antarctic Lands",
+   "color": [
+    157,
+    51,
+    158
+   ],
+   "population": 140,
+   "economy": 16,
+   "capital": 1098
+  },
+  {
+   "id": "TLS",
+   "name": "Timor-Leste",
+   "color": [
+    126,
+    229,
+    199
+   ],
+   "population": 1293119,
+   "economy": 2017,
+   "capital": 1100
+  },
+  {
+   "id": "ZAF",
+   "name": "South Africa",
+   "color": [
+    205,
+    133,
+    82
+   ],
+   "population": 58558270,
+   "economy": 351431,
+   "capital": 1117
+  },
+  {
+   "id": "LSO",
+   "name": "Lesotho",
+   "color": [
+    62,
+    45,
+    181
+   ],
+   "population": 2125268,
+   "economy": 2376,
+   "capital": 1136
+  },
+  {
+   "id": "MEX",
+   "name": "Mexico",
+   "color": [
+    89,
+    158,
+    75
+   ],
+   "population": 127575529,
+   "economy": 1268870,
+   "capital": 1153
+  },
+  {
+   "id": "URY",
+   "name": "Uruguay",
+   "color": [
+    229,
+    74,
+    146
+   ],
+   "population": 3461734,
+   "economy": 56045,
+   "capital": 1189
+  },
+  {
+   "id": "BRA",
+   "name": "Brazil",
+   "color": [
+    113,
+    182,
+    205
+   ],
+   "population": 211049527,
+   "economy": 1839758,
+   "capital": 1257
+  },
+  {
+   "id": "BOL",
+   "name": "Bolivia",
+   "color": [
+    181,
+    176,
+    72
+   ],
+   "population": 11513100,
+   "economy": 40895,
+   "capital": 1303
+  },
+  {
+   "id": "PER",
+   "name": "Peru",
+   "color": [
+    118,
+    39,
+    158
+   ],
+   "population": 32510453,
+   "economy": 226848,
+   "capital": 1330
+  },
+  {
+   "id": "COL",
+   "name": "Colombia",
+   "color": [
+    109,
+    229,
+    153
+   ],
+   "population": 50339443,
+   "economy": 323615,
+   "capital": 1360
+  },
+  {
+   "id": "PAN",
+   "name": "Panama",
+   "color": [
+    205,
+    77,
+    66
+   ],
+   "population": 4246439,
+   "economy": 66800,
+   "capital": 1391
+  },
+  {
+   "id": "CRI",
+   "name": "Costa Rica",
+   "color": [
+    100,
+    117,
+    181
+   ],
+   "population": 5047561,
+   "economy": 61801,
+   "capital": 1396
+  },
+  {
+   "id": "NIC",
+   "name": "Nicaragua",
+   "color": [
+    111,
+    158,
+    63
+   ],
+   "population": 6545502,
+   "economy": 12520,
+   "capital": 1400
+  },
+  {
+   "id": "HND",
+   "name": "Honduras",
+   "color": [
+    229,
+    57,
+    194
+   ],
+   "population": 9746117,
+   "economy": 25095,
+   "capital": 1409
+  },
+  {
+   "id": "SLV",
+   "name": "El Salvador",
+   "color": [
+    97,
+    205,
+    196
+   ],
+   "population": 6453553,
+   "economy": 27022,
+   "capital": 1413
+  },
+  {
+   "id": "GTM",
+   "name": "Guatemala",
+   "color": [
+    181,
+    135,
+    59
+   ],
+   "population": 16604026,
+   "economy": 76710,
+   "capital": 1418
+  },
+  {
+   "id": "BLZ",
+   "name": "Belize",
+   "color": [
+    110,
+    86,
+    158
+   ],
+   "population": 390353,
+   "economy": 1879,
+   "capital": 1423
+  },
+  {
+   "id": "VEN",
+   "name": "Venezuela",
+   "color": [
+    91,
+    229,
+    96
+   ],
+   "population": 28515829,
+   "economy": 482359,
+   "capital": 1450
+  },
+  {
+   "id": "GUY",
+   "name": "Guyana",
+   "color": [
+    205,
+    51,
+    90
+   ],
+   "population": 782766,
+   "economy": 5173,
+   "capital": 1456
+  },
+  {
+   "id": "SUR",
+   "name": "Suriname",
+   "color": [
+    86,
+    138,
+    181
+   ],
+   "population": 581363,
+   "economy": 3697,
+   "capital": 1462
+  },
+  {
+   "id": "FRA",
+   "name": "France",
+   "color": [
+    140,
+    158,
+    51
+   ],
+   "population": 67059887,
+   "economy": 2715518,
+   "capital": 1480
+  },
+  {
+   "id": "ECU",
+   "name": "Ecuador",
+   "color": [
+    215,
+    126,
+    229
+   ],
+   "population": 17373662,
+   "economy": 107435,
+   "capital": 1497
+  },
+  {
+   "id": "PRI",
+   "name": "Puerto Rico",
+   "color": [
+    82,
+    205,
+    153
+   ],
+   "population": 3193694,
+   "economy": 104988,
+   "capital": 1507
+  },
+  {
+   "id": "JAM",
+   "name": "Jamaica",
+   "color": [
+    181,
+    84,
+    45
+   ],
+   "population": 2948279,
+   "economy": 16458,
+   "capital": 1510
+  },
+  {
+   "id": "CUB",
+   "name": "Cuba",
+   "color": [
+    75,
+    75,
+    158
+   ],
+   "population": 11333483,
+   "economy": 100023,
+   "capital": 1517
+  },
+  {
+   "id": "ZWE",
+   "name": "Zimbabwe",
+   "color": [
+    120,
+    229,
+    74
+   ],
+   "population": 14645468,
+   "economy": 21440,
+   "capital": 1520
+  },
+  {
+   "id": "BWA",
+   "name": "Botswana",
+   "color": [
+    205,
+    113,
+    167
+   ],
+   "population": 2303697,
+   "economy": 18340,
+   "capital": 1543
+  },
+  {
+   "id": "NAM",
+   "name": "Namibia",
+   "color": [
+    72,
+    168,
+    181
+   ],
+   "population": 2494530,
+   "economy": 12366,
+   "capital": 1558
+  },
+  {
+   "id": "SEN",
+   "name": "Senegal",
+   "color": [
+    158,
+    137,
+    39
+   ],
+   "population": 16296364,
+   "economy": 23578,
+   "capital": 1580
+  },
+  {
+   "id": "MLI",
+   "name": "Mali",
+   "color": [
+    173,
+    109,
+    229
+   ],
+   "population": 19658031,
+   "economy": 17279,
+   "capital": 1599
+  },
+  {
+   "id": "MRT",
+   "name": "Mauritania",
+   "color": [
+    66,
+    205,
+    100
+   ],
+   "population": 4525696,
+   "economy": 7600,
+   "capital": 1643
+  },
+  {
+   "id": "BEN",
+   "name": "Benin",
+   "color": [
+    181,
+    100,
+    104
+   ],
+   "population": 11801151,
+   "economy": 14390,
+   "capital": 1650
+  },
+  {
+   "id": "NER",
+   "name": "Niger",
+   "color": [
+    63,
+    95,
+    158
+   ],
+   "population": 23310715,
+   "economy": 12911,
+   "capital": 1672
+  },
+  {
+   "id": "NGA",
+   "name": "Nigeria",
+   "color": [
+    166,
+    229,
+    57
+   ],
+   "population": 200963599,
+   "economy": 448120,
+   "capital": 1695
+  },
+  {
+   "id": "CMR",
+   "name": "Cameroon",
+   "color": [
+    205,
+    97,
+    197
+   ],
+   "population": 25876380,
+   "economy": 39007,
+   "capital": 1716
+  },
+  {
+   "id": "TGO",
+   "name": "Togo",
+   "color": [
+    59,
+    181,
+    155
+   ],
+   "population": 8082366,
+   "economy": 5490,
+   "capital": 1734
+  },
+  {
+   "id": "GHA",
+   "name": "Ghana",
+   "color": [
+    158,
+    121,
+    86
+   ],
+   "population": 30417856,
+   "economy": 66983,
+   "capital": 1740
+  },
+  {
+   "id": "CIV",
+   "name": "Côte d'Ivoire",
+   "color": [
+    119,
+    91,
+    229
+   ],
+   "population": 25716544,
+   "economy": 58539,
+   "capital": 1758
+  },
+  {
+   "id": "GIN",
+   "name": "Guinea",
+   "color": [
+    65,
+    205,
+    51
+   ],
+   "population": 12771246,
+   "economy": 12296,
+   "capital": 1765
+  },
+  {
+   "id": "GNB",
+   "name": "Guinea-Bissau",
+   "color": [
+    181,
+    86,
+    122
+   ],
+   "population": 1920922,
+   "economy": 1339,
+   "capital": 1772
+  },
+  {
+   "id": "LBR",
+   "name": "Liberia",
+   "color": [
+    51,
+    123,
+    158
+   ],
+   "population": 4937374,
+   "economy": 3070,
+   "capital": 1778
+  },
+  {
+   "id": "SLE",
+   "name": "Sierra Leone",
+   "color": [
+    226,
+    229,
+    126
+   ],
+   "population": 7813215,
+   "economy": 4121,
+   "capital": 1787
+  },
+  {
+   "id": "BFA",
+   "name": "Burkina Faso",
+   "color": [
+    173,
+    82,
+    205
+   ],
+   "population": 20321378,
+   "economy": 15990,
+   "capital": 1791
+  },
+  {
+   "id": "CAF",
+   "name": "Central African Rep.",
+   "color": [
+    45,
+    181,
+    106
+   ],
+   "population": 4745185,
+   "economy": 2220,
+   "capital": 1812
+  },
+  {
+   "id": "COG",
+   "name": "Congo",
+   "color": [
+    158,
+    88,
+    75
+   ],
+   "population": 5380508,
+   "economy": 12267,
+   "capital": 1822
+  },
+  {
+   "id": "GAB",
+   "name": "Gabon",
+   "color": [
+    74,
+    95,
+    229
+   ],
+   "population": 2172579,
+   "economy": 16874,
+   "capital": 1838
+  },
+  {
+   "id": "GNQ",
+   "name": "Eq. Guinea",
+   "color": [
+    152,
+    205,
+    113
+   ],
+   "population": 1355986,
+   "economy": 11026,
+   "capital": 1846
+  },
+  {
+   "id": "ZMB",
+   "name": "Zambia",
+   "color": [
+    181,
+    72,
+    151
+   ],
+   "population": 17861030,
+   "economy": 23309,
+   "capital": 1857
+  },
+  {
+   "id": "MWI",
+   "name": "Malawi",
+   "color": [
+    39,
+    158,
+    156
+   ],
+   "population": 18628747,
+   "economy": 7666,
+   "capital": 1878
+  },
+  {
+   "id": "MOZ",
+   "name": "Mozambique",
+   "color": [
+    229,
+    193,
+    109
+   ],
+   "population": 30366036,
+   "economy": 15291,
+   "capital": 1881
+  },
+  {
+   "id": "SWZ",
+   "name": "eSwatini",
+   "color": [
+    123,
+    66,
+    205
+   ],
+   "population": 1148130,
+   "economy": 4471,
+   "capital": 1905
+  },
+  {
+   "id": "AGO",
+   "name": "Angola",
+   "color": [
+    100,
+    181,
+    109
+   ],
+   "population": 31825295,
+   "economy": 88815,
+   "capital": 1924
+  },
+  {
+   "id": "BDI",
+   "name": "Burundi",
+   "color": [
+    158,
+    63,
+    79
+   ],
+   "population": 11530580,
+   "economy": 3012,
+   "capital": 1938
+  },
+  {
+   "id": "ISR",
+   "name": "Israel",
+   "color": [
+    57,
+    137,
+    229
+   ],
+   "population": 9053300,
+   "economy": 394652,
+   "capital": 1943
+  },
+  {
+   "id": "LBN",
+   "name": "Lebanon",
+   "color": [
+    179,
+    205,
+    97
+   ],
+   "population": 6855713,
+   "economy": 51991,
+   "capital": 1944
+  },
+  {
+   "id": "MDG",
+   "name": "Madagascar",
+   "color": [
+    175,
+    59,
+    181
+   ],
+   "population": 26969307,
+   "economy": 14114,
+   "capital": 1952
+  },
+  {
+   "id": "PSE",
+   "name": "Palestine",
+   "color": [
+    86,
+    158,
+    133
+   ],
+   "population": 4685306,
+   "economy": 16276,
+   "capital": 1966
+  },
+  {
+   "id": "GMB",
+   "name": "Gambia",
+   "color": [
+    229,
+    141,
+    91
+   ],
+   "population": 2347706,
+   "economy": 1826,
+   "capital": 1968
+  },
+  {
+   "id": "TUN",
+   "name": "Tunisia",
+   "color": [
+    62,
+    51,
+    205
+   ],
+   "population": 11694719,
+   "economy": 38796,
+   "capital": 1974
+  },
+  {
+   "id": "DZA",
+   "name": "Algeria",
+   "color": [
+    107,
+    181,
+    86
+   ],
+   "population": 43053054,
+   "economy": 171091,
+   "capital": 2016
+  },
+  {
+   "id": "JOR",
+   "name": "Jordan",
+   "color": [
+    158,
+    51,
+    105
+   ],
+   "population": 10101694,
+   "economy": 44502,
+   "capital": 2029
+  },
+  {
+   "id": "ARE",
+   "name": "United Arab Emirates",
+   "color": [
+    126,
+    209,
+    229
+   ],
+   "population": 9770529,
+   "economy": 421142,
+   "capital": 2037
+  },
+  {
+   "id": "QAT",
+   "name": "Qatar",
+   "color": [
+    205,
+    194,
+    82
+   ],
+   "population": 2832067,
+   "economy": 175837,
+   "capital": 2041
+  },
+  {
+   "id": "KWT",
+   "name": "Kuwait",
+   "color": [
+    129,
+    45,
+    181
+   ],
+   "population": 4207083,
+   "economy": 134628,
+   "capital": 2043
+  },
+  {
+   "id": "IRQ",
+   "name": "Iraq",
+   "color": [
+    75,
+    158,
+    101
+   ],
+   "population": 39309783,
+   "economy": 234094,
+   "capital": 2046
+  },
+  {
+   "id": "OMN",
+   "name": "Oman",
+   "color": [
+    229,
+    79,
+    74
+   ],
+   "population": 4974986,
+   "economy": 76331,
+   "capital": 2068
+  },
+  {
+   "id": "VUT",
+   "name": "Vanuatu",
+   "color": [
+    113,
+    137,
+    205
+   ],
+   "population": 299882,
+   "economy": 934,
+   "capital": 2077
+  },
+  {
+   "id": "KHM",
+   "name": "Cambodia",
+   "color": [
+    133,
+    181,
+    72
+   ],
+   "population": 16486542,
+   "economy": 27089,
+   "capital": 2085
+  },
+  {
+   "id": "THA",
+   "name": "Thailand",
+   "color": [
+    158,
+    39,
+    139
+   ],
+   "population": 69625582,
+   "economy": 543548,
+   "capital": 2102
+  },
+  {
+   "id": "LAO",
+   "name": "Laos",
+   "color": [
+    109,
+    229,
+    212
+   ],
+   "population": 7169455,
+   "economy": 18173,
+   "capital": 2113
+  },
+  {
+   "id": "MMR",
+   "name": "Myanmar",
+   "color": [
+    205,
+    146,
+    66
+   ],
+   "population": 54045420,
+   "economy": 76085,
+   "capital": 2125
+  },
+  {
+   "id": "VNM",
+   "name": "Vietnam",
+   "color": [
+    122,
+    100,
+    181
+   ],
+   "population": 96462106,
+   "economy": 261921,
+   "capital": 2142
+  },
+  {
+   "id": "PRK",
+   "name": "North Korea",
+   "color": [
+    64,
+    158,
+    63
+   ],
+   "population": 25666161,
+   "economy": 40000,
+   "capital": 2158
+  },
+  {
+   "id": "KOR",
+   "name": "South Korea",
+   "color": [
+    229,
+    57,
+    109
+   ],
+   "population": 51709098,
+   "economy": 1646739,
+   "capital": 2162
+  },
+  {
+   "id": "MNG",
+   "name": "Mongolia",
+   "color": [
+    97,
+    162,
+    205
+   ],
+   "population": 3225167,
+   "economy": 13996,
+   "capital": 2171
+  },
+  {
+   "id": "IND",
+   "name": "India",
+   "color": [
+    168,
+    181,
+    59
+   ],
+   "population": 1366417754,
+   "economy": 2868929,
+   "capital": 2256
+  },
+  {
+   "id": "BGD",
+   "name": "Bangladesh",
+   "color": [
+    145,
+    86,
+    158
+   ],
+   "population": 163046161,
+   "economy": 302571,
+   "capital": 2275
+  },
+  {
+   "id": "BTN",
+   "name": "Bhutan",
+   "color": [
+    91,
+    229,
+    164
+   ],
+   "population": 763092,
+   "economy": 2530,
+   "capital": 2280
+  },
+  {
+   "id": "NPL",
+   "name": "Nepal",
+   "color": [
+    205,
+    87,
+    51
+   ],
+   "population": 28608710,
+   "economy": 30641,
+   "capital": 2289
+  },
+  {
+   "id": "PAK",
+   "name": "Pakistan",
+   "color": [
+    86,
+    91,
+    181
+   ],
+   "population": 216565318,
+   "economy": 278221,
+   "capital": 2307
+  },
+  {
+   "id": "AFG",
+   "name": "Afghanistan",
+   "color": [
+    88,
+    158,
+    51
+   ],
+   "population": 38041754,
+   "economy": 19291,
+   "capital": 2334
+  },
+  {
+   "id": "TJK",
+   "name": "Tajikistan",
+   "color": [
+    229,
+    126,
+    192
+   ],
+   "population": 9321018,
+   "economy": 8116,
+   "capital": 2343
+  },
+  {
+   "id": "KGZ",
+   "name": "Kyrgyzstan",
+   "color": [
+    82,
+    197,
+    205
+   ],
+   "population": 6456900,
+   "economy": 8454,
+   "capital": 2352
+  },
+  {
+   "id": "TKM",
+   "name": "Turkmenistan",
+   "color": [
+    181,
+    151,
+    45
+   ],
+   "population": 5942089,
+   "economy": 40761,
+   "capital": 2368
+  },
+  {
+   "id": "IRN",
+   "name": "Iran",
+   "color": [
+    115,
+    75,
+    158
+   ],
+   "population": 82913906,
+   "economy": 453996,
+   "capital": 2392
+  },
+  {
+   "id": "SYR",
+   "name": "Syria",
+   "color": [
+    74,
+    229,
+    104
+   ],
+   "population": 17070135,
+   "economy": 98830,
+   "capital": 2430
+  },
+  {
+   "id": "ARM",
+   "name": "Armenia",
+   "color": [
+    205,
+    113,
+    122
+   ],
+   "population": 2957731,
+   "economy": 13672,
+   "capital": 2438
+  },
+  {
+   "id": "SWE",
+   "name": "Sweden",
+   "color": [
+    72,
+    115,
+    181
+   ],
+   "population": 10285453,
+   "economy": 530883,
+   "capital": 2441
+  },
+  {
+   "id": "BLR",
+   "name": "Belarus",
+   "color": [
+    120,
+    158,
+    39
+   ],
+   "population": 9466856,
+   "economy": 63080,
+   "capital": 2477
+  },
+  {
+   "id": "UKR",
+   "name": "Ukraine",
+   "color": [
+    229,
+    109,
+    226
+   ],
+   "population": 44385155,
+   "economy": 153781,
+   "capital": 2488
+  },
+  {
+   "id": "POL",
+   "name": "Poland",
+   "color": [
+    66,
+    205,
+    168
+   ],
+   "population": 37970874,
+   "economy": 595858,
+   "capital": 2510
+  },
+  {
+   "id": "AUT",
+   "name": "Austria",
+   "color": [
+    181,
+    136,
+    100
+   ],
+   "population": 8877067,
+   "economy": 445075,
+   "capital": 2525
+  },
+  {
+   "id": "HUN",
+   "name": "Hungary",
+   "color": [
+    77,
+    63,
+    158
+   ],
+   "population": 9769949,
+   "economy": 163469,
+   "capital": 2533
+  },
+  {
+   "id": "MDA",
+   "name": "Moldova",
+   "color": [
+    81,
+    229,
+    57
+   ],
+   "population": 2657637,
+   "economy": 11968,
+   "capital": 2539
+  },
+  {
+   "id": "ROU",
+   "name": "Romania",
+   "color": [
+    205,
+    97,
+    144
+   ],
+   "population": 19356544,
+   "economy": 250077,
+   "capital": 2547
+  },
+  {
+   "id": "LTU",
+   "name": "Lithuania",
+   "color": [
+    59,
+    147,
+    181
+   ],
+   "population": 2786844,
+   "economy": 54627,
+   "capital": 2563
+  },
+  {
+   "id": "LVA",
+   "name": "Latvia",
+   "color": [
+    158,
+    156,
+    86
+   ],
+   "population": 1912789,
+   "economy": 34102,
+   "capital": 2565
+  },
+  {
+   "id": "EST",
+   "name": "Estonia",
+   "color": [
+    187,
+    91,
+    229
+   ],
+   "population": 1326590,
+   "economy": 31471,
+   "capital": 2571
+  },
+  {
+   "id": "DEU",
+   "name": "Germany",
+   "color": [
+    51,
+    205,
+    113
+   ],
+   "population": 83132799,
+   "economy": 3861123,
+   "capital": 2581
+  },
+  {
+   "id": "BGR",
+   "name": "Bulgaria",
+   "color": [
+    181,
+    96,
+    86
+   ],
+   "population": 6975761,
+   "economy": 68558,
+   "capital": 2598
+  },
+  {
+   "id": "GRC",
+   "name": "Greece",
+   "color": [
+    51,
+    70,
+    158
+   ],
+   "population": 10716322,
+   "economy": 209852,
+   "capital": 2607
+  },
+  {
+   "id": "TUR",
+   "name": "Turkey",
+   "color": [
+    175,
+    229,
+    126
+   ],
+   "population": 83429615,
+   "economy": 761425,
+   "capital": 2628
+  },
+  {
+   "id": "ALB",
+   "name": "Albania",
+   "color": [
+    205,
+    82,
+    176
+   ],
+   "population": 2854191,
+   "economy": 15279,
+   "capital": 2643
+  },
+  {
+   "id": "HRV",
+   "name": "Croatia",
+   "color": [
+    45,
+    181,
+    173
+   ],
+   "population": 4067500,
+   "economy": 60752,
+   "capital": 2650
+  },
+  {
+   "id": "CHE",
+   "name": "Switzerland",
+   "color": [
+    158,
+    129,
+    75
+   ],
+   "population": 8574832,
+   "economy": 703082,
+   "capital": 2654
+  },
+  {
+   "id": "LUX",
+   "name": "Luxembourg",
+   "color": [
+    130,
+    74,
+    229
+   ],
+   "population": 619896,
+   "economy": 71104,
+   "capital": 2656
+  },
+  {
+   "id": "BEL",
+   "name": "Belgium",
+   "color": [
+    113,
+    205,
+    119
+   ],
+   "population": 11484055,
+   "economy": 533097,
+   "capital": 2658
+  },
+  {
+   "id": "NLD",
+   "name": "Netherlands",
+   "color": [
+    181,
+    72,
+    97
+   ],
+   "population": 17332850,
+   "economy": 907050,
+   "capital": 2663
+  },
+  {
+   "id": "PRT",
+   "name": "Portugal",
+   "color": [
+    39,
+    100,
+    158
+   ],
+   "population": 10269417,
+   "economy": 238785,
+   "capital": 2668
+  },
+  {
+   "id": "ESP",
+   "name": "Spain",
+   "color": [
+    206,
+    229,
+    109
+   ],
+   "population": 47076781,
+   "economy": 1393490,
+   "capital": 2686
+  },
+  {
+   "id": "IRL",
+   "name": "Ireland",
+   "color": [
+    191,
+    66,
+    205
+   ],
+   "population": 4941444,
+   "economy": 388698,
+   "capital": 2695
+  },
+  {
+   "id": "NCL",
+   "name": "New Caledonia",
+   "color": [
+    100,
+    181,
+    149
+   ],
+   "population": 287800,
+   "economy": 10770,
+   "capital": 2701
+  },
+  {
+   "id": "SLB",
+   "name": "Solomon Is.",
+   "color": [
+    158,
+    93,
+    63
+   ],
+   "population": 669823,
+   "economy": 1589,
+   "capital": 2704
+  },
+  {
+   "id": "NZL",
+   "name": "New Zealand",
+   "color": [
+    61,
+    57,
+    229
+   ],
+   "population": 4917000,
+   "economy": 206928,
+   "capital": 2712
+  },
+  {
+   "id": "AUS",
+   "name": "Australia",
+   "color": [
+    126,
+    205,
+    97
+   ],
+   "population": 25364307,
+   "economy": 1396567,
+   "capital": 2721
+  },
+  {
+   "id": "LKA",
+   "name": "Sri Lanka",
+   "color": [
+    181,
+    59,
+    127
+   ],
+   "population": 21803000,
+   "economy": 84008,
+   "capital": 2828
+  },
+  {
+   "id": "CHN",
+   "name": "China",
+   "color": [
+    86,
+    147,
+    158
+   ],
+   "population": 1397715000,
+   "economy": 14342903,
+   "capital": 2868
+  },
+  {
+   "id": "TWN",
+   "name": "Taiwan",
+   "color": [
+    229,
+    209,
+    91
+   ],
+   "population": 23568378,
+   "economy": 1127000,
+   "capital": 2954
+  },
+  {
+   "id": "ITA",
+   "name": "Italy",
+   "color": [
+    138,
+    51,
+    205
+   ],
+   "population": 60297396,
+   "economy": 2003576,
+   "capital": 2961
+  },
+  {
+   "id": "DNK",
+   "name": "Denmark",
+   "color": [
+    86,
+    181,
+    112
+   ],
+   "population": 5818553,
+   "economy": 350104,
+   "capital": 2975
+  },
+  {
+   "id": "GBR",
+   "name": "United Kingdom",
+   "color": [
+    158,
+    51,
+    53
+   ],
+   "population": 66834405,
+   "economy": 2829108,
+   "capital": 2982
+  },
+  {
+   "id": "ISL",
+   "name": "Iceland",
+   "color": [
+    126,
+    158,
+    229
+   ],
+   "population": 361313,
+   "economy": 24188,
+   "capital": 3007
+  },
+  {
+   "id": "AZE",
+   "name": "Azerbaijan",
+   "color": [
+    156,
+    205,
+    82
+   ],
+   "population": 10023318,
+   "economy": 48047,
+   "capital": 3013
+  },
+  {
+   "id": "GEO",
+   "name": "Georgia",
+   "color": [
+    181,
+    45,
+    167
+   ],
+   "population": 3720382,
+   "economy": 17477,
+   "capital": 3018
+  },
+  {
+   "id": "PHL",
+   "name": "Philippines",
+   "color": [
+    75,
+    158,
+    142
+   ],
+   "population": 108116615,
+   "economy": 376795,
+   "capital": 3025
+  },
+  {
+   "id": "MYS",
+   "name": "Malaysia",
+   "color": [
+    229,
+    155,
+    74
+   ],
+   "population": 31949777,
+   "economy": 364681,
+   "capital": 3035
+  },
+  {
+   "id": "BRN",
+   "name": "Brunei",
+   "color": [
+    134,
+    113,
+    205
+   ],
+   "population": 433285,
+   "economy": 13469,
+   "capital": 3049
+  },
+  {
+   "id": "SVN",
+   "name": "Slovenia",
+   "color": [
+    79,
+    181,
+    72
+   ],
+   "population": 2087946,
+   "economy": 54174,
+   "capital": 3051
+  },
+  {
+   "id": "FIN",
+   "name": "Finland",
+   "color": [
+    158,
+    39,
+    81
+   ],
+   "population": 5520314,
+   "economy": 269296,
+   "capital": 3056
+  },
+  {
+   "id": "SVK",
+   "name": "Slovakia",
+   "color": [
+    109,
+    186,
+    229
+   ],
+   "population": 5454073,
+   "economy": 105079,
+   "capital": 3081
+  },
+  {
+   "id": "CZE",
+   "name": "Czechia",
+   "color": [
+    196,
+    205,
+    66
+   ],
+   "population": 10669709,
+   "economy": 250680,
+   "capital": 3084
+  },
+  {
+   "id": "ERI",
+   "name": "Eritrea",
+   "color": [
+    163,
+    100,
+    181
+   ],
+   "population": 6081196,
+   "economy": 2065,
+   "capital": 3094
+  },
+  {
+   "id": "JPN",
+   "name": "Japan",
+   "color": [
+    63,
+    158,
+    108
+   ],
+   "population": 126264931,
+   "economy": 5081769,
+   "capital": 3107
+  },
+  {
+   "id": "PRY",
+   "name": "Paraguay",
+   "color": [
+    229,
+    89,
+    57
+   ],
+   "population": 7044636,
+   "economy": 38145,
+   "capital": 3117
+  },
+  {
+   "id": "YEM",
+   "name": "Yemen",
+   "color": [
+    97,
+    108,
+    205
+   ],
+   "population": 29161922,
+   "economy": 22581,
+   "capital": 3142
+  },
+  {
+   "id": "SAU",
+   "name": "Saudi Arabia",
+   "color": [
+    107,
+    181,
+    59
+   ],
+   "population": 34268528,
+   "economy": 792966,
+   "capital": 3179
+  },
+  {
+   "id": "ATA",
+   "name": "Antarctica",
+   "color": [
+    158,
+    86,
+    135
+   ],
+   "population": 4490,
+   "economy": 898,
+   "capital": 3362
+  },
+  {
+   "id": "CYN",
+   "name": "N. Cyprus",
+   "color": [
+    91,
+    226,
+    229
+   ],
+   "population": 326000,
+   "economy": 3600,
+   "capital": 3412
+  },
+  {
+   "id": "CYP",
+   "name": "Cyprus",
+   "color": [
+    205,
+    163,
+    51
+   ],
+   "population": 1198575,
+   "economy": 24948,
+   "capital": 3413
+  },
+  {
+   "id": "MAR",
+   "name": "Morocco",
+   "color": [
+    128,
+    86,
+    181
+   ],
+   "population": 36471769,
+   "economy": 119700,
+   "capital": 3419
+  },
+  {
+   "id": "EGY",
+   "name": "Egypt",
+   "color": [
+    51,
+    158,
+    66
+   ],
+   "population": 100388073,
+   "economy": 303092,
+   "capital": 3447
+  },
+  {
+   "id": "LBY",
+   "name": "Libya",
+   "color": [
+    229,
+    126,
+    141
+   ],
+   "population": 6777452,
+   "economy": 52091,
+   "capital": 3470
+  },
+  {
+   "id": "ETH",
+   "name": "Ethiopia",
+   "color": [
+    82,
+    136,
+    205
+   ],
+   "population": 112078730,
+   "economy": 95912,
+   "capital": 3512
+  },
+  {
+   "id": "DJI",
+   "name": "Djibouti",
+   "color": [
+    145,
+    181,
+    45
+   ],
+   "population": 973560,
+   "economy": 3324,
+   "capital": 3535
+  },
+  {
+   "id": "SOL",
+   "name": "Somaliland",
+   "color": [
+    156,
+    75,
+    158
+   ],
+   "population": 5096159,
+   "economy": 17836,
+   "capital": 3542
+  },
+  {
+   "id": "UGA",
+   "name": "Uganda",
+   "color": [
+    74,
+    229,
+    180
+   ],
+   "population": 44269594,
+   "economy": 35165,
+   "capital": 3548
+  },
+  {
+   "id": "RWA",
+   "name": "Rwanda",
+   "color": [
+    205,
+    149,
+    113
+   ],
+   "population": 12626950,
+   "economy": 10354,
+   "capital": 3558
+  },
+  {
+   "id": "BIH",
+   "name": "Bosnia and Herz.",
+   "color": [
+    83,
+    72,
+    181
+   ],
+   "population": 3301000,
+   "economy": 20164,
+   "capital": 3561
+  },
+  {
+   "id": "MKD",
+   "name": "North Macedonia",
+   "color": [
+    61,
+    158,
+    39
+   ],
+   "population": 2083459,
+   "economy": 12547,
+   "capital": 3567
+  },
+  {
+   "id": "SRB",
+   "name": "Serbia",
+   "color": [
+    229,
+    109,
+    166
+   ],
+   "population": 6944975,
+   "economy": 51475,
+   "capital": 3572
+  },
+  {
+   "id": "MNE",
+   "name": "Montenegro",
+   "color": [
+    66,
+    174,
+    205
+   ],
+   "population": 622137,
+   "economy": 5542,
+   "capital": 3576
+  },
+  {
+   "id": "KOS",
+   "name": "Kosovo",
+   "color": [
+    181,
+    176,
+    100
+   ],
+   "population": 1794248,
+   "economy": 7926,
+   "capital": 3579
+  },
+  {
+   "id": "TTO",
+   "name": "Trinidad and Tobago",
+   "color": [
+    124,
+    63,
+    158
+   ],
+   "population": 1394973,
+   "economy": 24269,
+   "capital": 3580
+  },
+  {
+   "id": "SSD",
+   "name": "S. Sudan",
+   "color": [
+    57,
+    229,
+    117
+   ],
+   "population": 11062113,
+   "economy": 11998,
+   "capital": 3582
+  }
+ ]
+}

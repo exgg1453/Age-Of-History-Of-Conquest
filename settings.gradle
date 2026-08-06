@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = "Age-Of-History-Of-Conquest"
+
+include ':core'
+include ':android'
+include ':desktop'
