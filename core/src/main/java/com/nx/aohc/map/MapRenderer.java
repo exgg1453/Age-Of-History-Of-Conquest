@@ -8,30 +8,45 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
+
+import com.nx.aohc.graphics.QualitySettings;
 
 public class MapRenderer {
 
     private static final int PALETTE_SIZE = 256;
 
     private final ProvinceMap provinceMap;
+    private final QualitySettings qualitySettings;
     private final ShaderProgram shader;
     private final Mesh mesh;
     private final Pixmap palettePixmap;
     private final Texture paletteTexture;
+    private final Matrix4 screenProjection = new Matrix4();
     private final Color borderColor = new Color(0.08f, 0.08f, 0.10f, 1f);
     private final Color seaColor = new Color(0.10f, 0.20f, 0.36f, 1f);
+
+    private FrameBuffer frameBuffer;
+    private int frameBufferWidth;
+    private int frameBufferHeight;
+    private int screenWidth;
+    private int screenHeight;
     private float borderStrength = 0.85f;
     private boolean paletteDirty = true;
 
-    public MapRenderer(ProvinceMap provinceMap) {
+    public MapRenderer(ProvinceMap provinceMap, QualitySettings qualitySettings) {
         this.provinceMap = provinceMap;
+        this.qualitySettings = qualitySettings;
 
         String vertexSource = Gdx.files.internal("shaders/map.vert").readString();
         String fragmentSource = Gdx.files.internal("shaders/map.frag").readString();
+        String defines = "#define BORDER_MODE " + qualitySettings.getBorderMode() + "\n";
+
         ShaderProgram.pedantic = false;
-        this.shader = new ShaderProgram(vertexSource, fragmentSource);
+        this.shader = new ShaderProgram(vertexSource, injectDefines(fragmentSource, defines));
         if (!shader.isCompiled()) {
             throw new IllegalStateException("Map shader failed to compile: " + shader.getLog());
         }
@@ -45,6 +60,15 @@ public class MapRenderer {
         this.paletteTexture.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
 
         this.mesh = buildQuad(provinceMap.getWidth(), provinceMap.getHeight());
+    }
+
+    private String injectDefines(String source, String defines) {
+        int precisionEnd = source.indexOf("#endif");
+        if (source.startsWith("#ifdef GL_ES") && precisionEnd >= 0) {
+            int insertAt = precisionEnd + "#endif".length();
+            return source.substring(0, insertAt) + "\n" + defines + source.substring(insertAt);
+        }
+        return defines + source;
     }
 
     private Mesh buildQuad(float width, float height) {
@@ -65,25 +89,41 @@ public class MapRenderer {
         return quad;
     }
 
+    public void resize(int width, int height) {
+        screenWidth = width;
+        screenHeight = height;
+        screenProjection.setToOrtho2D(0f, 0f, width, height);
+
+        int targetWidth = Math.max(320, Math.round(width * qualitySettings.getRenderScale()));
+        int targetHeight = Math.max(240, Math.round(height * qualitySettings.getRenderScale()));
+
+        if (qualitySettings.getRenderScale() >= 0.999f) {
+            disposeFrameBuffer();
+            return;
+        }
+
+        if (frameBuffer != null && targetWidth == frameBufferWidth && targetHeight == frameBufferHeight) {
+            return;
+        }
+
+        disposeFrameBuffer();
+        frameBufferWidth = targetWidth;
+        frameBufferHeight = targetHeight;
+        frameBuffer = new FrameBuffer(Pixmap.Format.RGB565, frameBufferWidth, frameBufferHeight, false);
+
+        Texture texture = frameBuffer.getColorBufferTexture();
+        Texture.TextureFilter filter = qualitySettings.isLinearMapFiltering()
+                ? Texture.TextureFilter.Linear
+                : Texture.TextureFilter.Nearest;
+        texture.setFilter(filter, filter);
+    }
+
     public void setProvinceColor(int provinceId, Color color) {
         if (provinceId <= 0 || provinceId >= PALETTE_SIZE * PALETTE_SIZE) {
             return;
         }
-        int column = provinceId % PALETTE_SIZE;
-        int row = provinceId / PALETTE_SIZE;
         palettePixmap.setColor(color);
-        palettePixmap.drawPixel(column, row);
-        paletteDirty = true;
-    }
-
-    public void setProvinceColor(int provinceId, float red, float green, float blue, float alpha) {
-        if (provinceId <= 0 || provinceId >= PALETTE_SIZE * PALETTE_SIZE) {
-            return;
-        }
-        int column = provinceId % PALETTE_SIZE;
-        int row = provinceId / PALETTE_SIZE;
-        palettePixmap.setColor(red, green, blue, alpha);
-        palettePixmap.drawPixel(column, row);
+        palettePixmap.drawPixel(provinceId % PALETTE_SIZE, provinceId / PALETTE_SIZE);
         paletteDirty = true;
     }
 
@@ -97,7 +137,28 @@ public class MapRenderer {
         paletteDirty = false;
     }
 
-    public void render(Matrix4 combined) {
+    public void render(Matrix4 combined, SpriteBatch batch) {
+        if (frameBuffer == null) {
+            renderMap(combined);
+            return;
+        }
+
+        frameBuffer.begin();
+        Gdx.gl.glClearColor(seaColor.r, seaColor.g, seaColor.b, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        renderMap(combined);
+        frameBuffer.end();
+
+        batch.setShader(null);
+        batch.setProjectionMatrix(screenProjection);
+        batch.disableBlending();
+        batch.begin();
+        batch.draw(frameBuffer.getColorBufferTexture(), 0f, 0f, screenWidth, screenHeight, 0f, 1f, 1f, 0f);
+        batch.end();
+        batch.enableBlending();
+    }
+
+    private void renderMap(Matrix4 combined) {
         uploadPaletteIfNeeded();
 
         provinceMap.getProvinceTexture().bind(1);
@@ -129,7 +190,15 @@ public class MapRenderer {
         return borderColor;
     }
 
+    private void disposeFrameBuffer() {
+        if (frameBuffer != null) {
+            frameBuffer.dispose();
+            frameBuffer = null;
+        }
+    }
+
     public void dispose() {
+        disposeFrameBuffer();
         mesh.dispose();
         shader.dispose();
         paletteTexture.dispose();

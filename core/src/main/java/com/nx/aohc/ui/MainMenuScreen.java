@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.nx.aohc.AgeOfHistoryOfConquest;
+import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.localization.Localization;
 import com.nx.aohc.scenario.Scenario;
 
@@ -82,7 +83,20 @@ public class MainMenuScreen implements Screen {
                 + "  ·  " + localization.format("menu.mods.count", game.getModLoader().getMods().size),
                 game.getSkin(), "small");
 
+        final QualitySettings qualitySettings = game.getQualitySettings();
+        TextButton qualityButton = new TextButton(
+                localization.get("menu.quality") + ": " + localization.get(qualitySettings.getSelectedProfileKey()),
+                game.getSkin());
+        qualityButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                qualitySettings.cycleProfile();
+                buildInterface();
+            }
+        });
+
         bottomBar.add(languageButton).left();
+        bottomBar.add(qualityButton).left();
         bottomBar.add(versionLabel).right().expandX();
         rootTable.add(bottomBar).growX().row();
     }

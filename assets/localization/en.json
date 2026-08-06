@@ -19,5 +19,10 @@
   "editor.target": "Assigning to: {0}",
   "editor.save": "Save",
   "editor.saved": "Scenario saved as {0}",
-  "editor.saveFailed": "Scenario could not be saved"
+  "editor.saveFailed": "Scenario could not be saved",
+  "menu.quality": "Quality",
+  "quality.auto": "Auto",
+  "quality.low": "Low",
+  "quality.medium": "Medium",
+  "quality.high": "High"
 }

@@ -9,4 +9,6 @@ public interface PlatformBridge {
     FileHandle getSaveDirectory();
 
     String getDeviceLanguage();
+
+    int getDefaultQualityProfile();
 }

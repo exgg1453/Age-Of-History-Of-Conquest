@@ -40,35 +40,54 @@ jobs:
             -keypass aohc_open_source \
             -dname "CN=Age Of History Of Conquest, OU=Community, O=Open Source, L=Internet, S=Internet, C=TR"
 
-      - name: Build debug APK
-        id: debug
-        run: gradle :android:assembleDebug --stacktrace 2>&1 | tee debug-build.log
+      - name: Build all variants
+        run: |
+          gradle :android:assembleNormalDebug :android:assembleNormalRelease \
+                 :android:assembleLiteDebug :android:assembleLiteRelease \
+                 --stacktrace 2>&1 | tee build.log
 
-      - name: Build release APK
-        id: release
-        run: gradle :android:assembleRelease --stacktrace 2>&1 | tee release-build.log
-
-      - name: Collect APK information
+      - name: Report APK sizes
         if: success()
         run: |
-          mkdir -p output
-          find android/build/outputs/apk -name "*.apk" -exec cp {} output/ \;
-          ls -lh output
+          echo "### APK sizes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Variant | Size |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          find android/build/outputs/apk -name "*.apk" | sort | while read -r apk; do
+            size=$(du -h "$apk" | cut -f1)
+            echo "| $(basename "$apk") | ${size}B |" >> $GITHUB_STEP_SUMMARY
+          done
 
-      - name: Upload debug APK
+      - name: Upload normal debug APK
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: debug-apk
-          path: android/build/outputs/apk/debug/*.apk
+          name: normal-debug-apk
+          path: android/build/outputs/apk/normal/debug/*.apk
           if-no-files-found: error
 
-      - name: Upload release APK
+      - name: Upload normal release APK
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: release-apk
-          path: android/build/outputs/apk/release/*.apk
+          name: normal-release-apk
+          path: android/build/outputs/apk/normal/release/*.apk
+          if-no-files-found: error
+
+      - name: Upload lite debug APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lite-debug-apk
+          path: android/build/outputs/apk/lite/debug/*.apk
+          if-no-files-found: error
+
+      - name: Upload lite release APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lite-release-apk
+          path: android/build/outputs/apk/lite/release/*.apk
           if-no-files-found: error
 
       - name: Write error report
@@ -79,11 +98,8 @@ jobs:
             echo "Build failed for commit ${GITHUB_SHA}"
             echo "Workflow run ${GITHUB_RUN_ID}"
             echo ""
-            echo "===== DEBUG BUILD LOG ====="
-            if [ -f debug-build.log ]; then tail -n 400 debug-build.log; else echo "not produced"; fi
-            echo ""
-            echo "===== RELEASE BUILD LOG ====="
-            if [ -f release-build.log ]; then tail -n 400 release-build.log; else echo "not produced"; fi
+            echo "===== BUILD LOG ====="
+            if [ -f build.log ]; then tail -n 500 build.log; else echo "not produced"; fi
           } > error-report/error.txt
 
       - name: Upload error report

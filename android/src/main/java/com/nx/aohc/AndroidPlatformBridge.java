@@ -42,6 +42,14 @@ public class AndroidPlatformBridge implements PlatformBridge {
     }
 
     @Override
+    public int getDefaultQualityProfile() {
+        if ("lite".equals(BuildConfig.FLAVOR)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
     public String getDeviceLanguage() {
         Locale locale = Locale.getDefault();
         return locale.getLanguage().toLowerCase(Locale.ROOT);

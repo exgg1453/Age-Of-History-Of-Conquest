@@ -34,35 +34,55 @@ void main() {
 
     vec4 baseColor = lookupOwnerColor(index);
 
-    float left = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(-u_texelSize.x, 0.0)));
-    float right = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(u_texelSize.x, 0.0)));
-    float up = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(0.0, -u_texelSize.y)));
-    float down = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(0.0, u_texelSize.y)));
+#if BORDER_MODE == 0
+    gl_FragColor = baseColor;
+#endif
+
+#if BORDER_MODE == 1
+    float rightIndex = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(u_texelSize.x, 0.0)));
+    float downIndex = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(0.0, u_texelSize.y)));
+
+    vec4 rightColor = lookupOwnerColor(rightIndex);
+    vec4 downColor = lookupOwnerColor(downIndex);
+
+    vec4 lowResult = baseColor;
+    if (rightColor != baseColor || downColor != baseColor) {
+        lowResult = mix(lowResult, u_borderColor, u_borderStrength);
+    }
+    gl_FragColor = lowResult;
+#endif
+
+#if BORDER_MODE == 2
+    float leftIndex = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(-u_texelSize.x, 0.0)));
+    float rightIndex = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(u_texelSize.x, 0.0)));
+    float upIndex = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(0.0, -u_texelSize.y)));
+    float downIndex = decodeIndex(texture2D(u_provinceTexture, v_texCoord + vec2(0.0, u_texelSize.y)));
 
     float provinceEdge = 0.0;
-    if (left != index || right != index || up != index || down != index) {
+    if (leftIndex != index || rightIndex != index || upIndex != index || downIndex != index) {
         provinceEdge = 1.0;
     }
 
-    vec4 leftColor = lookupOwnerColor(left);
-    vec4 rightColor = lookupOwnerColor(right);
-    vec4 upColor = lookupOwnerColor(up);
-    vec4 downColor = lookupOwnerColor(down);
+    vec4 leftColor = lookupOwnerColor(leftIndex);
+    vec4 rightColor = lookupOwnerColor(rightIndex);
+    vec4 upColor = lookupOwnerColor(upIndex);
+    vec4 downColor = lookupOwnerColor(downIndex);
 
     float countryEdge = 0.0;
     if (leftColor != baseColor || rightColor != baseColor || upColor != baseColor || downColor != baseColor) {
         countryEdge = 1.0;
     }
 
-    vec4 result = baseColor;
+    vec4 highResult = baseColor;
 
     if (provinceEdge > 0.5) {
-        result = mix(result, u_borderColor, u_borderStrength * 0.35);
+        highResult = mix(highResult, u_borderColor, u_borderStrength * 0.35);
     }
 
     if (countryEdge > 0.5) {
-        result = mix(result, u_borderColor, u_borderStrength);
+        highResult = mix(highResult, u_borderColor, u_borderStrength);
     }
 
-    gl_FragColor = result;
+    gl_FragColor = highResult;
+#endif
 }

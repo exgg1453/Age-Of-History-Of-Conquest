@@ -40,6 +40,11 @@ public class DesktopLauncher {
         }
 
         @Override
+        public int getDefaultQualityProfile() {
+            return 0;
+        }
+
+        @Override
         public String getDeviceLanguage() {
             return Locale.getDefault().getLanguage().toLowerCase(Locale.ROOT);
         }

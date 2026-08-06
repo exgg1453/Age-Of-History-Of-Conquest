@@ -23,6 +23,7 @@ import com.nx.aohc.localization.Localization;
 import com.nx.aohc.map.MapCameraController;
 import com.nx.aohc.map.MapRenderer;
 import com.nx.aohc.map.ProvinceMap;
+import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.scenario.Scenario;
 import com.nx.aohc.scenario.ScenarioExporter;
 
@@ -54,7 +55,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         this.game = game;
         this.scenario = scenario;
         this.provinceMap = game.getAssets().getProvinceMap();
-        this.mapRenderer = new MapRenderer(provinceMap);
+        this.mapRenderer = new MapRenderer(provinceMap, game.getQualitySettings());
         this.gameState = new GameState(provinceMap);
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new ScreenViewport(), game.getBatch());
@@ -67,6 +68,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         camera.position.set(provinceMap.getWidth() * 0.5f, provinceMap.getHeight() * 0.5f, 0f);
         camera.zoom = cameraController.getDefaultZoom();
         cameraController.updateViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        mapRenderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         buildInterface();
     }
@@ -244,8 +246,10 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private void updateHeader() {
         Localization localization = game.getLocalization();
         String modeText = editorMode ? "  ·  " + localization.get("editor.active") : "";
+        QualitySettings qualitySettings = game.getQualitySettings();
         headerLabel.setText(scenario.getDisplayName(localization.getActiveLanguage())
                 + "  ·  " + localization.format("map.year", gameState.getCurrentYear())
+                + "  ·  " + localization.get(qualitySettings.getEffectiveProfileKey())
                 + modeText);
     }
 
@@ -295,7 +299,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        mapRenderer.render(camera.combined);
+        mapRenderer.render(camera.combined, game.getBatch());
 
         stage.act(delta);
         stage.draw();
@@ -305,6 +309,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
         cameraController.updateViewport(width, height);
+        mapRenderer.resize(width, height);
     }
 
     @Override

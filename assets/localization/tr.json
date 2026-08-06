@@ -19,5 +19,10 @@
   "editor.target": "Atanan ülke: {0}",
   "editor.save": "Kaydet",
   "editor.saved": "Senaryo {0} olarak kaydedildi",
-  "editor.saveFailed": "Senaryo kaydedilemedi"
+  "editor.saveFailed": "Senaryo kaydedilemedi",
+  "menu.quality": "Kalite",
+  "quality.auto": "Otomatik",
+  "quality.low": "Düşük",
+  "quality.medium": "Orta",
+  "quality.high": "Yüksek"
 }

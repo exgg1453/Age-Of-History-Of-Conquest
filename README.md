@@ -56,16 +56,60 @@ speculative Third World War setting.
 
 ### Android
 
-Debug and release APKs are produced automatically by GitHub Actions on every
-push to `main`. Download them from the **Actions** tab of this repository.
+Two APK variants are produced automatically by GitHub Actions on every push to
+`main`. Download them from the **Actions** tab of this repository.
+
+| Variant | Package | Map raster | Default quality | Intended for |
+|---|---|---|---|---|
+| normal | `com.nx.aohc` | 4096x2048 | automatic | anything from mid range upwards |
+| lite | `com.nx.aohc.lite` | 2048x1024 | low | old and very weak devices |
+
+Both variants contain the same 3600 provinces and the same scenarios. The lite
+build simply ships the quarter size raster, defaults to the low quality profile,
+and drops the x86 native libraries. The two packages have different application
+ids, so both can be installed side by side for comparison.
 
 To build locally:
 
 ```
-gradle :android:assembleDebug
+gradle :android:assembleNormalDebug
+gradle :android:assembleLiteDebug
 ```
 
 Requires JDK 17 and the Android SDK with platform 34.
+
+### Graphics quality
+
+Quality can be changed at any time from the main menu and is remembered between
+sessions. It is independent of which APK is installed, so the lite build can be
+raised to high and the normal build lowered to potato levels.
+
+| Profile | Internal render scale | Borders | Texture samples per pixel |
+|---|---|---|---|
+| low | 55% | country borders only | 3 |
+| medium | 75% | province and country borders | 9 |
+| high | 100% | province and country borders | 9 |
+
+The render scale is real: the map is drawn into an RGB565 offscreen buffer at
+that fraction of the screen resolution and then stretched back up, so on low the
+GPU shades roughly a third of the pixels it would otherwise. The interface is
+still drawn at full resolution on top, so text stays sharp while the map itself
+gets softer. That is the intended trade: the map looks worse, the game runs.
+
+The automatic profile inspects the maximum texture size, processor count,
+available heap and screen resolution at startup and picks a profile. A device
+that cannot handle a 4096 texture at all is detected here and dropped to low,
+which is also why the lite raster exists.
+
+### Regenerating the low resolution raster
+
+```
+python tools/generate_lite_map.py --width 2048 --height 1024
+```
+
+The downscale is nearest neighbour, because province ids live in the pixel
+values and interpolation would invent ids that do not exist. Any province that
+would vanish entirely at the smaller size is stamped back in at its centroid.
 
 ### Desktop
 
