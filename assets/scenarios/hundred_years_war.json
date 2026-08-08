@@ -1,0 +1,565 @@
+{
+ "id": "hundred_years_war",
+ "startYear": 1337,
+ "inheritDefaultOwnership": false,
+ "name": {
+  "en": "The Hundred Years' War",
+  "tr": "Yüz Yıl Savaşları"
+ },
+ "description": {
+  "en": "1337. Edward III claims the French crown. England holds Gascony and Normandy, Scotland stands with France, and Burgundy waits to see which way to lean.",
+  "tr": "1337. III. Edward Fransa tacında hak iddia ediyor. İngiltere Gaskonya ve Normandiya'yı elinde tutuyor, İskoçya Fransa'nın yanında, Burgonya ise hangi tarafa yaslanacağını bekliyor."
+ },
+ "countries": [
+  {
+   "id": "ENG",
+   "name": {
+    "en": "Kingdom of England",
+    "tr": "İngiltere Krallığı"
+   },
+   "color": [
+    186,
+    58,
+    52
+   ],
+   "capital": 2982,
+   "provinces": [
+    1473,
+    1476,
+    1484,
+    1489,
+    1490,
+    2980,
+    2981,
+    2982,
+    2983,
+    2984,
+    2985,
+    2989,
+    2990,
+    2991,
+    2992
+   ]
+  },
+  {
+   "id": "SCO",
+   "name": {
+    "en": "Kingdom of Scotland",
+    "tr": "İskoçya Krallığı"
+   },
+   "color": [
+    66,
+    108,
+    176
+   ],
+   "capital": 2993,
+   "provinces": [
+    2986,
+    2987,
+    2988,
+    2993,
+    2994,
+    2995
+   ]
+  },
+  {
+   "id": "IRE",
+   "name": {
+    "en": "Irish Lordships",
+    "tr": "İrlanda Beylikleri"
+   },
+   "color": [
+    76,
+    138,
+    90
+   ],
+   "capital": 2695,
+   "provinces": [
+    2694,
+    2695,
+    2696,
+    2697,
+    2698,
+    2699
+   ]
+  },
+  {
+   "id": "FRA",
+   "name": {
+    "en": "Kingdom of France",
+    "tr": "Fransa Krallığı"
+   },
+   "color": [
+    76,
+    110,
+    196
+   ],
+   "capital": 1480,
+   "provinces": [
+    1470,
+    1471,
+    1472,
+    1479,
+    1480,
+    1481,
+    1482,
+    1483,
+    1485,
+    1487,
+    1488,
+    1491,
+    1493,
+    1494
+   ]
+  },
+  {
+   "id": "BRI",
+   "name": {
+    "en": "Duchy of Brittany",
+    "tr": "Bretanya Dukalığı"
+   },
+   "color": [
+    128,
+    156,
+    190
+   ],
+   "capital": 1474,
+   "provinces": [
+    1474
+   ]
+  },
+  {
+   "id": "BUR",
+   "name": {
+    "en": "Duchy of Burgundy",
+    "tr": "Burgonya Dukalığı"
+   },
+   "color": [
+    196,
+    150,
+    62
+   ],
+   "capital": 1486,
+   "provinces": [
+    1475,
+    1477,
+    1478,
+    1486,
+    1492,
+    2656,
+    2657,
+    2658,
+    2659,
+    2660,
+    2661,
+    2662,
+    2663,
+    2664,
+    2665
+   ]
+  },
+  {
+   "id": "CAS",
+   "name": {
+    "en": "Crown of Castile",
+    "tr": "Kastilya Krallığı"
+   },
+   "color": [
+    188,
+    132,
+    74
+   ],
+   "capital": 2686,
+   "provinces": [
+    2673,
+    2675,
+    2677,
+    2678,
+    2681,
+    2683,
+    2684,
+    2685,
+    2686,
+    2687,
+    2688,
+    2689,
+    2693
+   ]
+  },
+  {
+   "id": "ARA",
+   "name": {
+    "en": "Crown of Aragon",
+    "tr": "Aragon Krallığı"
+   },
+   "color": [
+    200,
+    176,
+    80
+   ],
+   "capital": 2690,
+   "provinces": [
+    2676,
+    2690,
+    2691,
+    2692
+   ]
+  },
+  {
+   "id": "GRA",
+   "name": {
+    "en": "Emirate of Granada",
+    "tr": "Gırnata Emirliği"
+   },
+   "color": [
+    64,
+    138,
+    116
+   ],
+   "capital": 2682,
+   "provinces": [
+    2679,
+    2680,
+    2682
+   ]
+  },
+  {
+   "id": "NAV",
+   "name": {
+    "en": "Kingdom of Navarre",
+    "tr": "Navarra Krallığı"
+   },
+   "color": [
+    162,
+    116,
+    152
+   ],
+   "capital": 2674,
+   "provinces": [
+    2674
+   ]
+  },
+  {
+   "id": "POR",
+   "name": {
+    "en": "Kingdom of Portugal",
+    "tr": "Portekiz Krallığı"
+   },
+   "color": [
+    104,
+    148,
+    96
+   ],
+   "capital": 2668,
+   "provinces": [
+    2666,
+    2667,
+    2668,
+    2669,
+    2670,
+    2671,
+    2672
+   ]
+  },
+  {
+   "id": "HRE",
+   "name": {
+    "en": "Holy Roman Empire",
+    "tr": "Kutsal Roma İmparatorluğu"
+   },
+   "color": [
+    128,
+    128,
+    136
+   ],
+   "capital": 2581,
+   "provinces": [
+    2524,
+    2525,
+    2526,
+    2527,
+    2528,
+    2529,
+    2530,
+    2577,
+    2578,
+    2579,
+    2580,
+    2581,
+    2582,
+    2583,
+    2584,
+    2585,
+    2586,
+    2587,
+    2588,
+    2589,
+    2590,
+    2591,
+    2592,
+    2593,
+    2594,
+    2595,
+    2651,
+    2652,
+    2653,
+    2654,
+    2655,
+    3051,
+    3052,
+    3053,
+    3083,
+    3084,
+    3085,
+    3086,
+    3087,
+    3088,
+    3089,
+    3090
+   ]
+  },
+  {
+   "id": "PAP",
+   "name": {
+    "en": "Papal States",
+    "tr": "Papalık Devleti"
+   },
+   "color": [
+    210,
+    200,
+    186
+   ],
+   "capital": 2961,
+   "provinces": [
+    2960,
+    2961,
+    2963,
+    2971,
+    2973
+   ]
+  },
+  {
+   "id": "NAP",
+   "name": {
+    "en": "Kingdom of Naples",
+    "tr": "Napoli Krallığı"
+   },
+   "color": [
+    176,
+    118,
+    98
+   ],
+   "capital": 2959,
+   "provinces": [
+    2959,
+    2962,
+    2966,
+    2969,
+    2970,
+    2972
+   ]
+  },
+  {
+   "id": "ITA",
+   "name": {
+    "en": "Italian City States",
+    "tr": "İtalyan Şehir Devletleri"
+   },
+   "color": [
+    142,
+    160,
+    172
+   ],
+   "capital": 2958,
+   "provinces": [
+    2958,
+    2964,
+    2965,
+    2967,
+    2968
+   ]
+  },
+  {
+   "id": "HUN",
+   "name": {
+    "en": "Kingdom of Hungary",
+    "tr": "Macaristan Krallığı"
+   },
+   "color": [
+    156,
+    96,
+    76
+   ],
+   "capital": 2533,
+   "provinces": [
+    2531,
+    2532,
+    2533,
+    2534,
+    2535,
+    2536,
+    2537,
+    2538,
+    2645,
+    2646,
+    2647,
+    2648,
+    2649,
+    2650,
+    3078,
+    3079,
+    3080,
+    3081,
+    3082,
+    3561,
+    3562,
+    3563,
+    3564,
+    3565,
+    3569,
+    3570,
+    3571,
+    3572,
+    3573,
+    3574,
+    3575
+   ]
+  },
+  {
+   "id": "POL",
+   "name": {
+    "en": "Poland and Lithuania",
+    "tr": "Polonya ve Litvanya"
+   },
+   "color": [
+    178,
+    74,
+    118
+   ],
+   "capital": 2510,
+   "provinces": [
+    2466,
+    2467,
+    2468,
+    2469,
+    2470,
+    2471,
+    2472,
+    2473,
+    2474,
+    2475,
+    2476,
+    2477,
+    2478,
+    2479,
+    2506,
+    2507,
+    2508,
+    2509,
+    2510,
+    2511,
+    2512,
+    2513,
+    2514,
+    2515,
+    2516,
+    2517,
+    2518,
+    2519,
+    2520,
+    2521,
+    2522,
+    2523,
+    2557,
+    2558,
+    2559,
+    2560,
+    2561,
+    2562,
+    2563,
+    2564,
+    2565,
+    2566,
+    2567,
+    2568,
+    2569,
+    2570,
+    2571,
+    2572,
+    2573,
+    2574,
+    2575,
+    2576
+   ]
+  },
+  {
+   "id": "OTT",
+   "name": {
+    "en": "Ottoman Beylik",
+    "tr": "Osmanlı Beyliği"
+   },
+   "color": [
+    46,
+    118,
+    74
+   ],
+   "capital": 2628,
+   "provinces": [
+    2596,
+    2597,
+    2598,
+    2599,
+    2600,
+    2601,
+    2602,
+    2603,
+    2604,
+    2605,
+    2606,
+    2607,
+    2608,
+    2609,
+    2610,
+    2611,
+    2612,
+    2613,
+    2614,
+    2615,
+    2616,
+    2617,
+    2618,
+    2619,
+    2620,
+    2621,
+    2622,
+    2623,
+    2624,
+    2625,
+    2626,
+    2627,
+    2628,
+    2629,
+    2630,
+    2631,
+    2632,
+    2633,
+    2634,
+    2635,
+    2636,
+    2637,
+    2638,
+    2639,
+    2640,
+    2641,
+    2642,
+    2643,
+    2644,
+    3566,
+    3567,
+    3568,
+    3576,
+    3577
+   ]
+  }
+ ]
+}

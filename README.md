@@ -46,9 +46,29 @@ The project is in early development. Current milestone: **core engine**.
 | 5 | Scenario sharing and import/export as archives | planned |
 | 6 | Historical scenario content | planned |
 
-Planned scenario content: 1444, the Balkan Wars, the First World War, the Turkish
-War of Independence, the Second World War, the Cold War, Present Day, and a
-speculative Third World War setting.
+### Scenarios
+
+Shipped with the game:
+
+| Scenario | Year | Kind |
+|---|---|---|
+| Present Day | 2026 | historical |
+| The Hundred Years' War | 1337 | historical |
+| Cold War Blocs | 1962 | historical |
+| The Second World War: An Ottoman Empire That Endured | 1939 | alternate |
+| Turan | 1923 | alternate |
+| Hot War | 1962 | alternate |
+| Strait Crisis | 2031 | alternate |
+
+Still planned: 1444, the Balkan Wars, the First World War, the Turkish War of
+Independence, a historical Second World War, and a speculative Third World War.
+
+Historical scenarios are limited by the province map, which is generated from
+modern country geometry. Sub-national borders are approximated by selecting
+provinces inside longitude and latitude boxes, which is how England ends up
+holding Gascony and Normandy in 1337 without a hand drawn map. Substituting a
+higher detail administrative dataset in `generate_map.py` would sharpen every
+historical scenario at once.
 
 ---
 
