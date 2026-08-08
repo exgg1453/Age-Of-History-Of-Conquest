@@ -40,8 +40,8 @@ The project is in early development. Current milestone: **core engine**.
 | Milestone | Contents | State |
 |---|---|---|
 | 1 | Province map rendering, pan and zoom, province selection, mod loader, localization, CI | done |
-| 2 | Turn loop, armies, combat, economy, diplomacy | planned |
-| 3 | Country AI | planned |
+| 2 | Turn loop, armies, combat, economy | done |
+| 3 | Country AI and diplomacy | planned |
 | 4 | Full scenario editor with country creation and map painting | in progress |
 | 5 | Scenario sharing and import/export as archives | planned |
 | 6 | Historical scenario content | planned |
@@ -116,6 +116,29 @@ would vanish entirely at the smaller size is stamped back in at its centroid.
 ```
 gradle :desktop:run
 ```
+
+---
+
+## Gameplay
+
+Pick a country when a scenario starts, then play in turns.
+
+* Every province holds a garrison. Starting strength scales with province size.
+* Tap one of your provinces to select it. Its neighbours are highlighted.
+* Tap a highlighted neighbour to act. Your own province is reinforced; a foreign
+  one is attacked.
+* Each province may act once per turn, and moving empties the origin province,
+  so a front line cannot be held and pushed with the same troops.
+* Combat compares attacking troops against defending troops multiplied by the
+  defence bonus, with a random spread of plus or minus eighteen percent on each
+  side. Winning attackers keep a share of their strength proportional to how
+  lopsided the fight was; a failed attack is wiped out but still bleeds the
+  defender.
+* Recruiting costs gold and manpower and adds troops to the selected province.
+* Ending a turn pays income from economy, adds manpower from population, clears
+  the acted flags and advances the year.
+
+Other countries do not act yet. That is the next milestone.
 
 ---
 

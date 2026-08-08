@@ -15,6 +15,8 @@ public class Province {
     public int population;
     public int economy;
     public int army;
+    public boolean hasActedThisTurn;
+    public float defenceBonus = 1f;
 
     public Province(int id, String name, String originalCountry, int pixelCount, float centroidX, float centroidY, String terrain, int[] neighbours) {
         this.id = id;

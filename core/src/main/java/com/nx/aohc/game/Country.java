@@ -10,6 +10,10 @@ public class Country {
     public Color color;
     public long population;
     public long economy;
+    public long gold;
+    public long manpower;
+    public long incomePerTurn;
+    public long manpowerPerTurn;
     public int capitalProvince;
     public boolean playerControlled;
     public final IntArray ownedProvinces = new IntArray();

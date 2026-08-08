@@ -3,27 +3,31 @@ package com.nx.aohc.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.nx.aohc.AgeOfHistoryOfConquest;
 import com.nx.aohc.game.Country;
 import com.nx.aohc.game.GameState;
 import com.nx.aohc.game.Province;
+import com.nx.aohc.game.TurnManager;
+import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.localization.Localization;
 import com.nx.aohc.map.MapCameraController;
 import com.nx.aohc.map.MapRenderer;
 import com.nx.aohc.map.ProvinceMap;
-import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.scenario.Scenario;
 import com.nx.aohc.scenario.ScenarioExporter;
 
@@ -34,21 +38,30 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private final ProvinceMap provinceMap;
     private final MapRenderer mapRenderer;
     private final GameState gameState;
+    private final TurnManager turnManager;
     private final OrthographicCamera camera;
     private final MapCameraController cameraController;
     private final Stage stage;
 
+    private final IntArray highlightedProvinces = new IntArray();
+    private final Color selectionColor = new Color(1f, 1f, 1f, 1f);
+    private final Color targetColor = new Color(0.95f, 0.85f, 0.45f, 1f);
+
     private Label headerLabel;
+    private Label resourceLabel;
     private Label provinceNameLabel;
     private Label provinceDetailLabel;
-    private Table provincePanel;
+    private Label messageLabel;
+    private Table actionBar;
+    private Cell<Table> editorCell;
     private Table editorPanel;
-    private com.badlogic.gdx.scenes.scene2d.ui.Cell<Table> editorCell;
-    private TextButton editorToggleButton;
     private Label editorTargetLabel;
+    private TextButton recruitButton;
+    private TextButton endTurnButton;
 
     private int selectedProvinceId;
     private boolean editorMode;
+    private boolean countrySelectionPending = true;
     private Country editorTargetCountry;
 
     public MapScreen(AgeOfHistoryOfConquest game, Scenario scenario) {
@@ -57,11 +70,13 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         this.provinceMap = game.getAssets().getProvinceMap();
         this.mapRenderer = new MapRenderer(provinceMap, game.getQualitySettings());
         this.gameState = new GameState(provinceMap);
+        this.turnManager = new TurnManager(gameState);
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new ScreenViewport(), game.getBatch());
         this.cameraController = new MapCameraController(camera, provinceMap, this);
 
         gameState.applyScenario(scenario, game.getAssets().getDefaultCountries(), game.getLocalization().getActiveLanguage());
+        turnManager.initialiseCountries();
         gameState.paintAll(mapRenderer);
 
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -89,7 +104,12 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         topBar.pad(10f * scale);
 
         headerLabel = new Label("", game.getSkin(), "bold");
-        updateHeader();
+        resourceLabel = new Label("", game.getSkin(), "small");
+
+        Table headerColumn = new Table();
+        headerColumn.left();
+        headerColumn.add(headerLabel).left().growX().row();
+        headerColumn.add(resourceLabel).left().growX().padTop(2f * scale).row();
 
         TextButton backButton = new TextButton(localization.get("common.back"), game.getSkin());
         backButton.addListener(new ClickListener() {
@@ -100,7 +120,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             }
         });
 
-        editorToggleButton = new TextButton(localization.get("editor.toggle"), game.getSkin());
+        TextButton editorToggleButton = new TextButton(localization.get("editor.toggle"), game.getSkin());
         editorToggleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -108,14 +128,18 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             }
         });
 
-        topBar.add(headerLabel).left().growX();
+        topBar.add(headerColumn).left().growX();
         topBar.add(editorToggleButton).right().padLeft(8f * scale);
         topBar.add(backButton).right().padLeft(8f * scale);
 
         root.add(topBar).growX().row();
         root.add().grow().row();
 
-        provincePanel = new Table();
+        messageLabel = new Label("", game.getSkin(), "small");
+        messageLabel.setWrap(true);
+        root.add(messageLabel).growX().padBottom(6f * scale).row();
+
+        Table provincePanel = new Table();
         provincePanel.setBackground(game.getSkin().getDrawable("panel"));
         provincePanel.pad(12f * scale);
         provincePanel.left();
@@ -128,13 +152,44 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         infoColumn.left();
         infoColumn.add(provinceNameLabel).left().growX().row();
         infoColumn.add(provinceDetailLabel).left().growX().padTop(4f * scale).row();
-        provincePanel.add(infoColumn).growX();
+
+        actionBar = new Table();
+        actionBar.right();
+
+        recruitButton = new TextButton(localization.get("action.recruit"), game.getSkin());
+        recruitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                performRecruit();
+            }
+        });
+
+        endTurnButton = new TextButton(localization.get("action.endTurn"), game.getSkin(), "accent");
+        endTurnButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                performEndTurn();
+            }
+        });
+
+        actionBar.add(recruitButton).padRight(8f * scale);
+        actionBar.add(endTurnButton);
+
+        provincePanel.add(infoColumn).growX().left();
+        provincePanel.add(actionBar).right().padLeft(12f * scale);
 
         root.add(provincePanel).growX().row();
 
         buildEditorPanel();
         editorCell = root.add((Table) null).growX().padTop(8f * scale);
         editorCell.getTable().row();
+
+        updateHeader();
+        updateActionAvailability();
+
+        if (countrySelectionPending) {
+            showCountryChooser();
+        }
     }
 
     private void buildEditorPanel() {
@@ -172,7 +227,79 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         editorMode = enabled;
         editorCell.setActor(enabled ? editorPanel : null);
         editorCell.getTable().invalidateHierarchy();
+        clearHighlights();
         updateHeader();
+        updateActionAvailability();
+    }
+
+    private void showCountryChooser() {
+        Localization localization = game.getLocalization();
+        float scale = game.getUiScale();
+
+        final Table overlay = new Table();
+        overlay.setFillParent(true);
+        overlay.setBackground(game.getSkin().getDrawable("panel"));
+        overlay.pad(16f * scale);
+        overlay.top();
+
+        Label title = new Label(localization.get("start.chooseCountry"), game.getSkin(), "bold");
+        Label hint = new Label(localization.get("start.chooseHint"), game.getSkin(), "small");
+        hint.setWrap(true);
+
+        overlay.add(title).left().row();
+        overlay.add(hint).left().growX().padBottom(10f * scale).row();
+
+        Table listTable = new Table();
+        listTable.top().left();
+        listTable.defaults().growX().padBottom(4f * scale);
+
+        Array<Country> countries = new Array<Country>(gameState.getCountryList());
+        countries.sort(new java.util.Comparator<Country>() {
+            @Override
+            public int compare(Country first, Country second) {
+                return second.ownedProvinces.size - first.ownedProvinces.size;
+            }
+        });
+
+        for (int index = 0; index < countries.size; index++) {
+            final Country country = countries.get(index);
+            TextButton button = new TextButton(country.name + "   " + country.ownedProvinces.size, game.getSkin());
+            button.getLabel().setColor(country.color);
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    startAsCountry(country);
+                    overlay.remove();
+                }
+            });
+            listTable.add(button).row();
+        }
+
+        ScrollPane scrollPane = new ScrollPane(listTable, game.getSkin());
+        scrollPane.setFadeScrollBars(false);
+        overlay.add(scrollPane).grow().row();
+
+        stage.addActor(overlay);
+    }
+
+    private void startAsCountry(Country country) {
+        gameState.setPlayerCountry(country);
+        countrySelectionPending = false;
+
+        if (country.ownedProvinces.size > 0) {
+            Province capital = provinceMap.getProvince(country.capitalProvince > 0
+                    ? country.capitalProvince
+                    : country.ownedProvinces.get(0));
+            if (capital != null) {
+                cameraController.focusOn(capital.centroidX, provinceMap.getHeight() - capital.centroidY);
+                camera.zoom = Math.max(0.25f, cameraController.getDefaultZoom() * 0.25f);
+                cameraController.clampCamera();
+            }
+        }
+
+        updateHeader();
+        updateActionAvailability();
+        setMessage(game.getLocalization().format("start.playingAs", country.name));
     }
 
     private void showCountryPicker() {
@@ -236,21 +363,117 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             String scenarioId = scenario.id + "_edited";
             ScenarioExporter.export(gameState, scenarioId, scenario.startYear,
                     game.getPlatformBridge().getModsDirectory());
-            provinceDetailLabel.setText(game.getLocalization().format("editor.saved", scenarioId));
+            setMessage(game.getLocalization().format("editor.saved", scenarioId));
         } catch (Exception exception) {
             Gdx.app.error("MapScreen", "Scenario export failed", exception);
-            provinceDetailLabel.setText(game.getLocalization().get("editor.saveFailed"));
+            setMessage(game.getLocalization().get("editor.saveFailed"));
         }
+    }
+
+    private void performRecruit() {
+        Country player = gameState.getPlayerCountry();
+        Province province = provinceMap.getProvince(selectedProvinceId);
+        if (player == null || province == null) {
+            return;
+        }
+        if (turnManager.recruit(player, province)) {
+            setMessage(game.getLocalization().format("action.recruited", TurnManager.RECRUIT_BATCH, province.name));
+        } else {
+            setMessage(game.getLocalization().get("action.cannotRecruit"));
+        }
+        refreshProvincePanel();
+        updateHeader();
+        updateActionAvailability();
+    }
+
+    private void performEndTurn() {
+        turnManager.endTurn();
+        clearHighlights();
+        selectedProvinceId = 0;
+        refreshProvincePanel();
+        updateHeader();
+        updateActionAvailability();
+        setMessage(game.getLocalization().format("action.turnAdvanced", gameState.getTurnNumber()));
     }
 
     private void updateHeader() {
         Localization localization = game.getLocalization();
-        String modeText = editorMode ? "  ·  " + localization.get("editor.active") : "";
         QualitySettings qualitySettings = game.getQualitySettings();
+
+        String modeText = editorMode ? "  ·  " + localization.get("editor.active") : "";
         headerLabel.setText(scenario.getDisplayName(localization.getActiveLanguage())
                 + "  ·  " + localization.format("map.year", gameState.getCurrentYear())
-                + "  ·  " + localization.get(qualitySettings.getEffectiveProfileKey())
+                + "  ·  " + localization.format("map.turn", gameState.getTurnNumber())
                 + modeText);
+
+        Country player = gameState.getPlayerCountry();
+        if (player == null) {
+            resourceLabel.setText(localization.get(qualitySettings.getEffectiveProfileKey()));
+        } else {
+            resourceLabel.setText(localization.format("map.resources",
+                    player.name, player.gold, player.incomePerTurn, player.manpower, player.ownedProvinces.size));
+        }
+    }
+
+    private void updateActionAvailability() {
+        Country player = gameState.getPlayerCountry();
+        Province province = provinceMap.getProvince(selectedProvinceId);
+        boolean canRecruit = !editorMode && turnManager.canRecruit(player, province);
+        recruitButton.setDisabled(!canRecruit);
+        recruitButton.setColor(canRecruit ? Color.WHITE : new Color(1f, 1f, 1f, 0.45f));
+        endTurnButton.setDisabled(editorMode || player == null);
+        endTurnButton.setColor(editorMode || player == null ? new Color(1f, 1f, 1f, 0.45f) : Color.WHITE);
+    }
+
+    private void setMessage(String text) {
+        messageLabel.setText(text);
+    }
+
+    private void clearHighlights() {
+        for (int index = 0; index < highlightedProvinces.size; index++) {
+            gameState.paintProvince(mapRenderer, highlightedProvinces.get(index));
+        }
+        highlightedProvinces.clear();
+    }
+
+    private void applyHighlights(Province origin) {
+        clearHighlights();
+        if (origin == null) {
+            return;
+        }
+
+        mapRenderer.setProvinceColor(origin.id, selectionColor);
+        highlightedProvinces.add(origin.id);
+
+        Country player = gameState.getPlayerCountry();
+        if (player == null || !player.id.equals(origin.owner) || origin.hasActedThisTurn || origin.army <= 0) {
+            return;
+        }
+
+        for (int index = 0; index < origin.neighbours.length; index++) {
+            int neighbourId = origin.neighbours[index];
+            mapRenderer.setProvinceColor(neighbourId, targetColor);
+            highlightedProvinces.add(neighbourId);
+        }
+    }
+
+    private void refreshProvincePanel() {
+        Localization localization = game.getLocalization();
+        Province province = provinceMap.getProvince(selectedProvinceId);
+
+        if (province == null) {
+            provinceNameLabel.setText(localization.get("map.noSelection"));
+            provinceDetailLabel.setText("");
+            return;
+        }
+
+        Country owner = gameState.getCountryOfProvince(province.id);
+        provinceNameLabel.setText(province.name);
+        provinceDetailLabel.setText(localization.format("map.provinceInfo",
+                owner != null ? owner.name : localization.get("map.unclaimed"),
+                province.army,
+                province.population,
+                province.economy));
     }
 
     @Override
@@ -258,9 +481,11 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         Localization localization = game.getLocalization();
 
         if (provinceId <= 0) {
+            clearHighlights();
             selectedProvinceId = 0;
             provinceNameLabel.setText(localization.get("map.sea"));
             provinceDetailLabel.setText("");
+            updateActionAvailability();
             return;
         }
 
@@ -269,20 +494,66 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             return;
         }
 
-        if (editorMode && editorTargetCountry != null) {
-            gameState.transferProvince(provinceId, editorTargetCountry.id);
-            gameState.paintProvince(mapRenderer, provinceId);
-            gameState.recomputeCountryStatistics();
+        if (editorMode) {
+            if (editorTargetCountry != null) {
+                gameState.transferProvince(provinceId, editorTargetCountry.id);
+                gameState.paintProvince(mapRenderer, provinceId);
+                gameState.recomputeCountryStatistics();
+            }
+            selectedProvinceId = provinceId;
+            refreshProvincePanel();
+            return;
+        }
+
+        Country player = gameState.getPlayerCountry();
+        Province origin = provinceMap.getProvince(selectedProvinceId);
+
+        boolean originIsOwnActionable = player != null
+                && origin != null
+                && player.id.equals(origin.owner)
+                && !origin.hasActedThisTurn
+                && origin.army > 0;
+
+        if (originIsOwnActionable && origin.id != provinceId && turnManager.areAdjacent(origin, province)) {
+            TurnManager.ActionResult result = turnManager.performAction(player, origin, province);
+            handleActionResult(result, origin, province);
+            return;
         }
 
         selectedProvinceId = provinceId;
-        Country owner = gameState.getCountryOfProvince(provinceId);
-        provinceNameLabel.setText(province.name);
-        provinceDetailLabel.setText(localization.format("map.provinceInfo",
-                owner != null ? owner.name : localization.get("map.unclaimed"),
-                province.population,
-                province.economy,
-                province.neighbours.length));
+        applyHighlights(province);
+        refreshProvincePanel();
+        updateActionAvailability();
+    }
+
+    private void handleActionResult(TurnManager.ActionResult result, Province origin, Province target) {
+        Localization localization = game.getLocalization();
+
+        switch (result.type) {
+            case TurnManager.ACTION_REINFORCED:
+                setMessage(localization.format("action.reinforced", target.name, target.army));
+                break;
+            case TurnManager.ACTION_CAPTURED:
+                setMessage(localization.format("action.captured", target.name, result.attackerLosses, result.defenderLosses));
+                gameState.removeDeadCountries();
+                break;
+            case TurnManager.ACTION_REPELLED:
+                setMessage(localization.format("action.repelled", target.name, result.attackerLosses, result.defenderLosses));
+                break;
+            default:
+                setMessage(localization.get(result.messageKey));
+                break;
+        }
+
+        clearHighlights();
+        gameState.paintProvince(mapRenderer, origin.id);
+        gameState.paintProvince(mapRenderer, target.id);
+        gameState.recomputeCountryStatistics();
+
+        selectedProvinceId = target.id;
+        refreshProvincePanel();
+        updateHeader();
+        updateActionAvailability();
     }
 
     @Override

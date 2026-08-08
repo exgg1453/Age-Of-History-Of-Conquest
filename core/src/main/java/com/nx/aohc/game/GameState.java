@@ -126,6 +126,10 @@ public class GameState {
         }
     }
 
+    public void removeDeadCountries() {
+        removeEmptyCountries();
+    }
+
     public void recomputeCountryStatistics() {
         for (int index = 0; index < countryList.size; index++) {
             Country country = countryList.get(index);
