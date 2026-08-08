@@ -23,9 +23,20 @@ public class TurnManager {
     public static final int RECRUIT_MANPOWER_COST = 1000;
 
     private final GameState gameState;
+    private final Diplomacy diplomacy;
+    private CountryAI countryAI;
 
-    public TurnManager(GameState gameState) {
+    public TurnManager(GameState gameState, Diplomacy diplomacy) {
         this.gameState = gameState;
+        this.diplomacy = diplomacy;
+    }
+
+    public void setCountryAI(CountryAI countryAI) {
+        this.countryAI = countryAI;
+    }
+
+    public Diplomacy getDiplomacy() {
+        return diplomacy;
     }
 
     public void initialiseCountries() {
@@ -110,6 +121,13 @@ public class TurnManager {
             return result;
         }
 
+        if (target.owner != null
+                && !actingCountry.id.equals(target.owner)
+                && !diplomacy.isAtWar(actingCountry.id, target.owner)) {
+            result.messageKey = "action.notAtWar";
+            return result;
+        }
+
         if (actingCountry.id.equals(target.owner)) {
             target.army += origin.army;
             origin.army = 0;
@@ -142,7 +160,9 @@ public class TurnManager {
         return result;
     }
 
-    public void endTurn() {
+    public CountryAI.TurnReport endTurn() {
+        CountryAI.TurnReport report = countryAI != null ? countryAI.runAllCountries() : new CountryAI.TurnReport();
+
         IntMap<Province> provinces = gameState.getProvinceMap().getProvinces();
         for (IntMap.Entry<Province> entry : provinces.entries()) {
             entry.value.hasActedThisTurn = false;
@@ -158,5 +178,7 @@ public class TurnManager {
         }
 
         gameState.advanceTurn();
+        diplomacy.expireTruces(gameState.getTurnNumber());
+        return report;
     }
 }

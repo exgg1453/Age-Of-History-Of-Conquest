@@ -20,6 +20,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.nx.aohc.AgeOfHistoryOfConquest;
 import com.nx.aohc.game.Country;
+import com.nx.aohc.game.CountryAI;
+import com.nx.aohc.game.Diplomacy;
 import com.nx.aohc.game.GameState;
 import com.nx.aohc.game.Province;
 import com.nx.aohc.game.TurnManager;
@@ -39,6 +41,8 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private final MapRenderer mapRenderer;
     private final GameState gameState;
     private final TurnManager turnManager;
+    private final Diplomacy diplomacy;
+    private final CountryAI countryAI;
     private final OrthographicCamera camera;
     private final MapCameraController cameraController;
     private final Stage stage;
@@ -58,6 +62,9 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private Label editorTargetLabel;
     private TextButton recruitButton;
     private TextButton endTurnButton;
+    private TextButton declareWarButton;
+    private TextButton offerPeaceButton;
+    private Label diplomacyLabel;
 
     private int selectedProvinceId;
     private boolean editorMode;
@@ -70,7 +77,10 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         this.provinceMap = game.getAssets().getProvinceMap();
         this.mapRenderer = new MapRenderer(provinceMap, game.getQualitySettings());
         this.gameState = new GameState(provinceMap);
-        this.turnManager = new TurnManager(gameState);
+        this.diplomacy = new Diplomacy();
+        this.turnManager = new TurnManager(gameState, diplomacy);
+        this.countryAI = new CountryAI(gameState, turnManager, diplomacy);
+        this.turnManager.setCountryAI(countryAI);
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new ScreenViewport(), game.getBatch());
         this.cameraController = new MapCameraController(camera, provinceMap, this);
@@ -147,11 +157,13 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         provinceNameLabel = new Label(localization.get("map.noSelection"), game.getSkin(), "bold");
         provinceDetailLabel = new Label("", game.getSkin(), "small");
         provinceDetailLabel.setWrap(true);
+        diplomacyLabel = new Label("", game.getSkin(), "small");
 
         Table infoColumn = new Table();
         infoColumn.left();
         infoColumn.add(provinceNameLabel).left().growX().row();
         infoColumn.add(provinceDetailLabel).left().growX().padTop(4f * scale).row();
+        infoColumn.add(diplomacyLabel).left().growX().padTop(2f * scale).row();
 
         actionBar = new Table();
         actionBar.right();
@@ -172,6 +184,24 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             }
         });
 
+        declareWarButton = new TextButton(localization.get("diplomacy.declareWar"), game.getSkin());
+        declareWarButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                performDeclareWar();
+            }
+        });
+
+        offerPeaceButton = new TextButton(localization.get("diplomacy.offerPeace"), game.getSkin());
+        offerPeaceButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                performOfferPeace();
+            }
+        });
+
+        actionBar.add(declareWarButton).padRight(8f * scale);
+        actionBar.add(offerPeaceButton).padRight(8f * scale);
         actionBar.add(recruitButton).padRight(8f * scale);
         actionBar.add(endTurnButton);
 
@@ -386,14 +416,76 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         updateActionAvailability();
     }
 
+    private void performDeclareWar() {
+        Country player = gameState.getPlayerCountry();
+        Country target = gameState.getCountryOfProvince(selectedProvinceId);
+        if (player == null || target == null || target == player) {
+            return;
+        }
+        if (!diplomacy.canDeclareWar(player.id, target.id)) {
+            setMessage(game.getLocalization().get("diplomacy.cannotDeclare"));
+            return;
+        }
+        diplomacy.declareWar(player.id, target.id);
+        setMessage(game.getLocalization().format("diplomacy.warDeclared", target.name));
+        refreshProvincePanel();
+        updateActionAvailability();
+    }
+
+    private void performOfferPeace() {
+        Country player = gameState.getPlayerCountry();
+        Country target = gameState.getCountryOfProvince(selectedProvinceId);
+        if (player == null || target == null || target == player) {
+            return;
+        }
+        if (!diplomacy.isAtWar(player.id, target.id)) {
+            return;
+        }
+        if (countryAI.considerPlayerPeaceOffer(target, player)) {
+            setMessage(game.getLocalization().format("diplomacy.peaceAccepted", target.name));
+        } else {
+            setMessage(game.getLocalization().format("diplomacy.peaceRejected", target.name));
+        }
+        refreshProvincePanel();
+        updateActionAvailability();
+    }
+
     private void performEndTurn() {
-        turnManager.endTurn();
+        CountryAI.TurnReport report = turnManager.endTurn();
         clearHighlights();
         selectedProvinceId = 0;
+        gameState.paintAll(mapRenderer);
         refreshProvincePanel();
         updateHeader();
         updateActionAvailability();
-        setMessage(game.getLocalization().format("action.turnAdvanced", gameState.getTurnNumber()));
+        setMessage(buildTurnReport(report));
+    }
+
+    private String buildTurnReport(CountryAI.TurnReport report) {
+        Localization localization = game.getLocalization();
+        StringBuilder builder = new StringBuilder();
+        builder.append(localization.format("action.turnAdvanced", gameState.getTurnNumber()));
+
+        if (report.warsDeclaredOnPlayer > 0) {
+            builder.append("   ");
+            StringBuilder names = new StringBuilder();
+            for (int index = 0; index < report.attackersOnPlayer.size; index++) {
+                if (index > 0) {
+                    names.append(", ");
+                }
+                names.append(report.attackersOnPlayer.get(index));
+            }
+            builder.append(localization.format("report.warsDeclared", names.toString()));
+        }
+        if (report.provincesTakenFromPlayer > 0) {
+            builder.append("   ");
+            builder.append(localization.format("report.provincesLost", report.provincesTakenFromPlayer));
+        }
+        if (report.peaceOffersAcceptedByPlayer > 0) {
+            builder.append("   ");
+            builder.append(localization.get("report.peaceMade"));
+        }
+        return builder.toString();
     }
 
     private void updateHeader() {
@@ -418,11 +510,22 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private void updateActionAvailability() {
         Country player = gameState.getPlayerCountry();
         Province province = provinceMap.getProvince(selectedProvinceId);
+        Country owner = gameState.getCountryOfProvince(selectedProvinceId);
+
         boolean canRecruit = !editorMode && turnManager.canRecruit(player, province);
-        recruitButton.setDisabled(!canRecruit);
-        recruitButton.setColor(canRecruit ? Color.WHITE : new Color(1f, 1f, 1f, 0.45f));
-        endTurnButton.setDisabled(editorMode || player == null);
-        endTurnButton.setColor(editorMode || player == null ? new Color(1f, 1f, 1f, 0.45f) : Color.WHITE);
+        setButtonEnabled(recruitButton, canRecruit);
+
+        boolean playing = !editorMode && player != null;
+        setButtonEnabled(endTurnButton, playing);
+
+        boolean foreignSelected = playing && owner != null && owner != player;
+        setButtonEnabled(declareWarButton, foreignSelected && diplomacy.canDeclareWar(player.id, owner.id));
+        setButtonEnabled(offerPeaceButton, foreignSelected && diplomacy.isAtWar(player.id, owner.id));
+    }
+
+    private void setButtonEnabled(TextButton button, boolean enabled) {
+        button.setDisabled(!enabled);
+        button.setColor(enabled ? Color.WHITE : new Color(1f, 1f, 1f, 0.4f));
     }
 
     private void setMessage(String text) {
@@ -474,6 +577,15 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
                 province.army,
                 province.population,
                 province.economy));
+
+        Country player = gameState.getPlayerCountry();
+        if (player == null || owner == null || owner == player) {
+            diplomacyLabel.setText("");
+        } else {
+            int state = diplomacy.getState(player.id, owner.id);
+            diplomacyLabel.setText(localization.format("diplomacy.status",
+                    owner.name, localization.get(diplomacy.stateKey(state))));
+        }
     }
 
     @Override

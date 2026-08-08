@@ -41,7 +41,7 @@ The project is in early development. Current milestone: **core engine**.
 |---|---|---|
 | 1 | Province map rendering, pan and zoom, province selection, mod loader, localization, CI | done |
 | 2 | Turn loop, armies, combat, economy | done |
-| 3 | Country AI and diplomacy | planned |
+| 3 | Country AI and diplomacy | done |
 | 4 | Full scenario editor with country creation and map painting | in progress |
 | 5 | Scenario sharing and import/export as archives | planned |
 | 6 | Historical scenario content | planned |
@@ -158,7 +158,34 @@ Pick a country when a scenario starts, then play in turns.
 * Ending a turn pays income from economy, adds manpower from population, clears
   the acted flags and advances the year.
 
-Other countries do not act yet. That is the next milestone.
+### Diplomacy
+
+Provinces can only be attacked while at war. Select a foreign province to see the
+current relation and to declare war or offer peace. Peace puts a six turn truce
+in place, during which neither side can declare war again.
+
+An offer is judged on relative strength and on how much the war has cost that
+country so far, so a country that is winning comfortably will refuse. Grinding
+its border down is what makes it accept.
+
+### The AI
+
+Every country that is not yours is run by the same utility AI, once per turn,
+after you end yours. Each one:
+
+* finds its border provinces, and ignores its interior except as a troop source
+* declares war on a neighbour only when clearly stronger, and holds at most
+  three wars at once
+* sues for peace once a war has cost it enough and it is no longer the stronger
+  side
+* spends gold reinforcing whichever border province is currently weakest
+* attacks only where it holds a comfortable margin over the defenders, choosing
+  the richest province it can safely take
+* walks idle interior troops toward the thinnest part of its own front line
+
+The result is that borders move on their own. Leaving a weak province on a
+hostile border will eventually cost it, and a war on two fronts is genuinely
+dangerous now.
 
 ---
 
