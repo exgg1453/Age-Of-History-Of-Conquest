@@ -280,6 +280,94 @@ def build_hundred_years_war(map_data):
     }
 
 
+def build_great_war_nazi_germany(map_data):
+    map_data.reset_claims()
+    select = map_data.select
+
+    germany = select(["DEU"])
+    germany += select(["POL"], longitude_range=(14.0, 19.5))
+    germany += select(["FRA"], longitude_range=(6.5, 8.4), latitude_range=(47.4, 49.6))
+    germany += select(["LTU"], latitude_range=(55.0, 56.5), longitude_range=(20.0, 22.5))
+    germany = sorted(set(germany))
+
+    austria_hungary = select(["AUT", "HUN", "CZE", "SVK", "SVN", "HRV", "BIH"])
+    austria_hungary += select(["POL"], longitude_range=(19.5, 25.0), latitude_range=(48.5, 51.0))
+    austria_hungary += select(["ROU"], longitude_range=(21.0, 26.5), latitude_range=(45.0, 48.5))
+    austria_hungary += select(["ITA"], latitude_range=(45.7, 47.5))
+    austria_hungary = sorted(set(austria_hungary))
+
+    ottoman = select(["TUR", "SYR", "LBN", "JOR", "ISR", "IRQ", "KWT", "CYP", "YEM"])
+    ottoman += select(["SAU"], longitude_range=(34.0, 45.0))
+    ottoman = sorted(set(ottoman))
+
+    bulgaria = select(["BGR"])
+
+    russia = select(["RUS", "UKR", "BLR", "LTU", "LVA", "EST", "FIN", "MDA",
+                     "GEO", "ARM", "AZE", "KAZ", "UZB", "TKM", "KGZ", "TJK"])
+    russia += select(["POL"])
+    russia = sorted(set(russia))
+
+    france = select(["FRA", "DZA", "TUN", "MAR", "MLI", "NER", "TCD", "CAF", "COG",
+                     "GAB", "SEN", "GIN", "CIV", "BFA", "BEN", "MDG", "VNM", "LAO", "KHM"])
+    britain = select(["GBR", "IRL", "IND", "PAK", "BGD", "MMR", "EGY", "SDN", "ZAF",
+                      "AUS", "NZL", "CAN", "NGA", "GHA", "KEN", "UGA", "ZMB", "ZWE",
+                      "BWA", "MWI", "LKA", "MYS", "SOM"])
+    serbia = select(["SRB", "MNE", "MKD"])
+    belgium = select(["BEL", "COD"])
+    japan = select(["JPN", "KOR", "PRK", "TWN"])
+
+    italy = select(["ITA", "ERI", "LBY"])
+    united_states = select(["USA", "PHL"])
+    netherlands = select(["NLD", "IDN"])
+    portugal = select(["PRT", "AGO", "MOZ"])
+    spain = select(["ESP"])
+    scandinavia = select(["SWE", "NOR", "DNK"])
+    switzerland = select(["CHE"])
+    greece = select(["GRC", "ALB"])
+    romania = select(["ROU"])
+    china = select(["CHN", "MNG"])
+    persia = select(["IRN", "AFG"])
+    ethiopia = select(["ETH"])
+
+    return {
+        "id": "great_war_national_socialist_germany",
+        "startYear": 1914,
+        "inheritDefaultOwnership": True,
+        "name": {
+            "en": "The Great War: A National Socialist Germany",
+            "tr": "Birinci Dünya Savaşı: Nasyonal Sosyalist Almanya"
+        },
+        "description": {
+            "en": "A counterfactual 1914. The movement that historically took power in Germany fifteen years after the war instead governs the Reich when it begins. Borders are those of August 1914; only the regime is moved.",
+            "tr": "Karşı olgusal bir 1914. Tarihte savaştan on beş yıl sonra Almanya'da iktidara gelen hareket, bu kez savaş başlarken Reich'ı yönetiyor. Sınırlar Ağustos 1914'ün sınırları; yalnızca rejim öne alınmış durumda."
+        },
+        "countries": [
+            country_entry(map_data, "DEU", "German Reich", "Alman Reich'ı", [74, 78, 84], germany),
+            country_entry(map_data, "AUH", "Austria-Hungary", "Avusturya-Macaristan", [186, 156, 96], austria_hungary),
+            country_entry(map_data, "OTT", "Ottoman Empire", "Osmanlı İmparatorluğu", [32, 112, 72], ottoman),
+            country_entry(map_data, "BGR", "Bulgaria", "Bulgaristan", [122, 142, 88], bulgaria),
+            country_entry(map_data, "RUS", "Russian Empire", "Rus İmparatorluğu", [168, 60, 60], russia),
+            country_entry(map_data, "FRA", "France", "Fransa", [62, 100, 182], france),
+            country_entry(map_data, "GBR", "British Empire", "Britanya İmparatorluğu", [178, 66, 56], britain),
+            country_entry(map_data, "SRB", "Serbia", "Sırbistan", [138, 74, 96], serbia),
+            country_entry(map_data, "BEL", "Belgium", "Belçika", [98, 128, 168], belgium),
+            country_entry(map_data, "JPN", "Japan", "Japonya", [176, 88, 96], japan),
+            country_entry(map_data, "ITA", "Italy", "İtalya", [128, 156, 128], italy),
+            country_entry(map_data, "USA", "United States", "Amerika Birleşik Devletleri", [86, 140, 196], united_states),
+            country_entry(map_data, "NLD", "Netherlands", "Hollanda", [206, 152, 78], netherlands),
+            country_entry(map_data, "PRT", "Portugal", "Portekiz", [104, 148, 96], portugal),
+            country_entry(map_data, "ESP", "Spain", "İspanya", [196, 168, 88], spain),
+            country_entry(map_data, "SWE", "Scandinavia", "İskandinavya", [140, 172, 196], scandinavia),
+            country_entry(map_data, "CHE", "Switzerland", "İsviçre", [200, 200, 204], switzerland),
+            country_entry(map_data, "GRC", "Greece", "Yunanistan", [110, 154, 186], greece),
+            country_entry(map_data, "ROU", "Romania", "Romanya", [158, 118, 82], romania),
+            country_entry(map_data, "CHN", "China", "Çin", [204, 172, 70], china),
+            country_entry(map_data, "IRN", "Persia", "İran", [146, 102, 58], persia),
+            country_entry(map_data, "ETH", "Ethiopia", "Etiyopya", [92, 130, 78], ethiopia),
+        ]
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     base = os.path.dirname(__file__)
@@ -297,6 +385,7 @@ def main():
     write_scenario(output_directory, build_hot_war(map_data))
     write_scenario(output_directory, build_turan(map_data))
     write_scenario(output_directory, build_hundred_years_war(map_data))
+    write_scenario(output_directory, build_great_war_nazi_germany(map_data))
 
 
 if __name__ == "__main__":

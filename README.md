@@ -55,13 +55,15 @@ Shipped with the game:
 | Present Day | 2026 | historical |
 | The Hundred Years' War | 1337 | historical |
 | Cold War Blocs | 1962 | historical |
+| The Great War: A National Socialist Germany | 1914 | alternate |
 | The Second World War: An Ottoman Empire That Endured | 1939 | alternate |
 | Turan | 1923 | alternate |
 | Hot War | 1962 | alternate |
 | Strait Crisis | 2031 | alternate |
 
-Still planned: 1444, the Balkan Wars, the First World War, the Turkish War of
-Independence, a historical Second World War, and a speculative Third World War.
+Still planned: 1444, the Balkan Wars, a historical First World War, the Turkish
+War of Independence, a historical Second World War, and a speculative Third
+World War.
 
 Historical scenarios are limited by the province map, which is generated from
 modern country geometry. Sub-national borders are approximated by selecting
