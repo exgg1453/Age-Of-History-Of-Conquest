@@ -1,0 +1,103 @@
+{
+ "achievements": [
+  {
+   "id": "WELCOME",
+   "name": {
+    "en": "Welcome",
+    "tr": "Hoş Geldin"
+   },
+   "description": {
+    "en": "Open the game for the first time.",
+    "tr": "Oyunu ilk kez aç."
+   }
+  },
+  {
+   "id": "FIRST_CONQUEST",
+   "name": {
+    "en": "First Blood",
+    "tr": "İlk Fetih"
+   },
+   "description": {
+    "en": "Capture a province from another country.",
+    "tr": "Başka bir ülkeden bir il ele geçir."
+   }
+  },
+  {
+   "id": "FIRST_PEACE",
+   "name": {
+    "en": "Terms Agreed",
+    "tr": "Barış Masası"
+   },
+   "description": {
+    "en": "End a war by having a peace offer accepted.",
+    "tr": "Barış teklifin kabul edilerek bir savaşı bitir."
+   }
+  },
+  {
+   "id": "FIRST_ALLIANCE",
+   "name": {
+    "en": "Better Together",
+    "tr": "Müttefik"
+   },
+   "description": {
+    "en": "Form an alliance with another country.",
+    "tr": "Başka bir ülkeyle ittifak kur."
+   }
+  },
+  {
+   "id": "WORLD_CONQUEST",
+   "name": {
+    "en": "The World Entire",
+    "tr": "Dünya Fethi"
+   },
+   "description": {
+    "en": "Be the only country left on the map.",
+    "tr": "Haritada ayakta kalan tek ülke ol."
+   }
+  },
+  {
+   "id": "TEN_PROVINCES",
+   "name": {
+    "en": "Expansion",
+    "tr": "Genişleme"
+   },
+   "description": {
+    "en": "Capture ten provinces in a single game.",
+    "tr": "Tek bir oyunda on il ele geçir."
+   }
+  },
+  {
+   "id": "HUNDRED_PROVINCES",
+   "name": {
+    "en": "Conqueror",
+    "tr": "Fatih"
+   },
+   "description": {
+    "en": "Capture one hundred provinces in a single game.",
+    "tr": "Tek bir oyunda yüz il ele geçir."
+   }
+  },
+  {
+   "id": "SURVIVE_FIFTY_TURNS",
+   "name": {
+    "en": "Long Reign",
+    "tr": "Uzun Saltanat"
+   },
+   "description": {
+    "en": "Reach turn fifty without losing your country.",
+    "tr": "Ülkeni kaybetmeden ellinci tura ulaş."
+   }
+  },
+  {
+   "id": "SCENARIO_EDITOR",
+   "name": {
+    "en": "Cartographer",
+    "tr": "Haritacı"
+   },
+   "description": {
+    "en": "Save a scenario with the in game editor.",
+    "tr": "Oyun içi düzenleyiciyle bir senaryo kaydet."
+   }
+  }
+ ]
+}

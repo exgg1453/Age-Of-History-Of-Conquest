@@ -95,8 +95,22 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        TextButton achievementsButton = new TextButton(
+                localization.format("menu.achievements",
+                        game.getAchievementManager().getUnlockedCount(),
+                        game.getAchievementManager().getAchievements().size),
+                game.getSkin());
+        achievementsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new AchievementsScreen(game));
+                dispose();
+            }
+        });
+
         bottomBar.add(languageButton).left();
         bottomBar.add(qualityButton).left();
+        bottomBar.add(achievementsButton).left();
         bottomBar.add(versionLabel).right().expandX();
         rootTable.add(bottomBar).growX().row();
     }

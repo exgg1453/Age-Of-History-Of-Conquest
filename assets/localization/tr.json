@@ -64,5 +64,14 @@
   "formable.progress": "{1} ilin {0} tanesi elinde",
   "formable.proclaim": "İlan et",
   "formable.formed": "{0} ilan edildi",
-  "formable.none": "Bu ülkeyle kurulabilecek bir devlet yok"
+  "formable.none": "Bu ülkeyle kurulabilecek bir devlet yok",
+  "menu.achievements": "Başarımlar {0}/{1}",
+  "achievements.title": "Başarımlar",
+  "achievements.progress": "{1} başarımın {0} tanesi açıldı",
+  "achievements.unlocked": "Açıldı",
+  "achievements.locked": "Kilitli",
+  "achievements.unlockedToast": "Başarım açıldı",
+  "diplomacy.offerAlliance": "İttifak teklif et",
+  "diplomacy.allianceAccepted": "{0} ittifakı kabul etti",
+  "diplomacy.allianceRejected": "{0} ittifakı reddetti"
 }

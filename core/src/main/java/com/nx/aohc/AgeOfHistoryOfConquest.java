@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import com.nx.aohc.achievement.AchievementManager;
 import com.nx.aohc.game.GameAssets;
 import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.localization.Localization;
@@ -24,6 +25,7 @@ public class AgeOfHistoryOfConquest extends Game {
     private ModLoader modLoader;
     private GameAssets assets;
     private QualitySettings qualitySettings;
+    private AchievementManager achievementManager;
     private float uiScale = 1f;
 
     public AgeOfHistoryOfConquest(PlatformBridge platformBridge) {
@@ -48,12 +50,18 @@ public class AgeOfHistoryOfConquest extends Game {
             localization.setActiveLanguage("en");
         }
 
+        achievementManager = new AchievementManager(localization);
+        achievementManager.register(modLoader.getAchievements());
+        achievementManager.registerFormables(modLoader.getFormables());
+
         skin = UiSkinFactory.create(uiScale);
 
         assets = new GameAssets(
                 modLoader.resolveAsset("map/provinces.png"),
                 modLoader.resolveAsset("map/provinces.json"),
                 modLoader.resolveAsset("map/countries.json"));
+
+        achievementManager.unlock(AchievementManager.WELCOME);
 
         setScreen(new MainMenuScreen(this));
     }
@@ -87,6 +95,10 @@ public class AgeOfHistoryOfConquest extends Game {
 
     public QualitySettings getQualitySettings() {
         return qualitySettings;
+    }
+
+    public AchievementManager getAchievementManager() {
+        return achievementManager;
     }
 
     public PlatformBridge getPlatformBridge() {

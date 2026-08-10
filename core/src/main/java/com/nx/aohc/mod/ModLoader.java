@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+import com.nx.aohc.achievement.Achievement;
+import com.nx.aohc.achievement.AchievementLoader;
 import com.nx.aohc.formable.Formable;
 import com.nx.aohc.formable.FormableLoader;
 import com.nx.aohc.localization.Localization;
@@ -17,6 +19,7 @@ public class ModLoader {
     private final Array<Mod> mods = new Array<Mod>();
     private final Array<Scenario> scenarios = new Array<Scenario>();
     private final Array<Formable> formables = new Array<Formable>();
+    private final Array<Achievement> achievements = new Array<Achievement>();
 
     public void loadBaseContent(Localization localization) {
         localization.loadDirectory(Gdx.files.internal("localization"));
@@ -39,6 +42,17 @@ public class ModLoader {
                     formables.addAll(FormableLoader.load(file, "base"));
                 } catch (Exception exception) {
                     Gdx.app.error("ModLoader", "Failed to load base formables " + file.name(), exception);
+                }
+            }
+        }
+
+        FileHandle achievementDirectory = Gdx.files.internal("achievements");
+        if (achievementDirectory.exists()) {
+            for (FileHandle file : achievementDirectory.list(".json")) {
+                try {
+                    achievements.addAll(AchievementLoader.load(file, "base"));
+                } catch (Exception exception) {
+                    Gdx.app.error("ModLoader", "Failed to load base achievements " + file.name(), exception);
                 }
             }
         }
@@ -74,6 +88,17 @@ public class ModLoader {
                         }
                     }
                 }
+                FileHandle achievementDirectory = candidate.child("achievements");
+                if (achievementDirectory.exists()) {
+                    for (FileHandle file : achievementDirectory.list(".json")) {
+                        try {
+                            achievements.addAll(AchievementLoader.load(file, mod.id));
+                        } catch (Exception exception) {
+                            Gdx.app.error("ModLoader", "Failed to load achievements " + file.name() + " from mod " + mod.id, exception);
+                        }
+                    }
+                }
+
                 FileHandle formableDirectory = candidate.child("formables");
                 if (formableDirectory.exists()) {
                     for (FileHandle file : formableDirectory.list(".json")) {
@@ -124,6 +149,10 @@ public class ModLoader {
 
     public Array<Formable> getFormables() {
         return formables;
+    }
+
+    public Array<Achievement> getAchievements() {
+        return achievements;
     }
 
     public Scenario findScenario(String id) {

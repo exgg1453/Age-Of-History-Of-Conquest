@@ -64,5 +64,14 @@
   "formable.progress": "{0} of {1} provinces held",
   "formable.proclaim": "Proclaim",
   "formable.formed": "{0} proclaimed",
-  "formable.none": "Nothing can be formed by this country"
+  "formable.none": "Nothing can be formed by this country",
+  "menu.achievements": "Achievements {0}/{1}",
+  "achievements.title": "Achievements",
+  "achievements.progress": "{0} of {1} unlocked",
+  "achievements.unlocked": "Unlocked",
+  "achievements.locked": "Locked",
+  "achievements.unlockedToast": "Achievement unlocked",
+  "diplomacy.offerAlliance": "Offer alliance",
+  "diplomacy.allianceAccepted": "{0} accepted the alliance",
+  "diplomacy.allianceRejected": "{0} declined the alliance"
 }

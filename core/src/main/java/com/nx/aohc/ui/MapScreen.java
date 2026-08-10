@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -25,6 +26,8 @@ import com.nx.aohc.game.Diplomacy;
 import com.nx.aohc.game.GameState;
 import com.nx.aohc.game.Province;
 import com.nx.aohc.game.TurnManager;
+import com.nx.aohc.achievement.Achievement;
+import com.nx.aohc.achievement.AchievementManager;
 import com.nx.aohc.formable.Formable;
 import com.nx.aohc.formable.FormableManager;
 import com.nx.aohc.graphics.QualitySettings;
@@ -68,8 +71,10 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private TextButton formNationButton;
     private TextButton declareWarButton;
     private TextButton offerPeaceButton;
+    private TextButton offerAllianceButton;
     private Label diplomacyLabel;
 
+    private int provincesCaptured;
     private int selectedProvinceId;
     private boolean editorMode;
     private boolean countrySelectionPending = true;
@@ -100,7 +105,61 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         cameraController.updateViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mapRenderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        game.getAchievementManager().setUnlockListener(new AchievementManager.UnlockListener() {
+            @Override
+            public void onAchievementUnlocked(Achievement achievement) {
+                showAchievementToast(achievement);
+            }
+        });
+
         buildInterface();
+    }
+
+    private void showAchievementToast(Achievement achievement) {
+        float scale = game.getUiScale();
+        Localization localization = game.getLocalization();
+
+        Table toast = new Table();
+        toast.setBackground(game.getSkin().getDrawable("panel"));
+        toast.pad(12f * scale);
+
+        Label header = new Label(localization.get("achievements.unlockedToast"), game.getSkin(), "small");
+        Label name = new Label(achievement.getDisplayName(localization.getActiveLanguage()), game.getSkin(), "bold");
+        name.setColor(UiSkinFactory.ACCENT);
+
+        toast.add(header).left().row();
+        toast.add(name).left().row();
+        toast.pack();
+        toast.setPosition((stage.getWidth() - toast.getWidth()) * 0.5f,
+                stage.getHeight() - toast.getHeight() - 90f * scale);
+        toast.getColor().a = 0f;
+        toast.addAction(Actions.sequence(
+                Actions.fadeIn(0.25f),
+                Actions.delay(2.6f),
+                Actions.fadeOut(0.6f),
+                Actions.removeActor()));
+
+        stage.addActor(toast);
+    }
+
+    private void checkProgressAchievements() {
+        AchievementManager achievements = game.getAchievementManager();
+        Country player = gameState.getPlayerCountry();
+        if (player == null) {
+            return;
+        }
+        if (provincesCaptured >= 10) {
+            achievements.unlock("TEN_PROVINCES");
+        }
+        if (provincesCaptured >= 100) {
+            achievements.unlock("HUNDRED_PROVINCES");
+        }
+        if (gameState.getTurnNumber() >= 50 && player.isAlive()) {
+            achievements.unlock("SURVIVE_FIFTY_TURNS");
+        }
+        if (gameState.getCountryList().size == 1 && player.isAlive()) {
+            achievements.unlock(AchievementManager.WORLD_CONQUEST);
+        }
     }
 
     private void buildInterface() {
@@ -213,7 +272,16 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             }
         });
 
+        offerAllianceButton = new TextButton(localization.get("diplomacy.offerAlliance"), game.getSkin());
+        offerAllianceButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                performOfferAlliance();
+            }
+        });
+
         actionBar.add(formNationButton).padRight(8f * scale);
+        actionBar.add(offerAllianceButton).padRight(8f * scale);
         actionBar.add(declareWarButton).padRight(8f * scale);
         actionBar.add(offerPeaceButton).padRight(8f * scale);
         actionBar.add(recruitButton).padRight(8f * scale);
@@ -407,6 +475,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             String scenarioId = scenario.id + "_edited";
             ScenarioExporter.export(gameState, scenarioId, scenario.startYear,
                     game.getPlatformBridge().getModsDirectory());
+            game.getAchievementManager().unlock("SCENARIO_EDITOR");
             setMessage(game.getLocalization().format("editor.saved", scenarioId));
         } catch (Exception exception) {
             Gdx.app.error("MapScreen", "Scenario export failed", exception);
@@ -488,6 +557,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (formableManager.form(player, formable, localization.getActiveLanguage())) {
+                        game.getAchievementManager().unlockFormable(formable.id);
                         gameState.paintAll(mapRenderer);
                         setMessage(localization.format("formable.formed",
                                 formable.getDisplayName(localization.getActiveLanguage())));
@@ -546,9 +616,26 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             return;
         }
         if (countryAI.considerPlayerPeaceOffer(target, player)) {
+            game.getAchievementManager().unlock(AchievementManager.FIRST_PEACE);
             setMessage(game.getLocalization().format("diplomacy.peaceAccepted", target.name));
         } else {
             setMessage(game.getLocalization().format("diplomacy.peaceRejected", target.name));
+        }
+        refreshProvincePanel();
+        updateActionAvailability();
+    }
+
+    private void performOfferAlliance() {
+        Country player = gameState.getPlayerCountry();
+        Country target = gameState.getCountryOfProvince(selectedProvinceId);
+        if (player == null || target == null || target == player) {
+            return;
+        }
+        if (countryAI.considerPlayerAllianceOffer(target, player)) {
+            game.getAchievementManager().unlock(AchievementManager.FIRST_ALLIANCE);
+            setMessage(game.getLocalization().format("diplomacy.allianceAccepted", target.name));
+        } else {
+            setMessage(game.getLocalization().format("diplomacy.allianceRejected", target.name));
         }
         refreshProvincePanel();
         updateActionAvailability();
@@ -562,6 +649,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         refreshProvincePanel();
         updateHeader();
         updateActionAvailability();
+        checkProgressAchievements();
         setMessage(buildTurnReport(report));
     }
 
@@ -626,6 +714,9 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         boolean foreignSelected = playing && owner != null && owner != player;
         setButtonEnabled(declareWarButton, foreignSelected && diplomacy.canDeclareWar(player.id, owner.id));
         setButtonEnabled(offerPeaceButton, foreignSelected && diplomacy.isAtWar(player.id, owner.id));
+        setButtonEnabled(offerAllianceButton, foreignSelected
+                && !diplomacy.isAtWar(player.id, owner.id)
+                && !diplomacy.isAllied(player.id, owner.id));
     }
 
     private void setButtonEnabled(TextButton button, boolean enabled) {
@@ -753,6 +844,9 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             case TurnManager.ACTION_CAPTURED:
                 setMessage(localization.format("action.captured", target.name, result.attackerLosses, result.defenderLosses));
                 gameState.removeDeadCountries();
+                provincesCaptured++;
+                game.getAchievementManager().unlock(AchievementManager.FIRST_CONQUEST);
+                checkProgressAchievements();
                 break;
             case TurnManager.ACTION_REPELLED:
                 setMessage(localization.format("action.repelled", target.name, result.attackerLosses, result.defenderLosses));
@@ -814,6 +908,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
 
     @Override
     public void dispose() {
+        game.getAchievementManager().setUnlockListener(null);
         stage.dispose();
         mapRenderer.dispose();
     }

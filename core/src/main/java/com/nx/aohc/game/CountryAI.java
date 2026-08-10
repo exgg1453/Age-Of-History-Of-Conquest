@@ -143,6 +143,30 @@ public class CountryAI {
         }
     }
 
+    public boolean considerPlayerAllianceOffer(Country aiCountry, Country player) {
+        if (aiCountry == null || player == null) {
+            return false;
+        }
+        if (diplomacy.isAtWar(aiCountry.id, player.id) || diplomacy.isAllied(aiCountry.id, player.id)) {
+            return false;
+        }
+
+        float aiStrength = estimateStrength(aiCountry);
+        float playerStrength = estimateStrength(player);
+        if (playerStrength < aiStrength * 0.55f) {
+            return false;
+        }
+        if (countActiveWars(player) > MAXIMUM_WARS) {
+            return false;
+        }
+        if (MathUtils.random() > 0.55f) {
+            return false;
+        }
+
+        diplomacy.formAlliance(aiCountry.id, player.id);
+        return true;
+    }
+
     public boolean considerPlayerPeaceOffer(Country aiCountry, Country player) {
         if (aiCountry == null || player == null) {
             return false;
