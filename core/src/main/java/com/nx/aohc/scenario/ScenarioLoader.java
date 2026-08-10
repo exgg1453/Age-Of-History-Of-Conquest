@@ -35,6 +35,8 @@ public class ScenarioLoader {
 
                 country.capitalProvince = entry.getInt("capital", 0);
                 country.playable = entry.getBoolean("playable", true);
+                country.government = entry.getString("government", null);
+                country.religion = entry.getString("religion", null);
 
                 JsonValue provinceValue = entry.get("provinces");
                 if (provinceValue != null) {

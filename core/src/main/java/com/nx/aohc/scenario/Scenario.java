@@ -12,6 +12,8 @@ public class Scenario {
         public float green = 0.5f;
         public float blue = 0.5f;
         public int capitalProvince;
+        public String government;
+        public String religion;
         public final Array<Integer> provinces = new Array<Integer>();
         public boolean playable = true;
     }

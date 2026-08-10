@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.nx.aohc.AgeOfHistoryOfConquest;
+import com.nx.aohc.game.GameSettings;
 import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.localization.Localization;
 import com.nx.aohc.scenario.Scenario;
@@ -113,6 +114,49 @@ public class MainMenuScreen implements Screen {
         bottomBar.add(achievementsButton).left();
         bottomBar.add(versionLabel).right().expandX();
         rootTable.add(bottomBar).growX().row();
+
+        final GameSettings gameSettings = game.getGameSettings();
+
+        Table gameplayBar = new Table();
+        gameplayBar.defaults().padTop(8f * game.getUiScale()).padRight(8f * game.getUiScale());
+
+        TextButton difficultyButton = new TextButton(
+                localization.get("menu.difficulty") + ": " + localization.get(gameSettings.getDifficultyKey()),
+                game.getSkin());
+        difficultyButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameSettings.cycleDifficulty();
+                buildInterface();
+            }
+        });
+
+        TextButton aggressionDownButton = new TextButton("-10", game.getSkin());
+        aggressionDownButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameSettings.adjustAiAggression(-10);
+                buildInterface();
+            }
+        });
+
+        TextButton aggressionUpButton = new TextButton("+10", game.getSkin());
+        aggressionUpButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameSettings.adjustAiAggression(10);
+                buildInterface();
+            }
+        });
+
+        Label aggressionLabel = new Label(localization.format("menu.aggression",
+                gameSettings.getAiAggression()), game.getSkin(), "small");
+
+        gameplayBar.add(difficultyButton).left();
+        gameplayBar.add(aggressionDownButton).left();
+        gameplayBar.add(aggressionLabel).left();
+        gameplayBar.add(aggressionUpButton).left().expandX();
+        rootTable.add(gameplayBar).growX().row();
     }
 
     private Table buildScenarioRow(final Scenario scenario) {

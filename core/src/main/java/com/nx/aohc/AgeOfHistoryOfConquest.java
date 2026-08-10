@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import com.nx.aohc.achievement.AchievementManager;
 import com.nx.aohc.game.GameAssets;
+import com.nx.aohc.game.GameSettings;
 import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.localization.Localization;
 import com.nx.aohc.mod.ModLoader;
@@ -26,6 +27,7 @@ public class AgeOfHistoryOfConquest extends Game {
     private GameAssets assets;
     private QualitySettings qualitySettings;
     private AchievementManager achievementManager;
+    private GameSettings gameSettings;
     private float uiScale = 1f;
 
     public AgeOfHistoryOfConquest(PlatformBridge platformBridge) {
@@ -37,6 +39,7 @@ public class AgeOfHistoryOfConquest extends Game {
         uiScale = computeUiScale();
         batch = new SpriteBatch();
         qualitySettings = new QualitySettings(platformBridge.getDefaultQualityProfile());
+        gameSettings = new GameSettings();
 
         localization = new Localization();
         modLoader = new ModLoader();
@@ -99,6 +102,10 @@ public class AgeOfHistoryOfConquest extends Game {
 
     public AchievementManager getAchievementManager() {
         return achievementManager;
+    }
+
+    public GameSettings getGameSettings() {
+        return gameSettings;
     }
 
     public PlatformBridge getPlatformBridge() {

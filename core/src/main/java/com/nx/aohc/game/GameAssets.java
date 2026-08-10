@@ -37,6 +37,8 @@ public class GameAssets {
             }
             Country country = new Country(id, name, color);
             country.capitalProvince = entry.getInt("capital", 0);
+            country.government = entry.getString("government", "republic");
+            country.religion = entry.getString("religion", "secular");
             defaultCountries.put(id, country);
         }
     }

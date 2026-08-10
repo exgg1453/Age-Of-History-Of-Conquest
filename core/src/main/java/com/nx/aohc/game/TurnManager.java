@@ -24,11 +24,13 @@ public class TurnManager {
 
     private final GameState gameState;
     private final Diplomacy diplomacy;
+    private final GameSettings settings;
     private CountryAI countryAI;
 
-    public TurnManager(GameState gameState, Diplomacy diplomacy) {
+    public TurnManager(GameState gameState, Diplomacy diplomacy, GameSettings settings) {
         this.gameState = gameState;
         this.diplomacy = diplomacy;
+        this.settings = settings;
     }
 
     public void setCountryAI(CountryAI countryAI) {
@@ -173,8 +175,9 @@ public class TurnManager {
         for (int index = 0; index < gameState.getCountryList().size; index++) {
             Country country = gameState.getCountryList().get(index);
             recomputeIncome(country);
-            country.gold += country.incomePerTurn;
-            country.manpower += country.manpowerPerTurn;
+            float multiplier = country.playerControlled ? 1f : settings.getAiIncomeMultiplier();
+            country.gold += Math.round(country.incomePerTurn * multiplier);
+            country.manpower += Math.round(country.manpowerPerTurn * multiplier);
         }
 
         gameState.advanceTurn();

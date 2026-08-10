@@ -15,23 +15,28 @@ public class CountryAI {
         public final Array<String> attackersOnPlayer = new Array<String>();
     }
 
-    private static final float ATTACK_STRENGTH_MARGIN = 1.35f;
-    private static final float WAR_DECLARATION_MARGIN = 1.6f;
-    private static final int MAXIMUM_WARS = 3;
     private static final int PEACE_EXHAUSTION_THRESHOLD = 4;
     private static final float GOLD_RESERVE_FRACTION = 0.25f;
 
     private final GameState gameState;
     private final TurnManager turnManager;
     private final Diplomacy diplomacy;
+    private final GameSettings settings;
+    private final RelationCalculator relationCalculator;
 
     private final IntArray borderProvinces = new IntArray();
     private final IntArray candidateTargets = new IntArray();
 
-    public CountryAI(GameState gameState, TurnManager turnManager, Diplomacy diplomacy) {
+    public CountryAI(GameState gameState, TurnManager turnManager, Diplomacy diplomacy, GameSettings settings) {
         this.gameState = gameState;
         this.turnManager = turnManager;
         this.diplomacy = diplomacy;
+        this.settings = settings;
+        this.relationCalculator = new RelationCalculator(gameState, settings);
+    }
+
+    public RelationCalculator getRelationCalculator() {
+        return relationCalculator;
     }
 
     public TurnReport runAllCountries() {
@@ -114,7 +119,10 @@ public class CountryAI {
                     continue;
                 }
 
-                if (activeWars >= MAXIMUM_WARS) {
+                if (activeWars >= settings.getMaximumSimultaneousWars()) {
+                    continue;
+                }
+                if (diplomacy.isAllied(country.id, other.id)) {
                     continue;
                 }
                 if (!diplomacy.canDeclareWar(country.id, other.id)) {
@@ -123,10 +131,10 @@ public class CountryAI {
 
                 float ownStrength = estimateStrength(country);
                 float otherStrength = estimateStrength(other);
-                if (ownStrength < otherStrength * WAR_DECLARATION_MARGIN) {
+                if (ownStrength < otherStrength * settings.getWarDeclarationMargin()) {
                     continue;
                 }
-                if (MathUtils.random() > 0.35f) {
+                if (MathUtils.random() > settings.getWarDeclarationChance()) {
                     continue;
                 }
 
@@ -143,6 +151,10 @@ public class CountryAI {
         }
     }
 
+    public RelationCalculator.RelationBreakdown evaluateAlliance(Country aiCountry, Country player) {
+        return relationCalculator.evaluate(aiCountry, player);
+    }
+
     public boolean considerPlayerAllianceOffer(Country aiCountry, Country player) {
         if (aiCountry == null || player == null) {
             return false;
@@ -151,15 +163,8 @@ public class CountryAI {
             return false;
         }
 
-        float aiStrength = estimateStrength(aiCountry);
-        float playerStrength = estimateStrength(player);
-        if (playerStrength < aiStrength * 0.55f) {
-            return false;
-        }
-        if (countActiveWars(player) > MAXIMUM_WARS) {
-            return false;
-        }
-        if (MathUtils.random() > 0.55f) {
+        RelationCalculator.RelationBreakdown breakdown = relationCalculator.evaluate(aiCountry, player);
+        if (breakdown.total < RelationCalculator.ACCEPTANCE_THRESHOLD) {
             return false;
         }
 
@@ -310,7 +315,8 @@ public class CountryAI {
             }
 
             float defence = neighbour.army * neighbour.defenceBonus;
-            if (neighbour.owner != null && origin.army < defence * ATTACK_STRENGTH_MARGIN) {
+            float requiredMargin = settings.getAttackStrengthMargin() / settings.getAiCombatMultiplier();
+            if (neighbour.owner != null && origin.army < defence * requiredMargin) {
                 continue;
             }
 

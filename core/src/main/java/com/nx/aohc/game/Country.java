@@ -15,6 +15,8 @@ public class Country {
     public long incomePerTurn;
     public long manpowerPerTurn;
     public int capitalProvince;
+    public String government = "republic";
+    public String religion = "secular";
     public boolean playerControlled;
     public final IntArray ownedProvinces = new IntArray();
 

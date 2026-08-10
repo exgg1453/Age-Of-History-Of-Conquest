@@ -42,6 +42,8 @@ public class GameState {
                 Country source = entry.value;
                 Country country = new Country(source.id, source.name, new Color(source.color));
                 country.capitalProvince = source.capitalProvince;
+                country.government = source.government;
+                country.religion = source.religion;
                 registerCountry(country);
             }
             for (IntMap.Entry<Province> entry : provinces.entries()) {
@@ -81,6 +83,12 @@ public class GameState {
 
             if (definition.capitalProvince > 0) {
                 country.capitalProvince = definition.capitalProvince;
+            }
+            if (definition.government != null) {
+                country.government = definition.government;
+            }
+            if (definition.religion != null) {
+                country.religion = definition.religion;
             }
         }
 

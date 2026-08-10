@@ -10,7 +10,9 @@
    ],
    "population": 889953,
    "economy": 5496,
-   "capital": 3
+   "capital": 3,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "TZA",
@@ -22,7 +24,9 @@
    ],
    "population": 58005463,
    "economy": 63177,
-   "capital": 15
+   "capital": 15,
+   "government": "republic",
+   "religion": "protestant"
   },
   {
    "id": "ESH",
@@ -34,7 +38,9 @@
    ],
    "population": 603253,
    "economy": 907,
-   "capital": 34
+   "capital": 34,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "CAN",
@@ -46,7 +52,9 @@
    ],
    "population": 37589262,
    "economy": 1736425,
-   "capital": 37
+   "capital": 37,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "USA",
@@ -58,7 +66,9 @@
    ],
    "population": 328239523,
    "economy": 21433226,
-   "capital": 223
+   "capital": 223,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "KAZ",
@@ -70,7 +80,9 @@
    ],
    "population": 18513930,
    "economy": 181665,
-   "capital": 367
+   "capital": 367,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "UZB",
@@ -82,7 +94,9 @@
    ],
    "population": 33580650,
    "economy": 57921,
-   "capital": 433
+   "capital": 433,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "PNG",
@@ -94,7 +108,9 @@
    ],
    "population": 8776109,
    "economy": 24829,
-   "capital": 443
+   "capital": 443,
+   "government": "republic",
+   "religion": "protestant"
   },
   {
    "id": "IDN",
@@ -106,7 +122,9 @@
    ],
    "population": 270625568,
    "economy": 1119190,
-   "capital": 483
+   "capital": 483,
+   "government": "democracy",
+   "religion": "sunni_islam"
   },
   {
    "id": "ARG",
@@ -118,7 +136,9 @@
    ],
    "population": 44938712,
    "economy": 445445,
-   "capital": 514
+   "capital": 514,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "CHL",
@@ -130,7 +150,9 @@
    ],
    "population": 18952038,
    "economy": 282318,
-   "capital": 558
+   "capital": 558,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "COD",
@@ -142,7 +164,9 @@
    ],
    "population": 86790567,
    "economy": 50400,
-   "capital": 595
+   "capital": 595,
+   "government": "authoritarian",
+   "religion": "catholic"
   },
   {
    "id": "SOM",
@@ -154,7 +178,9 @@
    ],
    "population": 10192317,
    "economy": 4719,
-   "capital": 636
+   "capital": 636,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "KEN",
@@ -166,7 +192,9 @@
    ],
    "population": 52573973,
    "economy": 95503,
-   "capital": 648
+   "capital": 648,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "SDN",
@@ -178,7 +206,9 @@
    ],
    "population": 42813238,
    "economy": 30513,
-   "capital": 685
+   "capital": 685,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "TCD",
@@ -190,7 +220,9 @@
    ],
    "population": 15946876,
    "economy": 11314,
-   "capital": 712
+   "capital": 712,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "HTI",
@@ -202,7 +234,9 @@
    ],
    "population": 11263077,
    "economy": 14332,
-   "capital": 737
+   "capital": 737,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "DOM",
@@ -214,7 +248,9 @@
    ],
    "population": 10738958,
    "economy": 88941,
-   "capital": 739
+   "capital": 739,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "RUS",
@@ -226,7 +262,9 @@
    ],
    "population": 144373535,
    "economy": 1699876,
-   "capital": 887
+   "capital": 887,
+   "government": "authoritarian",
+   "religion": "orthodox"
   },
   {
    "id": "BHS",
@@ -238,7 +276,9 @@
    ],
    "population": 389482,
    "economy": 13578,
-   "capital": 964
+   "capital": 964,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "FLK",
@@ -250,7 +290,9 @@
    ],
    "population": 3398,
    "economy": 282,
-   "capital": 966
+   "capital": 966,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "NOR",
@@ -262,7 +304,9 @@
    ],
    "population": 5347896,
    "economy": 403336,
-   "capital": 990
+   "capital": 990,
+   "government": "monarchy",
+   "religion": "protestant"
   },
   {
    "id": "GRL",
@@ -274,7 +318,9 @@
    ],
    "population": 56225,
    "economy": 3051,
-   "capital": 1046
+   "capital": 1046,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "ATF",
@@ -286,7 +332,9 @@
    ],
    "population": 140,
    "economy": 16,
-   "capital": 1098
+   "capital": 1098,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "TLS",
@@ -298,7 +346,9 @@
    ],
    "population": 1293119,
    "economy": 2017,
-   "capital": 1100
+   "capital": 1100,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "ZAF",
@@ -310,7 +360,9 @@
    ],
    "population": 58558270,
    "economy": 351431,
-   "capital": 1117
+   "capital": 1117,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "LSO",
@@ -322,7 +374,9 @@
    ],
    "population": 2125268,
    "economy": 2376,
-   "capital": 1136
+   "capital": 1136,
+   "government": "monarchy",
+   "religion": "secular"
   },
   {
    "id": "MEX",
@@ -334,7 +388,9 @@
    ],
    "population": 127575529,
    "economy": 1268870,
-   "capital": 1153
+   "capital": 1153,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "URY",
@@ -346,7 +402,9 @@
    ],
    "population": 3461734,
    "economy": 56045,
-   "capital": 1189
+   "capital": 1189,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "BRA",
@@ -358,7 +416,9 @@
    ],
    "population": 211049527,
    "economy": 1839758,
-   "capital": 1257
+   "capital": 1257,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "BOL",
@@ -370,7 +430,9 @@
    ],
    "population": 11513100,
    "economy": 40895,
-   "capital": 1303
+   "capital": 1303,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "PER",
@@ -382,7 +444,9 @@
    ],
    "population": 32510453,
    "economy": 226848,
-   "capital": 1330
+   "capital": 1330,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "COL",
@@ -394,7 +458,9 @@
    ],
    "population": 50339443,
    "economy": 323615,
-   "capital": 1360
+   "capital": 1360,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "PAN",
@@ -406,7 +472,9 @@
    ],
    "population": 4246439,
    "economy": 66800,
-   "capital": 1391
+   "capital": 1391,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "CRI",
@@ -418,7 +486,9 @@
    ],
    "population": 5047561,
    "economy": 61801,
-   "capital": 1396
+   "capital": 1396,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "NIC",
@@ -430,7 +500,9 @@
    ],
    "population": 6545502,
    "economy": 12520,
-   "capital": 1400
+   "capital": 1400,
+   "government": "authoritarian",
+   "religion": "catholic"
   },
   {
    "id": "HND",
@@ -442,7 +514,9 @@
    ],
    "population": 9746117,
    "economy": 25095,
-   "capital": 1409
+   "capital": 1409,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "SLV",
@@ -454,7 +528,9 @@
    ],
    "population": 6453553,
    "economy": 27022,
-   "capital": 1413
+   "capital": 1413,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "GTM",
@@ -466,7 +542,9 @@
    ],
    "population": 16604026,
    "economy": 76710,
-   "capital": 1418
+   "capital": 1418,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "BLZ",
@@ -478,7 +556,9 @@
    ],
    "population": 390353,
    "economy": 1879,
-   "capital": 1423
+   "capital": 1423,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "VEN",
@@ -490,7 +570,9 @@
    ],
    "population": 28515829,
    "economy": 482359,
-   "capital": 1450
+   "capital": 1450,
+   "government": "authoritarian",
+   "religion": "catholic"
   },
   {
    "id": "GUY",
@@ -502,7 +584,9 @@
    ],
    "population": 782766,
    "economy": 5173,
-   "capital": 1456
+   "capital": 1456,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "SUR",
@@ -514,7 +598,9 @@
    ],
    "population": 581363,
    "economy": 3697,
-   "capital": 1462
+   "capital": 1462,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "FRA",
@@ -526,7 +612,9 @@
    ],
    "population": 67059887,
    "economy": 2715518,
-   "capital": 1480
+   "capital": 1480,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "ECU",
@@ -538,7 +626,9 @@
    ],
    "population": 17373662,
    "economy": 107435,
-   "capital": 1497
+   "capital": 1497,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "PRI",
@@ -550,7 +640,9 @@
    ],
    "population": 3193694,
    "economy": 104988,
-   "capital": 1507
+   "capital": 1507,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "JAM",
@@ -562,7 +654,9 @@
    ],
    "population": 2948279,
    "economy": 16458,
-   "capital": 1510
+   "capital": 1510,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "CUB",
@@ -574,7 +668,9 @@
    ],
    "population": 11333483,
    "economy": 100023,
-   "capital": 1517
+   "capital": 1517,
+   "government": "communism",
+   "religion": "secular"
   },
   {
    "id": "ZWE",
@@ -586,7 +682,9 @@
    ],
    "population": 14645468,
    "economy": 21440,
-   "capital": 1520
+   "capital": 1520,
+   "government": "authoritarian",
+   "religion": "protestant"
   },
   {
    "id": "BWA",
@@ -598,7 +696,9 @@
    ],
    "population": 2303697,
    "economy": 18340,
-   "capital": 1543
+   "capital": 1543,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "NAM",
@@ -610,7 +710,9 @@
    ],
    "population": 2494530,
    "economy": 12366,
-   "capital": 1558
+   "capital": 1558,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "SEN",
@@ -622,7 +724,9 @@
    ],
    "population": 16296364,
    "economy": 23578,
-   "capital": 1580
+   "capital": 1580,
+   "government": "democracy",
+   "religion": "sunni_islam"
   },
   {
    "id": "MLI",
@@ -634,7 +738,9 @@
    ],
    "population": 19658031,
    "economy": 17279,
-   "capital": 1599
+   "capital": 1599,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "MRT",
@@ -646,7 +752,9 @@
    ],
    "population": 4525696,
    "economy": 7600,
-   "capital": 1643
+   "capital": 1643,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "BEN",
@@ -658,7 +766,9 @@
    ],
    "population": 11801151,
    "economy": 14390,
-   "capital": 1650
+   "capital": 1650,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "NER",
@@ -670,7 +780,9 @@
    ],
    "population": 23310715,
    "economy": 12911,
-   "capital": 1672
+   "capital": 1672,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "NGA",
@@ -682,7 +794,9 @@
    ],
    "population": 200963599,
    "economy": 448120,
-   "capital": 1695
+   "capital": 1695,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "CMR",
@@ -694,7 +808,9 @@
    ],
    "population": 25876380,
    "economy": 39007,
-   "capital": 1716
+   "capital": 1716,
+   "government": "authoritarian",
+   "religion": "secular"
   },
   {
    "id": "TGO",
@@ -706,7 +822,9 @@
    ],
    "population": 8082366,
    "economy": 5490,
-   "capital": 1734
+   "capital": 1734,
+   "government": "authoritarian",
+   "religion": "secular"
   },
   {
    "id": "GHA",
@@ -718,7 +836,9 @@
    ],
    "population": 30417856,
    "economy": 66983,
-   "capital": 1740
+   "capital": 1740,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "CIV",
@@ -730,7 +850,9 @@
    ],
    "population": 25716544,
    "economy": 58539,
-   "capital": 1758
+   "capital": 1758,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "GIN",
@@ -742,7 +864,9 @@
    ],
    "population": 12771246,
    "economy": 12296,
-   "capital": 1765
+   "capital": 1765,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "GNB",
@@ -754,7 +878,9 @@
    ],
    "population": 1920922,
    "economy": 1339,
-   "capital": 1772
+   "capital": 1772,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "LBR",
@@ -766,7 +892,9 @@
    ],
    "population": 4937374,
    "economy": 3070,
-   "capital": 1778
+   "capital": 1778,
+   "government": "republic",
+   "religion": "protestant"
   },
   {
    "id": "SLE",
@@ -778,7 +906,9 @@
    ],
    "population": 7813215,
    "economy": 4121,
-   "capital": 1787
+   "capital": 1787,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "BFA",
@@ -790,7 +920,9 @@
    ],
    "population": 20321378,
    "economy": 15990,
-   "capital": 1791
+   "capital": 1791,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "CAF",
@@ -802,7 +934,9 @@
    ],
    "population": 4745185,
    "economy": 2220,
-   "capital": 1812
+   "capital": 1812,
+   "government": "authoritarian",
+   "religion": "secular"
   },
   {
    "id": "COG",
@@ -814,7 +948,9 @@
    ],
    "population": 5380508,
    "economy": 12267,
-   "capital": 1822
+   "capital": 1822,
+   "government": "authoritarian",
+   "religion": "secular"
   },
   {
    "id": "GAB",
@@ -826,7 +962,9 @@
    ],
    "population": 2172579,
    "economy": 16874,
-   "capital": 1838
+   "capital": 1838,
+   "government": "authoritarian",
+   "religion": "secular"
   },
   {
    "id": "GNQ",
@@ -838,7 +976,9 @@
    ],
    "population": 1355986,
    "economy": 11026,
-   "capital": 1846
+   "capital": 1846,
+   "government": "authoritarian",
+   "religion": "secular"
   },
   {
    "id": "ZMB",
@@ -850,7 +990,9 @@
    ],
    "population": 17861030,
    "economy": 23309,
-   "capital": 1857
+   "capital": 1857,
+   "government": "republic",
+   "religion": "protestant"
   },
   {
    "id": "MWI",
@@ -862,7 +1004,9 @@
    ],
    "population": 18628747,
    "economy": 7666,
-   "capital": 1878
+   "capital": 1878,
+   "government": "republic",
+   "religion": "protestant"
   },
   {
    "id": "MOZ",
@@ -874,7 +1018,9 @@
    ],
    "population": 30366036,
    "economy": 15291,
-   "capital": 1881
+   "capital": 1881,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "SWZ",
@@ -886,7 +1032,9 @@
    ],
    "population": 1148130,
    "economy": 4471,
-   "capital": 1905
+   "capital": 1905,
+   "government": "monarchy",
+   "religion": "secular"
   },
   {
    "id": "AGO",
@@ -898,7 +1046,9 @@
    ],
    "population": 31825295,
    "economy": 88815,
-   "capital": 1924
+   "capital": 1924,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "BDI",
@@ -910,7 +1060,9 @@
    ],
    "population": 11530580,
    "economy": 3012,
-   "capital": 1938
+   "capital": 1938,
+   "government": "authoritarian",
+   "religion": "catholic"
   },
   {
    "id": "ISR",
@@ -922,7 +1074,9 @@
    ],
    "population": 9053300,
    "economy": 394652,
-   "capital": 1943
+   "capital": 1943,
+   "government": "democracy",
+   "religion": "judaism"
   },
   {
    "id": "LBN",
@@ -934,7 +1088,9 @@
    ],
    "population": 6855713,
    "economy": 51991,
-   "capital": 1944
+   "capital": 1944,
+   "government": "republic",
+   "religion": "shia_islam"
   },
   {
    "id": "MDG",
@@ -946,7 +1102,9 @@
    ],
    "population": 26969307,
    "economy": 14114,
-   "capital": 1952
+   "capital": 1952,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "PSE",
@@ -958,7 +1116,9 @@
    ],
    "population": 4685306,
    "economy": 16276,
-   "capital": 1966
+   "capital": 1966,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "GMB",
@@ -970,7 +1130,9 @@
    ],
    "population": 2347706,
    "economy": 1826,
-   "capital": 1968
+   "capital": 1968,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "TUN",
@@ -982,7 +1144,9 @@
    ],
    "population": 11694719,
    "economy": 38796,
-   "capital": 1974
+   "capital": 1974,
+   "government": "democracy",
+   "religion": "sunni_islam"
   },
   {
    "id": "DZA",
@@ -994,7 +1158,9 @@
    ],
    "population": 43053054,
    "economy": 171091,
-   "capital": 2016
+   "capital": 2016,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "JOR",
@@ -1006,7 +1172,9 @@
    ],
    "population": 10101694,
    "economy": 44502,
-   "capital": 2029
+   "capital": 2029,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "ARE",
@@ -1018,7 +1186,9 @@
    ],
    "population": 9770529,
    "economy": 421142,
-   "capital": 2037
+   "capital": 2037,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "QAT",
@@ -1030,7 +1200,9 @@
    ],
    "population": 2832067,
    "economy": 175837,
-   "capital": 2041
+   "capital": 2041,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "KWT",
@@ -1042,7 +1214,9 @@
    ],
    "population": 4207083,
    "economy": 134628,
-   "capital": 2043
+   "capital": 2043,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "IRQ",
@@ -1054,7 +1228,9 @@
    ],
    "population": 39309783,
    "economy": 234094,
-   "capital": 2046
+   "capital": 2046,
+   "government": "authoritarian",
+   "religion": "shia_islam"
   },
   {
    "id": "OMN",
@@ -1066,7 +1242,9 @@
    ],
    "population": 4974986,
    "economy": 76331,
-   "capital": 2068
+   "capital": 2068,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "VUT",
@@ -1078,7 +1256,9 @@
    ],
    "population": 299882,
    "economy": 934,
-   "capital": 2077
+   "capital": 2077,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "KHM",
@@ -1090,7 +1270,9 @@
    ],
    "population": 16486542,
    "economy": 27089,
-   "capital": 2085
+   "capital": 2085,
+   "government": "monarchy",
+   "religion": "buddhism"
   },
   {
    "id": "THA",
@@ -1102,7 +1284,9 @@
    ],
    "population": 69625582,
    "economy": 543548,
-   "capital": 2102
+   "capital": 2102,
+   "government": "monarchy",
+   "religion": "buddhism"
   },
   {
    "id": "LAO",
@@ -1114,7 +1298,9 @@
    ],
    "population": 7169455,
    "economy": 18173,
-   "capital": 2113
+   "capital": 2113,
+   "government": "communism",
+   "religion": "buddhism"
   },
   {
    "id": "MMR",
@@ -1126,7 +1312,9 @@
    ],
    "population": 54045420,
    "economy": 76085,
-   "capital": 2125
+   "capital": 2125,
+   "government": "authoritarian",
+   "religion": "buddhism"
   },
   {
    "id": "VNM",
@@ -1138,7 +1326,9 @@
    ],
    "population": 96462106,
    "economy": 261921,
-   "capital": 2142
+   "capital": 2142,
+   "government": "communism",
+   "religion": "buddhism"
   },
   {
    "id": "PRK",
@@ -1150,7 +1340,9 @@
    ],
    "population": 25666161,
    "economy": 40000,
-   "capital": 2158
+   "capital": 2158,
+   "government": "communism",
+   "religion": "secular"
   },
   {
    "id": "KOR",
@@ -1162,7 +1354,9 @@
    ],
    "population": 51709098,
    "economy": 1646739,
-   "capital": 2162
+   "capital": 2162,
+   "government": "democracy",
+   "religion": "secular"
   },
   {
    "id": "MNG",
@@ -1174,7 +1368,9 @@
    ],
    "population": 3225167,
    "economy": 13996,
-   "capital": 2171
+   "capital": 2171,
+   "government": "authoritarian",
+   "religion": "buddhism"
   },
   {
    "id": "IND",
@@ -1186,7 +1382,9 @@
    ],
    "population": 1366417754,
    "economy": 2868929,
-   "capital": 2256
+   "capital": 2256,
+   "government": "democracy",
+   "religion": "hinduism"
   },
   {
    "id": "BGD",
@@ -1198,7 +1396,9 @@
    ],
    "population": 163046161,
    "economy": 302571,
-   "capital": 2275
+   "capital": 2275,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "BTN",
@@ -1210,7 +1410,9 @@
    ],
    "population": 763092,
    "economy": 2530,
-   "capital": 2280
+   "capital": 2280,
+   "government": "monarchy",
+   "religion": "buddhism"
   },
   {
    "id": "NPL",
@@ -1222,7 +1424,9 @@
    ],
    "population": 28608710,
    "economy": 30641,
-   "capital": 2289
+   "capital": 2289,
+   "government": "authoritarian",
+   "religion": "hinduism"
   },
   {
    "id": "PAK",
@@ -1234,7 +1438,9 @@
    ],
    "population": 216565318,
    "economy": 278221,
-   "capital": 2307
+   "capital": 2307,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "AFG",
@@ -1246,7 +1452,9 @@
    ],
    "population": 38041754,
    "economy": 19291,
-   "capital": 2334
+   "capital": 2334,
+   "government": "theocracy",
+   "religion": "sunni_islam"
   },
   {
    "id": "TJK",
@@ -1258,7 +1466,9 @@
    ],
    "population": 9321018,
    "economy": 8116,
-   "capital": 2343
+   "capital": 2343,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "KGZ",
@@ -1270,7 +1480,9 @@
    ],
    "population": 6456900,
    "economy": 8454,
-   "capital": 2352
+   "capital": 2352,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "TKM",
@@ -1282,7 +1494,9 @@
    ],
    "population": 5942089,
    "economy": 40761,
-   "capital": 2368
+   "capital": 2368,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "IRN",
@@ -1294,7 +1508,9 @@
    ],
    "population": 82913906,
    "economy": 453996,
-   "capital": 2392
+   "capital": 2392,
+   "government": "theocracy",
+   "religion": "shia_islam"
   },
   {
    "id": "SYR",
@@ -1306,7 +1522,9 @@
    ],
    "population": 17070135,
    "economy": 98830,
-   "capital": 2430
+   "capital": 2430,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "ARM",
@@ -1318,7 +1536,9 @@
    ],
    "population": 2957731,
    "economy": 13672,
-   "capital": 2438
+   "capital": 2438,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "SWE",
@@ -1330,7 +1550,9 @@
    ],
    "population": 10285453,
    "economy": 530883,
-   "capital": 2441
+   "capital": 2441,
+   "government": "monarchy",
+   "religion": "protestant"
   },
   {
    "id": "BLR",
@@ -1342,7 +1564,9 @@
    ],
    "population": 9466856,
    "economy": 63080,
-   "capital": 2477
+   "capital": 2477,
+   "government": "authoritarian",
+   "religion": "orthodox"
   },
   {
    "id": "UKR",
@@ -1354,7 +1578,9 @@
    ],
    "population": 44385155,
    "economy": 153781,
-   "capital": 2488
+   "capital": 2488,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "POL",
@@ -1366,7 +1592,9 @@
    ],
    "population": 37970874,
    "economy": 595858,
-   "capital": 2510
+   "capital": 2510,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "AUT",
@@ -1378,7 +1606,9 @@
    ],
    "population": 8877067,
    "economy": 445075,
-   "capital": 2525
+   "capital": 2525,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "HUN",
@@ -1390,7 +1620,9 @@
    ],
    "population": 9769949,
    "economy": 163469,
-   "capital": 2533
+   "capital": 2533,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "MDA",
@@ -1402,7 +1634,9 @@
    ],
    "population": 2657637,
    "economy": 11968,
-   "capital": 2539
+   "capital": 2539,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "ROU",
@@ -1414,7 +1648,9 @@
    ],
    "population": 19356544,
    "economy": 250077,
-   "capital": 2547
+   "capital": 2547,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "LTU",
@@ -1426,7 +1662,9 @@
    ],
    "population": 2786844,
    "economy": 54627,
-   "capital": 2563
+   "capital": 2563,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "LVA",
@@ -1438,7 +1676,9 @@
    ],
    "population": 1912789,
    "economy": 34102,
-   "capital": 2565
+   "capital": 2565,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "EST",
@@ -1450,7 +1690,9 @@
    ],
    "population": 1326590,
    "economy": 31471,
-   "capital": 2571
+   "capital": 2571,
+   "government": "democracy",
+   "religion": "secular"
   },
   {
    "id": "DEU",
@@ -1462,7 +1704,9 @@
    ],
    "population": 83132799,
    "economy": 3861123,
-   "capital": 2581
+   "capital": 2581,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "BGR",
@@ -1474,7 +1718,9 @@
    ],
    "population": 6975761,
    "economy": 68558,
-   "capital": 2598
+   "capital": 2598,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "GRC",
@@ -1486,7 +1732,9 @@
    ],
    "population": 10716322,
    "economy": 209852,
-   "capital": 2607
+   "capital": 2607,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "TUR",
@@ -1498,7 +1746,9 @@
    ],
    "population": 83429615,
    "economy": 761425,
-   "capital": 2628
+   "capital": 2628,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "ALB",
@@ -1510,7 +1760,9 @@
    ],
    "population": 2854191,
    "economy": 15279,
-   "capital": 2643
+   "capital": 2643,
+   "government": "democracy",
+   "religion": "sunni_islam"
   },
   {
    "id": "HRV",
@@ -1522,7 +1774,9 @@
    ],
    "population": 4067500,
    "economy": 60752,
-   "capital": 2650
+   "capital": 2650,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "CHE",
@@ -1534,7 +1788,9 @@
    ],
    "population": 8574832,
    "economy": 703082,
-   "capital": 2654
+   "capital": 2654,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "LUX",
@@ -1546,7 +1802,9 @@
    ],
    "population": 619896,
    "economy": 71104,
-   "capital": 2656
+   "capital": 2656,
+   "government": "monarchy",
+   "religion": "catholic"
   },
   {
    "id": "BEL",
@@ -1558,7 +1816,9 @@
    ],
    "population": 11484055,
    "economy": 533097,
-   "capital": 2658
+   "capital": 2658,
+   "government": "monarchy",
+   "religion": "catholic"
   },
   {
    "id": "NLD",
@@ -1570,7 +1830,9 @@
    ],
    "population": 17332850,
    "economy": 907050,
-   "capital": 2663
+   "capital": 2663,
+   "government": "monarchy",
+   "religion": "protestant"
   },
   {
    "id": "PRT",
@@ -1582,7 +1844,9 @@
    ],
    "population": 10269417,
    "economy": 238785,
-   "capital": 2668
+   "capital": 2668,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "ESP",
@@ -1594,7 +1858,9 @@
    ],
    "population": 47076781,
    "economy": 1393490,
-   "capital": 2686
+   "capital": 2686,
+   "government": "monarchy",
+   "religion": "catholic"
   },
   {
    "id": "IRL",
@@ -1606,7 +1872,9 @@
    ],
    "population": 4941444,
    "economy": 388698,
-   "capital": 2695
+   "capital": 2695,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "NCL",
@@ -1618,7 +1886,9 @@
    ],
    "population": 287800,
    "economy": 10770,
-   "capital": 2701
+   "capital": 2701,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "SLB",
@@ -1630,7 +1900,9 @@
    ],
    "population": 669823,
    "economy": 1589,
-   "capital": 2704
+   "capital": 2704,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "NZL",
@@ -1642,7 +1914,9 @@
    ],
    "population": 4917000,
    "economy": 206928,
-   "capital": 2712
+   "capital": 2712,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "AUS",
@@ -1654,7 +1928,9 @@
    ],
    "population": 25364307,
    "economy": 1396567,
-   "capital": 2721
+   "capital": 2721,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "LKA",
@@ -1666,7 +1942,9 @@
    ],
    "population": 21803000,
    "economy": 84008,
-   "capital": 2828
+   "capital": 2828,
+   "government": "authoritarian",
+   "religion": "buddhism"
   },
   {
    "id": "CHN",
@@ -1678,7 +1956,9 @@
    ],
    "population": 1397715000,
    "economy": 14342903,
-   "capital": 2868
+   "capital": 2868,
+   "government": "communism",
+   "religion": "secular"
   },
   {
    "id": "TWN",
@@ -1690,7 +1970,9 @@
    ],
    "population": 23568378,
    "economy": 1127000,
-   "capital": 2954
+   "capital": 2954,
+   "government": "democracy",
+   "religion": "secular"
   },
   {
    "id": "ITA",
@@ -1702,7 +1984,9 @@
    ],
    "population": 60297396,
    "economy": 2003576,
-   "capital": 2961
+   "capital": 2961,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "DNK",
@@ -1714,7 +1998,9 @@
    ],
    "population": 5818553,
    "economy": 350104,
-   "capital": 2975
+   "capital": 2975,
+   "government": "monarchy",
+   "religion": "protestant"
   },
   {
    "id": "GBR",
@@ -1726,7 +2012,9 @@
    ],
    "population": 66834405,
    "economy": 2829108,
-   "capital": 2982
+   "capital": 2982,
+   "government": "monarchy",
+   "religion": "protestant"
   },
   {
    "id": "ISL",
@@ -1738,7 +2026,9 @@
    ],
    "population": 361313,
    "economy": 24188,
-   "capital": 3007
+   "capital": 3007,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "AZE",
@@ -1750,7 +2040,9 @@
    ],
    "population": 10023318,
    "economy": 48047,
-   "capital": 3013
+   "capital": 3013,
+   "government": "authoritarian",
+   "religion": "shia_islam"
   },
   {
    "id": "GEO",
@@ -1762,7 +2054,9 @@
    ],
    "population": 3720382,
    "economy": 17477,
-   "capital": 3018
+   "capital": 3018,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "PHL",
@@ -1774,7 +2068,9 @@
    ],
    "population": 108116615,
    "economy": 376795,
-   "capital": 3025
+   "capital": 3025,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "MYS",
@@ -1786,7 +2082,9 @@
    ],
    "population": 31949777,
    "economy": 364681,
-   "capital": 3035
+   "capital": 3035,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "BRN",
@@ -1798,7 +2096,9 @@
    ],
    "population": 433285,
    "economy": 13469,
-   "capital": 3049
+   "capital": 3049,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "SVN",
@@ -1810,7 +2110,9 @@
    ],
    "population": 2087946,
    "economy": 54174,
-   "capital": 3051
+   "capital": 3051,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "FIN",
@@ -1822,7 +2124,9 @@
    ],
    "population": 5520314,
    "economy": 269296,
-   "capital": 3056
+   "capital": 3056,
+   "government": "democracy",
+   "religion": "protestant"
   },
   {
    "id": "SVK",
@@ -1834,7 +2138,9 @@
    ],
    "population": 5454073,
    "economy": 105079,
-   "capital": 3081
+   "capital": 3081,
+   "government": "democracy",
+   "religion": "catholic"
   },
   {
    "id": "CZE",
@@ -1846,7 +2152,9 @@
    ],
    "population": 10669709,
    "economy": 250680,
-   "capital": 3084
+   "capital": 3084,
+   "government": "democracy",
+   "religion": "secular"
   },
   {
    "id": "ERI",
@@ -1858,7 +2166,9 @@
    ],
    "population": 6081196,
    "economy": 2065,
-   "capital": 3094
+   "capital": 3094,
+   "government": "authoritarian",
+   "religion": "orthodox"
   },
   {
    "id": "JPN",
@@ -1870,7 +2180,9 @@
    ],
    "population": 126264931,
    "economy": 5081769,
-   "capital": 3107
+   "capital": 3107,
+   "government": "monarchy",
+   "religion": "buddhism"
   },
   {
    "id": "PRY",
@@ -1882,7 +2194,9 @@
    ],
    "population": 7044636,
    "economy": 38145,
-   "capital": 3117
+   "capital": 3117,
+   "government": "republic",
+   "religion": "catholic"
   },
   {
    "id": "YEM",
@@ -1894,7 +2208,9 @@
    ],
    "population": 29161922,
    "economy": 22581,
-   "capital": 3142
+   "capital": 3142,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "SAU",
@@ -1906,7 +2222,9 @@
    ],
    "population": 34268528,
    "economy": 792966,
-   "capital": 3179
+   "capital": 3179,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "ATA",
@@ -1918,7 +2236,9 @@
    ],
    "population": 4490,
    "economy": 898,
-   "capital": 3362
+   "capital": 3362,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "CYN",
@@ -1930,7 +2250,9 @@
    ],
    "population": 326000,
    "economy": 3600,
-   "capital": 3412
+   "capital": 3412,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "CYP",
@@ -1942,7 +2264,9 @@
    ],
    "population": 1198575,
    "economy": 24948,
-   "capital": 3413
+   "capital": 3413,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "MAR",
@@ -1954,7 +2278,9 @@
    ],
    "population": 36471769,
    "economy": 119700,
-   "capital": 3419
+   "capital": 3419,
+   "government": "monarchy",
+   "religion": "sunni_islam"
   },
   {
    "id": "EGY",
@@ -1966,7 +2292,9 @@
    ],
    "population": 100388073,
    "economy": 303092,
-   "capital": 3447
+   "capital": 3447,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "LBY",
@@ -1978,7 +2306,9 @@
    ],
    "population": 6777452,
    "economy": 52091,
-   "capital": 3470
+   "capital": 3470,
+   "government": "authoritarian",
+   "religion": "sunni_islam"
   },
   {
    "id": "ETH",
@@ -1990,7 +2320,9 @@
    ],
    "population": 112078730,
    "economy": 95912,
-   "capital": 3512
+   "capital": 3512,
+   "government": "authoritarian",
+   "religion": "orthodox"
   },
   {
    "id": "DJI",
@@ -2002,7 +2334,9 @@
    ],
    "population": 973560,
    "economy": 3324,
-   "capital": 3535
+   "capital": 3535,
+   "government": "republic",
+   "religion": "sunni_islam"
   },
   {
    "id": "SOL",
@@ -2014,7 +2348,9 @@
    ],
    "population": 5096159,
    "economy": 17836,
-   "capital": 3542
+   "capital": 3542,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "UGA",
@@ -2026,7 +2362,9 @@
    ],
    "population": 44269594,
    "economy": 35165,
-   "capital": 3548
+   "capital": 3548,
+   "government": "authoritarian",
+   "religion": "protestant"
   },
   {
    "id": "RWA",
@@ -2038,7 +2376,9 @@
    ],
    "population": 12626950,
    "economy": 10354,
-   "capital": 3558
+   "capital": 3558,
+   "government": "authoritarian",
+   "religion": "catholic"
   },
   {
    "id": "BIH",
@@ -2050,7 +2390,9 @@
    ],
    "population": 3301000,
    "economy": 20164,
-   "capital": 3561
+   "capital": 3561,
+   "government": "democracy",
+   "religion": "sunni_islam"
   },
   {
    "id": "MKD",
@@ -2062,7 +2404,9 @@
    ],
    "population": 2083459,
    "economy": 12547,
-   "capital": 3567
+   "capital": 3567,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "SRB",
@@ -2074,7 +2418,9 @@
    ],
    "population": 6944975,
    "economy": 51475,
-   "capital": 3572
+   "capital": 3572,
+   "government": "authoritarian",
+   "religion": "orthodox"
   },
   {
    "id": "MNE",
@@ -2086,7 +2432,9 @@
    ],
    "population": 622137,
    "economy": 5542,
-   "capital": 3576
+   "capital": 3576,
+   "government": "democracy",
+   "religion": "orthodox"
   },
   {
    "id": "KOS",
@@ -2098,7 +2446,9 @@
    ],
    "population": 1794248,
    "economy": 7926,
-   "capital": 3579
+   "capital": 3579,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "TTO",
@@ -2110,7 +2460,9 @@
    ],
    "population": 1394973,
    "economy": 24269,
-   "capital": 3580
+   "capital": 3580,
+   "government": "republic",
+   "religion": "secular"
   },
   {
    "id": "SSD",
@@ -2122,7 +2474,9 @@
    ],
    "population": 11062113,
    "economy": 11998,
-   "capital": 3582
+   "capital": 3582,
+   "government": "authoritarian",
+   "religion": "secular"
   }
  ]
 }

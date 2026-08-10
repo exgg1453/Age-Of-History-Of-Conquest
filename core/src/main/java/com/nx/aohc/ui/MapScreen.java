@@ -24,6 +24,7 @@ import com.nx.aohc.game.Country;
 import com.nx.aohc.game.CountryAI;
 import com.nx.aohc.game.Diplomacy;
 import com.nx.aohc.game.GameState;
+import com.nx.aohc.game.RelationCalculator;
 import com.nx.aohc.game.Province;
 import com.nx.aohc.game.TurnManager;
 import com.nx.aohc.achievement.Achievement;
@@ -87,8 +88,8 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         this.mapRenderer = new MapRenderer(provinceMap, game.getQualitySettings());
         this.gameState = new GameState(provinceMap);
         this.diplomacy = new Diplomacy();
-        this.turnManager = new TurnManager(gameState, diplomacy);
-        this.countryAI = new CountryAI(gameState, turnManager, diplomacy);
+        this.turnManager = new TurnManager(gameState, diplomacy, game.getGameSettings());
+        this.countryAI = new CountryAI(gameState, turnManager, diplomacy, game.getGameSettings());
         this.turnManager.setCountryAI(countryAI);
         this.formableManager = new FormableManager(gameState, game.getModLoader().getFormables());
         this.camera = new OrthographicCamera();
@@ -631,11 +632,18 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         if (player == null || target == null || target == player) {
             return;
         }
+        Localization localization = game.getLocalization();
+        RelationCalculator.RelationBreakdown breakdown = countryAI.evaluateAlliance(target, player);
+
         if (countryAI.considerPlayerAllianceOffer(target, player)) {
             game.getAchievementManager().unlock(AchievementManager.FIRST_ALLIANCE);
-            setMessage(game.getLocalization().format("diplomacy.allianceAccepted", target.name));
+            setMessage(localization.format("diplomacy.allianceAccepted", target.name, breakdown.total));
         } else {
-            setMessage(game.getLocalization().format("diplomacy.allianceRejected", target.name));
+            setMessage(localization.format("diplomacy.allianceRejected",
+                    target.name,
+                    breakdown.total,
+                    RelationCalculator.ACCEPTANCE_THRESHOLD,
+                    localization.get(breakdown.weakestFactorKey)));
         }
         refreshProvincePanel();
         updateActionAvailability();
@@ -779,8 +787,14 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             diplomacyLabel.setText("");
         } else {
             int state = diplomacy.getState(player.id, owner.id);
-            diplomacyLabel.setText(localization.format("diplomacy.status",
-                    owner.name, localization.get(diplomacy.stateKey(state))));
+            RelationCalculator.RelationBreakdown breakdown = countryAI.evaluateAlliance(owner, player);
+            diplomacyLabel.setText(localization.format("diplomacy.statusDetailed",
+                    owner.name,
+                    localization.get(diplomacy.stateKey(state)),
+                    breakdown.total,
+                    localization.get("government." + owner.government),
+                    localization.get("religion." + owner.religion),
+                    Math.round(breakdown.distanceKilometres)));
         }
     }
 
