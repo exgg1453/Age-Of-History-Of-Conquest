@@ -25,6 +25,8 @@ import com.nx.aohc.game.Diplomacy;
 import com.nx.aohc.game.GameState;
 import com.nx.aohc.game.Province;
 import com.nx.aohc.game.TurnManager;
+import com.nx.aohc.formable.Formable;
+import com.nx.aohc.formable.FormableManager;
 import com.nx.aohc.graphics.QualitySettings;
 import com.nx.aohc.localization.Localization;
 import com.nx.aohc.map.MapCameraController;
@@ -43,6 +45,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private final TurnManager turnManager;
     private final Diplomacy diplomacy;
     private final CountryAI countryAI;
+    private final FormableManager formableManager;
     private final OrthographicCamera camera;
     private final MapCameraController cameraController;
     private final Stage stage;
@@ -62,6 +65,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private Label editorTargetLabel;
     private TextButton recruitButton;
     private TextButton endTurnButton;
+    private TextButton formNationButton;
     private TextButton declareWarButton;
     private TextButton offerPeaceButton;
     private Label diplomacyLabel;
@@ -81,6 +85,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         this.turnManager = new TurnManager(gameState, diplomacy);
         this.countryAI = new CountryAI(gameState, turnManager, diplomacy);
         this.turnManager.setCountryAI(countryAI);
+        this.formableManager = new FormableManager(gameState, game.getModLoader().getFormables());
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new ScreenViewport(), game.getBatch());
         this.cameraController = new MapCameraController(camera, provinceMap, this);
@@ -200,6 +205,15 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             }
         });
 
+        formNationButton = new TextButton(localization.get("formable.button"), game.getSkin());
+        formNationButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showFormableList();
+            }
+        });
+
+        actionBar.add(formNationButton).padRight(8f * scale);
         actionBar.add(declareWarButton).padRight(8f * scale);
         actionBar.add(offerPeaceButton).padRight(8f * scale);
         actionBar.add(recruitButton).padRight(8f * scale);
@@ -416,6 +430,96 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         updateActionAvailability();
     }
 
+    private void showFormableList() {
+        final Localization localization = game.getLocalization();
+        final Country player = gameState.getPlayerCountry();
+        if (player == null) {
+            return;
+        }
+        float scale = game.getUiScale();
+
+        final Table overlay = new Table();
+        overlay.setFillParent(true);
+        overlay.setBackground(game.getSkin().getDrawable("panel"));
+        overlay.pad(16f * scale);
+        overlay.top();
+
+        Label title = new Label(localization.get("formable.title"), game.getSkin(), "bold");
+        Label hint = new Label(localization.get("formable.hint"), game.getSkin(), "small");
+        hint.setWrap(true);
+
+        overlay.add(title).left().row();
+        overlay.add(hint).left().growX().padBottom(10f * scale).row();
+
+        Table listTable = new Table();
+        listTable.top().left();
+        listTable.defaults().growX().padBottom(6f * scale);
+
+        Array<Formable> candidates = formableManager.getCandidates(player);
+        if (candidates.size == 0) {
+            listTable.add(new Label(localization.get("formable.none"), game.getSkin(), "small")).left().row();
+        }
+
+        for (int index = 0; index < candidates.size; index++) {
+            final Formable formable = candidates.get(index);
+            boolean satisfied = formableManager.isSatisfied(player, formable);
+            int owned = formableManager.countOwnedRequirements(player, formable);
+
+            Table row = new Table();
+            row.setBackground(game.getSkin().getDrawable("panel-light"));
+            row.pad(10f * scale);
+            row.left();
+
+            Label name = new Label(formable.getDisplayName(localization.getActiveLanguage()), game.getSkin(), "bold");
+            name.setColor(formable.red, formable.green, formable.blue, 1f);
+            Label progress = new Label(localization.format("formable.progress",
+                    owned, formable.requiredProvinces.size), game.getSkin(), "small");
+
+            Table textColumn = new Table();
+            textColumn.left();
+            textColumn.add(name).left().growX().row();
+            textColumn.add(progress).left().growX().padTop(2f * scale).row();
+
+            TextButton proclaimButton = new TextButton(localization.get("formable.proclaim"),
+                    game.getSkin(), satisfied ? "accent" : "default");
+            proclaimButton.setDisabled(!satisfied);
+            proclaimButton.setColor(satisfied ? Color.WHITE : new Color(1f, 1f, 1f, 0.4f));
+            proclaimButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (formableManager.form(player, formable, localization.getActiveLanguage())) {
+                        gameState.paintAll(mapRenderer);
+                        setMessage(localization.format("formable.formed",
+                                formable.getDisplayName(localization.getActiveLanguage())));
+                        updateHeader();
+                        refreshProvincePanel();
+                        updateActionAvailability();
+                        overlay.remove();
+                    }
+                }
+            });
+
+            row.add(textColumn).growX().left();
+            row.add(proclaimButton).right().padLeft(10f * scale).width(140f * scale);
+            listTable.add(row).row();
+        }
+
+        ScrollPane scrollPane = new ScrollPane(listTable, game.getSkin());
+        scrollPane.setFadeScrollBars(false);
+        overlay.add(scrollPane).grow().row();
+
+        TextButton closeButton = new TextButton(localization.get("common.close"), game.getSkin());
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                overlay.remove();
+            }
+        });
+        overlay.add(closeButton).right().padTop(10f * scale).row();
+
+        stage.addActor(overlay);
+    }
+
     private void performDeclareWar() {
         Country player = gameState.getPlayerCountry();
         Country target = gameState.getCountryOfProvince(selectedProvinceId);
@@ -517,6 +621,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
 
         boolean playing = !editorMode && player != null;
         setButtonEnabled(endTurnButton, playing);
+        setButtonEnabled(formNationButton, playing && formableManager.getCandidates(player).size > 0);
 
         boolean foreignSelected = playing && owner != null && owner != player;
         setButtonEnabled(declareWarButton, foreignSelected && diplomacy.canDeclareWar(player.id, owner.id));

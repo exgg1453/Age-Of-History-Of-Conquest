@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+import com.nx.aohc.formable.Formable;
+import com.nx.aohc.formable.FormableLoader;
 import com.nx.aohc.localization.Localization;
 import com.nx.aohc.scenario.Scenario;
 import com.nx.aohc.scenario.ScenarioLoader;
@@ -14,6 +16,7 @@ public class ModLoader {
 
     private final Array<Mod> mods = new Array<Mod>();
     private final Array<Scenario> scenarios = new Array<Scenario>();
+    private final Array<Formable> formables = new Array<Formable>();
 
     public void loadBaseContent(Localization localization) {
         localization.loadDirectory(Gdx.files.internal("localization"));
@@ -25,6 +28,17 @@ public class ModLoader {
                     scenarios.add(ScenarioLoader.load(file, "base"));
                 } catch (Exception exception) {
                     Gdx.app.error("ModLoader", "Failed to load base scenario " + file.name(), exception);
+                }
+            }
+        }
+
+        FileHandle formableDirectory = Gdx.files.internal("formables");
+        if (formableDirectory.exists()) {
+            for (FileHandle file : formableDirectory.list(".json")) {
+                try {
+                    formables.addAll(FormableLoader.load(file, "base"));
+                } catch (Exception exception) {
+                    Gdx.app.error("ModLoader", "Failed to load base formables " + file.name(), exception);
                 }
             }
         }
@@ -57,6 +71,16 @@ public class ModLoader {
                             scenarios.add(ScenarioLoader.load(file, mod.id));
                         } catch (Exception exception) {
                             Gdx.app.error("ModLoader", "Failed to load scenario " + file.name() + " from mod " + mod.id, exception);
+                        }
+                    }
+                }
+                FileHandle formableDirectory = candidate.child("formables");
+                if (formableDirectory.exists()) {
+                    for (FileHandle file : formableDirectory.list(".json")) {
+                        try {
+                            formables.addAll(FormableLoader.load(file, mod.id));
+                        } catch (Exception exception) {
+                            Gdx.app.error("ModLoader", "Failed to load formables " + file.name() + " from mod " + mod.id, exception);
                         }
                     }
                 }
@@ -96,6 +120,10 @@ public class ModLoader {
 
     public Array<Scenario> getScenarios() {
         return scenarios;
+    }
+
+    public Array<Formable> getFormables() {
+        return formables;
     }
 
     public Scenario findScenario(String id) {

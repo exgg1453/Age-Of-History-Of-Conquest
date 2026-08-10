@@ -57,5 +57,12 @@
   "diplomacy.peaceRejected": "{0} rejected the offer",
   "report.warsDeclared": "War declared on you by {0}",
   "report.provincesLost": "{0} provinces lost",
-  "report.peaceMade": "Peace was agreed"
+  "report.peaceMade": "Peace was agreed",
+  "formable.button": "Form nation",
+  "formable.title": "Formable nations",
+  "formable.hint": "Hold every listed province to proclaim a nation. Forming it renames your country, changes its colour and grants a treasury and manpower bonus.",
+  "formable.progress": "{0} of {1} provinces held",
+  "formable.proclaim": "Proclaim",
+  "formable.formed": "{0} proclaimed",
+  "formable.none": "Nothing can be formed by this country"
 }

@@ -57,5 +57,12 @@
   "diplomacy.peaceRejected": "{0} teklifi reddetti",
   "report.warsDeclared": "Sana savaş ilan edenler: {0}",
   "report.provincesLost": "{0} il kaybedildi",
-  "report.peaceMade": "Barış sağlandı"
+  "report.peaceMade": "Barış sağlandı",
+  "formable.button": "Devlet kur",
+  "formable.title": "Kurulabilir devletler",
+  "formable.hint": "Listedeki tüm illeri elinde tutunca devleti ilan edebilirsin. Kurulunca ülkenin adı ve rengi değişir, hazine ve insan gücü bonusu alırsın.",
+  "formable.progress": "{1} ilin {0} tanesi elinde",
+  "formable.proclaim": "İlan et",
+  "formable.formed": "{0} ilan edildi",
+  "formable.none": "Bu ülkeyle kurulabilecek bir devlet yok"
 }
