@@ -220,6 +220,11 @@ public class GameState {
         return turnNumber;
     }
 
+    public void setTurnState(int turnNumber, int year) {
+        this.turnNumber = turnNumber;
+        this.currentYear = year;
+    }
+
     public void advanceTurn() {
         turnNumber++;
         currentYear++;

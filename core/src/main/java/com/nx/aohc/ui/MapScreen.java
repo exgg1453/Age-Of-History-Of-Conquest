@@ -25,7 +25,9 @@ import com.nx.aohc.game.CountryAI;
 import com.nx.aohc.game.Diplomacy;
 import com.nx.aohc.game.GameState;
 import com.nx.aohc.game.RelationCalculator;
+import com.nx.aohc.game.PlayerSlot;
 import com.nx.aohc.game.Province;
+import com.nx.aohc.game.CombatResolver;
 import com.nx.aohc.game.TurnManager;
 import com.nx.aohc.achievement.Achievement;
 import com.nx.aohc.achievement.AchievementManager;
@@ -38,8 +40,12 @@ import com.nx.aohc.map.MapRenderer;
 import com.nx.aohc.map.ProvinceMap;
 import com.nx.aohc.scenario.Scenario;
 import com.nx.aohc.scenario.ScenarioExporter;
+import com.nx.aohc.net.GameCommand;
+import com.nx.aohc.net.LocalSession;
+import com.nx.aohc.net.NetworkSession;
+import com.nx.aohc.net.StateSnapshot;
 
-public class MapScreen implements Screen, MapCameraController.ProvinceClickListener {
+public class MapScreen implements Screen, MapCameraController.ProvinceClickListener, NetworkSession.Listener {
 
     private final AgeOfHistoryOfConquest game;
     private final Scenario scenario;
@@ -50,6 +56,9 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private final Diplomacy diplomacy;
     private final CountryAI countryAI;
     private final FormableManager formableManager;
+    private final NetworkSession session;
+    private final Array<PlayerSlot> playerSlots = new Array<PlayerSlot>();
+    private int activePlayerIndex;
     private final OrthographicCamera camera;
     private final MapCameraController cameraController;
     private final Stage stage;
@@ -82,7 +91,16 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private Country editorTargetCountry;
 
     public MapScreen(AgeOfHistoryOfConquest game, Scenario scenario) {
+        this(game, scenario, null, null);
+    }
+
+    public MapScreen(AgeOfHistoryOfConquest game, Scenario scenario,
+                     NetworkSession session, Array<PlayerSlot> slots) {
         this.game = game;
+        this.session = session != null ? session : new LocalSession(NetworkSession.MODE_SINGLE, new Array<String>());
+        if (slots != null) {
+            this.playerSlots.addAll(slots);
+        }
         this.scenario = scenario;
         this.provinceMap = game.getAssets().getProvinceMap();
         this.mapRenderer = new MapRenderer(provinceMap, game.getQualitySettings());
@@ -105,6 +123,13 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         camera.zoom = cameraController.getDefaultZoom();
         cameraController.updateViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mapRenderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        this.session.setListener(this);
+
+        if (playerSlots.size > 0) {
+            countrySelectionPending = false;
+            applyActivePlayer();
+        }
 
         game.getAchievementManager().setUnlockListener(new AchievementManager.UnlockListener() {
             @Override
@@ -487,17 +512,50 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     private void performRecruit() {
         Country player = gameState.getPlayerCountry();
         Province province = provinceMap.getProvince(selectedProvinceId);
-        if (player == null || province == null) {
+        if (player == null || province == null || !isLocalTurn()) {
             return;
         }
-        if (turnManager.recruit(player, province)) {
-            setMessage(game.getLocalization().format("action.recruited", TurnManager.RECRUIT_BATCH, province.name));
-        } else {
-            setMessage(game.getLocalization().get("action.cannotRecruit"));
+        session.submitCommand(GameCommand.recruit(player.id, province.id));
+    }
+
+    public boolean isLocalTurn() {
+        if (playerSlots.size == 0) {
+            return true;
         }
-        refreshProvincePanel();
-        updateHeader();
-        updateActionAvailability();
+        if (activePlayerIndex < 0 || activePlayerIndex >= playerSlots.size) {
+            return false;
+        }
+        return playerSlots.get(activePlayerIndex).local;
+    }
+
+    private void applyActivePlayer() {
+        if (playerSlots.size == 0) {
+            return;
+        }
+        int guard = 0;
+        while (guard < playerSlots.size) {
+            PlayerSlot slot = playerSlots.get(activePlayerIndex);
+            Country country = gameState.getCountry(slot.countryId);
+            if (country != null && country.isAlive()) {
+                gameState.setPlayerCountry(country);
+                return;
+            }
+            slot.defeated = true;
+            activePlayerIndex = (activePlayerIndex + 1) % playerSlots.size;
+            guard++;
+        }
+    }
+
+    private void advanceToNextPlayer() {
+        if (playerSlots.size <= 1) {
+            return;
+        }
+        activePlayerIndex = (activePlayerIndex + 1) % playerSlots.size;
+        applyActivePlayer();
+    }
+
+    private boolean isLastPlayerOfRound() {
+        return playerSlots.size <= 1 || activePlayerIndex == playerSlots.size - 1;
     }
 
     private void showFormableList() {
@@ -557,16 +615,8 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             proclaimButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (formableManager.form(player, formable, localization.getActiveLanguage())) {
-                        game.getAchievementManager().unlockFormable(formable.id);
-                        gameState.paintAll(mapRenderer);
-                        setMessage(localization.format("formable.formed",
-                                formable.getDisplayName(localization.getActiveLanguage())));
-                        updateHeader();
-                        refreshProvincePanel();
-                        updateActionAvailability();
-                        overlay.remove();
-                    }
+                    session.submitCommand(GameCommand.form(player.id, formable.id));
+                    overlay.remove();
                 }
             });
 
@@ -601,10 +651,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
             setMessage(game.getLocalization().get("diplomacy.cannotDeclare"));
             return;
         }
-        diplomacy.declareWar(player.id, target.id);
-        setMessage(game.getLocalization().format("diplomacy.warDeclared", target.name));
-        refreshProvincePanel();
-        updateActionAvailability();
+        session.submitCommand(GameCommand.declareWar(player.id, target.id));
     }
 
     private void performOfferPeace() {
@@ -616,14 +663,7 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         if (!diplomacy.isAtWar(player.id, target.id)) {
             return;
         }
-        if (countryAI.considerPlayerPeaceOffer(target, player)) {
-            game.getAchievementManager().unlock(AchievementManager.FIRST_PEACE);
-            setMessage(game.getLocalization().format("diplomacy.peaceAccepted", target.name));
-        } else {
-            setMessage(game.getLocalization().format("diplomacy.peaceRejected", target.name));
-        }
-        refreshProvincePanel();
-        updateActionAvailability();
+        session.submitCommand(GameCommand.peace(player.id, target.id));
     }
 
     private void performOfferAlliance() {
@@ -632,33 +672,15 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         if (player == null || target == null || target == player) {
             return;
         }
-        Localization localization = game.getLocalization();
-        RelationCalculator.RelationBreakdown breakdown = countryAI.evaluateAlliance(target, player);
-
-        if (countryAI.considerPlayerAllianceOffer(target, player)) {
-            game.getAchievementManager().unlock(AchievementManager.FIRST_ALLIANCE);
-            setMessage(localization.format("diplomacy.allianceAccepted", target.name, breakdown.total));
-        } else {
-            setMessage(localization.format("diplomacy.allianceRejected",
-                    target.name,
-                    breakdown.total,
-                    RelationCalculator.ACCEPTANCE_THRESHOLD,
-                    localization.get(breakdown.weakestFactorKey)));
-        }
-        refreshProvincePanel();
-        updateActionAvailability();
+        session.submitCommand(GameCommand.alliance(player.id, target.id));
     }
 
     private void performEndTurn() {
-        CountryAI.TurnReport report = turnManager.endTurn();
-        clearHighlights();
-        selectedProvinceId = 0;
-        gameState.paintAll(mapRenderer);
-        refreshProvincePanel();
-        updateHeader();
-        updateActionAvailability();
-        checkProgressAchievements();
-        setMessage(buildTurnReport(report));
+        Country player = gameState.getPlayerCountry();
+        if (player == null || !isLocalTurn()) {
+            return;
+        }
+        session.submitCommand(GameCommand.endTurn(player.id));
     }
 
     private String buildTurnReport(CountryAI.TurnReport report) {
@@ -693,6 +715,10 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         QualitySettings qualitySettings = game.getQualitySettings();
 
         String modeText = editorMode ? "  ·  " + localization.get("editor.active") : "";
+        if (playerSlots.size > 1 && activePlayerIndex >= 0 && activePlayerIndex < playerSlots.size) {
+            modeText = modeText + "  ·  " + localization.format("multiplayer.active",
+                    playerSlots.get(activePlayerIndex).name);
+        }
         headerLabel.setText(scenario.getDisplayName(localization.getActiveLanguage())
                 + "  ·  " + localization.format("map.year", gameState.getCurrentYear())
                 + "  ·  " + localization.format("map.turn", gameState.getTurnNumber())
@@ -712,10 +738,10 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         Province province = provinceMap.getProvince(selectedProvinceId);
         Country owner = gameState.getCountryOfProvince(selectedProvinceId);
 
-        boolean canRecruit = !editorMode && turnManager.canRecruit(player, province);
+        boolean canRecruit = !editorMode && isLocalTurn() && turnManager.canRecruit(player, province);
         setButtonEnabled(recruitButton, canRecruit);
 
-        boolean playing = !editorMode && player != null;
+        boolean playing = !editorMode && player != null && isLocalTurn();
         setButtonEnabled(endTurnButton, playing);
         setButtonEnabled(formNationButton, playing && formableManager.getCandidates(player).size > 0);
 
@@ -836,9 +862,9 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
                 && !origin.hasActedThisTurn
                 && origin.army > 0;
 
-        if (originIsOwnActionable && origin.id != provinceId && turnManager.areAdjacent(origin, province)) {
-            TurnManager.ActionResult result = turnManager.performAction(player, origin, province);
-            handleActionResult(result, origin, province);
+        if (originIsOwnActionable && origin.id != provinceId
+                && turnManager.areAdjacent(origin, province) && isLocalTurn()) {
+            session.submitCommand(GameCommand.move(player.id, origin.id, province.id));
             return;
         }
 
@@ -848,25 +874,231 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         updateActionAvailability();
     }
 
-    private void handleActionResult(TurnManager.ActionResult result, Province origin, Province target) {
+    @Override
+    public void onLobbyChanged() {
+    }
+
+    @Override
+    public void onGameStarted(String scenarioId) {
+    }
+
+    @Override
+    public void onCommandReceived(GameCommand command) {
+        if (session.isAuthoritative()) {
+            resolveAndBroadcast(command);
+        } else {
+            applyCommand(command);
+        }
+    }
+
+    private void resolveAndBroadcast(GameCommand command) {
+        Country actor = gameState.getCountry(command.actorCountry);
+        if (actor == null) {
+            return;
+        }
+
+        if (command.type == GameCommand.TYPE_MOVE) {
+            Province origin = provinceMap.getProvince(command.originProvince);
+            Province target = provinceMap.getProvince(command.targetProvince);
+            if (origin == null || target == null) {
+                return;
+            }
+            if (target.owner != null && !actor.id.equals(target.owner)) {
+                CombatResolver.CombatResult combat =
+                        CombatResolver.resolve(origin.army, target.army, target.defenceBonus);
+                command.accepted = combat.provinceCaptured;
+                command.attackerLosses = combat.attackerLosses;
+                command.defenderLosses = combat.defenderLosses;
+                command.survivingTroops = combat.provinceCaptured
+                        ? combat.survivingAttackers
+                        : combat.survivingDefenders;
+                command.resultCode = 1;
+            }
+        } else if (command.type == GameCommand.TYPE_PEACE) {
+            Country target = gameState.getCountry(command.targetCountry);
+            command.accepted = target != null && countryAI.considerPlayerPeaceOffer(target, actor);
+        } else if (command.type == GameCommand.TYPE_ALLIANCE) {
+            Country target = gameState.getCountry(command.targetCountry);
+            RelationCalculator.RelationBreakdown breakdown =
+                    target != null ? countryAI.evaluateAlliance(target, actor) : null;
+            command.accepted = target != null && countryAI.considerPlayerAllianceOffer(target, actor);
+            command.resultCode = breakdown != null ? breakdown.total : 0;
+            if (breakdown != null) {
+                command.textValue = breakdown.weakestFactorKey;
+            }
+        }
+
+        session.broadcastCommand(command);
+        applyCommand(command);
+    }
+
+    private void applyCommand(GameCommand command) {
         Localization localization = game.getLocalization();
+        Country actor = gameState.getCountry(command.actorCountry);
+        if (actor == null) {
+            return;
+        }
+        boolean local = isLocalCountry(actor);
+
+        switch (command.type) {
+            case GameCommand.TYPE_MOVE:
+                applyMoveCommand(command, actor, local);
+                break;
+
+            case GameCommand.TYPE_RECRUIT: {
+                Province province = provinceMap.getProvince(command.targetProvince);
+                if (province != null && turnManager.recruit(actor, province) && local) {
+                    setMessage(localization.format("action.recruited", TurnManager.RECRUIT_BATCH, province.name));
+                }
+                break;
+            }
+
+            case GameCommand.TYPE_DECLARE_WAR: {
+                Country target = gameState.getCountry(command.targetCountry);
+                if (target != null) {
+                    diplomacy.declareWar(actor.id, target.id);
+                    if (local) {
+                        setMessage(localization.format("diplomacy.warDeclared", target.name));
+                    } else {
+                        setMessage(localization.format("report.warsDeclared", actor.name + " > " + target.name));
+                    }
+                }
+                break;
+            }
+
+            case GameCommand.TYPE_PEACE: {
+                Country target = gameState.getCountry(command.targetCountry);
+                if (target == null) {
+                    break;
+                }
+                if (command.accepted) {
+                    if (!session.isAuthoritative()) {
+                        diplomacy.makePeace(actor.id, target.id, gameState.getTurnNumber());
+                    }
+                    if (local) {
+                        game.getAchievementManager().unlock(AchievementManager.FIRST_PEACE);
+                        setMessage(localization.format("diplomacy.peaceAccepted", target.name));
+                    }
+                } else if (local) {
+                    setMessage(localization.format("diplomacy.peaceRejected", target.name));
+                }
+                break;
+            }
+
+            case GameCommand.TYPE_ALLIANCE: {
+                Country target = gameState.getCountry(command.targetCountry);
+                if (target == null) {
+                    break;
+                }
+                if (command.accepted) {
+                    if (!session.isAuthoritative()) {
+                        diplomacy.formAlliance(actor.id, target.id);
+                    }
+                    if (local) {
+                        game.getAchievementManager().unlock(AchievementManager.FIRST_ALLIANCE);
+                        setMessage(localization.format("diplomacy.allianceAccepted", target.name, command.resultCode));
+                    }
+                } else if (local) {
+                    setMessage(localization.format("diplomacy.allianceRejected",
+                            target.name,
+                            command.resultCode,
+                            RelationCalculator.ACCEPTANCE_THRESHOLD,
+                            localization.get(command.textValue.isEmpty()
+                                    ? "relation.factor.none" : command.textValue)));
+                }
+                break;
+            }
+
+            case GameCommand.TYPE_FORM: {
+                Formable formable = findFormable(command.textValue);
+                if (formable != null && formableManager.form(actor, formable, localization.getActiveLanguage())) {
+                    gameState.paintAll(mapRenderer);
+                    if (local) {
+                        game.getAchievementManager().unlockFormable(formable.id);
+                    }
+                    setMessage(localization.format("formable.formed",
+                            formable.getDisplayName(localization.getActiveLanguage())));
+                }
+                break;
+            }
+
+            case GameCommand.TYPE_END_TURN:
+                applyEndTurnCommand();
+                break;
+
+            default:
+                break;
+        }
+
+        refreshProvincePanel();
+        updateHeader();
+        updateActionAvailability();
+    }
+
+    private Formable findFormable(String id) {
+        Array<Formable> formables = game.getModLoader().getFormables();
+        for (int index = 0; index < formables.size; index++) {
+            if (formables.get(index).id.equals(id)) {
+                return formables.get(index);
+            }
+        }
+        return null;
+    }
+
+    private boolean isLocalCountry(Country country) {
+        if (playerSlots.size == 0) {
+            return true;
+        }
+        for (int index = 0; index < playerSlots.size; index++) {
+            PlayerSlot slot = playerSlots.get(index);
+            if (slot.local && slot.countryId.equals(country.id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void applyMoveCommand(GameCommand command, Country actor, boolean local) {
+        Localization localization = game.getLocalization();
+        Province origin = provinceMap.getProvince(command.originProvince);
+        Province target = provinceMap.getProvince(command.targetProvince);
+        if (origin == null || target == null) {
+            return;
+        }
+
+        CombatResolver.CombatResult predetermined = null;
+        if (command.resultCode == 1) {
+            predetermined = CombatResolver.applyKnownResult(origin.army, target.army,
+                    command.accepted, command.attackerLosses, command.defenderLosses, command.survivingTroops);
+        }
+
+        TurnManager.ActionResult result = turnManager.performAction(actor, origin, target, predetermined);
 
         switch (result.type) {
             case TurnManager.ACTION_REINFORCED:
-                setMessage(localization.format("action.reinforced", target.name, target.army));
+                if (local) {
+                    setMessage(localization.format("action.reinforced", target.name, target.army));
+                }
                 break;
             case TurnManager.ACTION_CAPTURED:
-                setMessage(localization.format("action.captured", target.name, result.attackerLosses, result.defenderLosses));
+                setMessage(localization.format("action.capturedBy", actor.name, target.name));
                 gameState.removeDeadCountries();
-                provincesCaptured++;
-                game.getAchievementManager().unlock(AchievementManager.FIRST_CONQUEST);
-                checkProgressAchievements();
+                if (local) {
+                    provincesCaptured++;
+                    game.getAchievementManager().unlock(AchievementManager.FIRST_CONQUEST);
+                    checkProgressAchievements();
+                }
                 break;
             case TurnManager.ACTION_REPELLED:
-                setMessage(localization.format("action.repelled", target.name, result.attackerLosses, result.defenderLosses));
+                if (local) {
+                    setMessage(localization.format("action.repelled", target.name,
+                            result.attackerLosses, result.defenderLosses));
+                }
                 break;
             default:
-                setMessage(localization.get(result.messageKey));
+                if (local) {
+                    setMessage(localization.get(result.messageKey));
+                }
                 break;
         }
 
@@ -874,11 +1106,72 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
         gameState.paintProvince(mapRenderer, origin.id);
         gameState.paintProvince(mapRenderer, target.id);
         gameState.recomputeCountryStatistics();
-
         selectedProvinceId = target.id;
+    }
+
+    private void applyEndTurnCommand() {
+        if (!isLastPlayerOfRound()) {
+            advanceToNextPlayer();
+            clearHighlights();
+            selectedProvinceId = 0;
+            if (session.isAuthoritative()) {
+                session.broadcastTurn(activePlayerIndex);
+            }
+            setMessage(game.getLocalization().format("multiplayer.turnOf",
+                    playerSlots.get(activePlayerIndex).name));
+            return;
+        }
+
+        if (session.isAuthoritative()) {
+            CountryAI.TurnReport report = turnManager.endTurn();
+            activePlayerIndex = 0;
+            applyActivePlayer();
+            clearHighlights();
+            selectedProvinceId = 0;
+            gameState.paintAll(mapRenderer);
+            checkProgressAchievements();
+            setMessage(buildTurnReport(report));
+
+            session.broadcastSnapshot(StateSnapshot.encode(gameState,
+                    gameState.getTurnNumber(), gameState.getCurrentYear()));
+            session.broadcastTurn(activePlayerIndex);
+        }
+    }
+
+    @Override
+    public void onSnapshotReceived(String payload) {
+        StateSnapshot.apply(gameState, payload);
+        gameState.paintAll(mapRenderer);
+        clearHighlights();
+        selectedProvinceId = 0;
         refreshProvincePanel();
         updateHeader();
         updateActionAvailability();
+    }
+
+    @Override
+    public void onTurnChanged(int activePlayerIndex) {
+        this.activePlayerIndex = activePlayerIndex;
+        applyActivePlayer();
+        clearHighlights();
+        selectedProvinceId = 0;
+        refreshProvincePanel();
+        updateHeader();
+        updateActionAvailability();
+        if (playerSlots.size > activePlayerIndex && activePlayerIndex >= 0) {
+            setMessage(game.getLocalization().format("multiplayer.turnOf",
+                    playerSlots.get(activePlayerIndex).name));
+        }
+    }
+
+    @Override
+    public void onChatReceived(String playerName, String message) {
+        setMessage(playerName + ": " + message);
+    }
+
+    @Override
+    public void onDisconnected(String reason) {
+        setMessage(game.getLocalization().format("multiplayer.disconnected", reason));
     }
 
     @Override
@@ -891,6 +1184,8 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
 
     @Override
     public void render(float delta) {
+        session.poll();
+
         Gdx.gl.glClearColor(mapRenderer.getSeaColor().r, mapRenderer.getSeaColor().g, mapRenderer.getSeaColor().b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -923,6 +1218,8 @@ public class MapScreen implements Screen, MapCameraController.ProvinceClickListe
     @Override
     public void dispose() {
         game.getAchievementManager().setUnlockListener(null);
+        session.setListener(null);
+        session.close();
         stage.dispose();
         mapRenderer.dispose();
     }

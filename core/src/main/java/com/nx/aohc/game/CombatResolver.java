@@ -15,6 +15,23 @@ public class CombatResolver {
     private static final float MINIMUM_ATTACKER_SURVIVAL = 0.10f;
     private static final float RANDOM_SPREAD = 0.18f;
 
+    public static CombatResult applyKnownResult(int attackingTroops, int defendingTroops,
+                                                boolean captured, int attackerLosses,
+                                                int defenderLosses, int survivingTroops) {
+        CombatResult result = new CombatResult();
+        result.provinceCaptured = captured;
+        result.attackerLosses = attackerLosses;
+        result.defenderLosses = defenderLosses;
+        if (captured) {
+            result.survivingAttackers = survivingTroops;
+            result.survivingDefenders = 0;
+        } else {
+            result.survivingAttackers = 0;
+            result.survivingDefenders = survivingTroops;
+        }
+        return result;
+    }
+
     public static CombatResult resolve(int attackingTroops, int defendingTroops, float defenceBonus) {
         CombatResult result = new CombatResult();
 

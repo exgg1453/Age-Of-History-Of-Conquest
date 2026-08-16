@@ -109,6 +109,16 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        TextButton multiplayerButton = new TextButton(localization.get("multiplayer.title"), game.getSkin(), "accent");
+        multiplayerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MultiplayerScreen(game));
+                dispose();
+            }
+        });
+
+        bottomBar.add(multiplayerButton).left();
         bottomBar.add(languageButton).left();
         bottomBar.add(qualityButton).left();
         bottomBar.add(achievementsButton).left();

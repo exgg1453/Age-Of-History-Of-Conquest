@@ -101,6 +101,11 @@ public class TurnManager {
     }
 
     public ActionResult performAction(Country actingCountry, Province origin, Province target) {
+        return performAction(actingCountry, origin, target, null);
+    }
+
+    public ActionResult performAction(Country actingCountry, Province origin, Province target,
+                                      CombatResolver.CombatResult predetermined) {
         ActionResult result = new ActionResult();
 
         if (actingCountry == null || origin == null || target == null) {
@@ -139,7 +144,9 @@ public class TurnManager {
             return result;
         }
 
-        CombatResolver.CombatResult combat = CombatResolver.resolve(origin.army, target.army, target.defenceBonus);
+        CombatResolver.CombatResult combat = predetermined != null
+                ? predetermined
+                : CombatResolver.resolve(origin.army, target.army, target.defenceBonus);
         result.attackerLosses = combat.attackerLosses;
         result.defenderLosses = combat.defenderLosses;
         result.previousOwner = target.owner;
