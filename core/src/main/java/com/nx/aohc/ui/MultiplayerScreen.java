@@ -113,7 +113,7 @@ public class MultiplayerScreen implements Screen, NetworkSession.Listener {
         Localization localization = game.getLocalization();
         float scale = game.getUiScale();
 
-        Label hint = new Label(localization.get("multiplayer.modeHint"), game.getSkin(), "small");
+        Label hint = new Label(localization.get("multiplayer.modeHintOnline"), game.getSkin(), "small");
         hint.setWrap(true);
         root.add(hint).growX().left().padBottom(12f * scale).row();
 
@@ -147,6 +147,17 @@ public class MultiplayerScreen implements Screen, NetworkSession.Listener {
             }
         });
 
+        TextButton onlineButton = new TextButton(localization.get("online.title"), game.getSkin(), "accent");
+        onlineButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                closeSession();
+                game.setScreen(new OnlineScreen(game));
+                dispose();
+            }
+        });
+
+        buttons.add(onlineButton).row();
         buttons.add(hotseatButton).row();
         buttons.add(hostButton).row();
         buttons.add(joinButton).row();

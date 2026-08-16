@@ -218,6 +218,19 @@ for a region rather than a whole modern country.
 
 Two modes, both from the **Multiplayer** button in the main menu.
 
+**Online rooms.** Rooms are listed on a lobby server, so players on different
+networks can find each other. Rooms can be searched by name, host or room code,
+and can be password protected. The host picks the scenario, difficulty and AI
+aggression when creating the room, and those settings are applied on every
+player's device when they join.
+
+The lobby server only lists rooms and forwards messages; it holds no game logic
+and no accounts. The host device stays authoritative exactly as it does on a
+local network. The server lives in `server/` and runs on the free tier of any
+Node.js host; set its address in the online screen. There is no official public
+server, so a group needs one person to deploy it, or to run it at home and share
+the address.
+
 **Same device.** Add a name for each player, up to eight, pick a scenario and a
 country for each, and the device passes between them. Every player takes a full
 turn, and the AI runs once everyone has finished.
@@ -237,8 +250,8 @@ Any country not taken by a player is run by the AI as usual, so three friends
 can play a 1939 scenario as the Ottomans, Germany and Britain while the rest of
 the world plays itself.
 
-This is local network play. There is no matchmaking server, so playing with
-someone in another city needs a VPN or a manually forwarded port on 45456.
+The same network mode needs no server at all, and works with no internet
+connection.
 
 ### Difficulty and AI aggression
 

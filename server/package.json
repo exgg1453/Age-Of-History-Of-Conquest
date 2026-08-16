@@ -1,0 +1,16 @@
+{
+  "name": "aohc-lobby-server",
+  "version": "1.0.0",
+  "description": "Lobby and relay server for Age Of History Of Conquest",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "license": "GPL-3.0"
+}
