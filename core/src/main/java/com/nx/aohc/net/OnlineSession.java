@@ -2,7 +2,7 @@ package com.nx.aohc.net;
 
 import com.badlogic.gdx.utils.Array;
 
-public class OnlineSession implements NetworkSession, RelayClient.Listener {
+public class OnlineSession implements NetworkSession, Relay.Listener {
 
     public interface RoomListener {
         void onRoomStateChanged(RelayClient.RoomInfo room);
@@ -10,7 +10,7 @@ public class OnlineSession implements NetworkSession, RelayClient.Listener {
         void onServerError(String code);
     }
 
-    private final RelayClient relay;
+    private final Relay relay;
     private final boolean hostRole;
     private final Array<LobbyPlayer> players = new Array<LobbyPlayer>();
 
@@ -20,13 +20,13 @@ public class OnlineSession implements NetworkSession, RelayClient.Listener {
     private String localPeerId = "";
     private String scenarioId = "";
 
-    public OnlineSession(RelayClient relay, boolean hostRole) {
+    public OnlineSession(Relay relay, boolean hostRole) {
         this.relay = relay;
         this.hostRole = hostRole;
         this.relay.setListener(this);
     }
 
-    public RelayClient getRelay() {
+    public Relay getRelay() {
         return relay;
     }
 
@@ -247,8 +247,9 @@ public class OnlineSession implements NetworkSession, RelayClient.Listener {
     @Override
     public void onRoomUpdated(RelayClient.RoomInfo updatedRoom, Array<RelayClient.PeerInfo> members) {
         this.room = updatedRoom;
-        if (hostRole) {
+        if (hostRole && members.size > 0) {
             syncPlayersFromMembers(members);
+            broadcastLobby();
         }
         if (roomListener != null) {
             roomListener.onRoomStateChanged(updatedRoom);

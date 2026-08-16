@@ -13,7 +13,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class RelayClient {
+public class RelayClient implements Relay {
 
     public static class RoomInfo {
         public String id = "";
@@ -35,33 +35,13 @@ public class RelayClient {
         public boolean host;
     }
 
-    public interface Listener {
-        void onConnected(String peerId);
-
-        void onRoomList(Array<RoomInfo> rooms);
-
-        void onRoomEntered(RoomInfo room, Array<PeerInfo> members, boolean asHost);
-
-        void onRoomUpdated(RoomInfo room, Array<PeerInfo> members);
-
-        void onPeerJoined(PeerInfo peer, Array<PeerInfo> members);
-
-        void onPeerLeft(String peerId, Array<PeerInfo> members);
-
-        void onRelay(String fromPeerId, String data);
-
-        void onServerError(String code);
-
-        void onClosed(String reason);
-    }
-
     private final String serverUrl;
     private final String playerName;
     private final ConcurrentLinkedQueue<String> inbox = new ConcurrentLinkedQueue<String>();
     private final Json json = new Json(JsonWriter.OutputType.json);
 
     private WebSocketClient socket;
-    private Listener listener;
+    private Relay.Listener listener;
     private volatile boolean open;
     private String peerId = "";
 
@@ -70,6 +50,7 @@ public class RelayClient {
         this.playerName = playerName;
     }
 
+    @Override
     public void connect() {
         try {
             socket = new WebSocketClient(new URI(serverUrl)) {
@@ -119,10 +100,12 @@ public class RelayClient {
         }
     }
 
+    @Override
     public void requestRoomList(String query) {
         sendJson("{\"t\":\"list\",\"query\":" + quote(query) + "}");
     }
 
+    @Override
     public void createRoom(String name, String password, String scenarioId, String scenarioName,
                            int maxPlayers, int difficulty, int aggression) {
         StringBuilder builder = new StringBuilder();
@@ -136,10 +119,12 @@ public class RelayClient {
         sendJson(builder.toString());
     }
 
+    @Override
     public void joinRoom(String roomId, String password) {
         sendJson("{\"t\":\"join\",\"roomId\":" + quote(roomId) + ",\"password\":" + quote(password) + "}");
     }
 
+    @Override
     public void updateRoom(String scenarioId, String scenarioName, int difficulty, int aggression, boolean started) {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"t\":\"update\",\"scenario\":").append(quote(scenarioId));
@@ -150,22 +135,27 @@ public class RelayClient {
         sendJson(builder.toString());
     }
 
+    @Override
     public void leaveRoom() {
         sendJson("{\"t\":\"leave\"}");
     }
 
+    @Override
     public void relayToAll(String data) {
         sendJson("{\"t\":\"relay\",\"data\":" + quote(data) + "}");
     }
 
+    @Override
     public void relayToHost(String data) {
         sendJson("{\"t\":\"relay\",\"toHost\":true,\"data\":" + quote(data) + "}");
     }
 
+    @Override
     public void relayToPeer(String targetPeerId, String data) {
         sendJson("{\"t\":\"relay\",\"to\":" + quote(targetPeerId) + ",\"data\":" + quote(data) + "}");
     }
 
+    @Override
     public void poll() {
         if (listener == null) {
             return;
@@ -261,18 +251,22 @@ public class RelayClient {
         return peer;
     }
 
+    @Override
     public boolean isOpen() {
         return open;
     }
 
+    @Override
     public String getPeerId() {
         return peerId;
     }
 
-    public void setListener(Listener listener) {
+    @Override
+    public void setListener(Relay.Listener listener) {
         this.listener = listener;
     }
 
+    @Override
     public void close() {
         if (socket != null) {
             try {

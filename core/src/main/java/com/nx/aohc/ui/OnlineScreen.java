@@ -26,10 +26,12 @@ import com.nx.aohc.net.GameCommand;
 import com.nx.aohc.net.LobbyPlayer;
 import com.nx.aohc.net.NetworkSession;
 import com.nx.aohc.net.OnlineSession;
+import com.nx.aohc.net.HttpRelayClient;
+import com.nx.aohc.net.Relay;
 import com.nx.aohc.net.RelayClient;
 import com.nx.aohc.scenario.Scenario;
 
-public class OnlineScreen implements Screen, RelayClient.Listener, NetworkSession.Listener,
+public class OnlineScreen implements Screen, Relay.Listener, NetworkSession.Listener,
         OnlineSession.RoomListener {
 
     private static final int STAGE_BROWSER = 0;
@@ -39,7 +41,7 @@ public class OnlineScreen implements Screen, RelayClient.Listener, NetworkSessio
     private static final String PREFERENCES_NAME = "aohc-online";
     private static final String KEY_SERVER = "server";
     private static final String KEY_NAME = "playerName";
-    public static final String DEFAULT_SERVER = "ws://localhost:8080";
+    public static final String DEFAULT_SERVER = "https://aohc-lobby.netlify.app";
 
     private final AgeOfHistoryOfConquest game;
     private final Stage stage;
@@ -47,7 +49,7 @@ public class OnlineScreen implements Screen, RelayClient.Listener, NetworkSessio
     private final Array<RelayClient.RoomInfo> rooms = new Array<RelayClient.RoomInfo>();
     private final Array<PlayerSlot> resolvedSlots = new Array<PlayerSlot>();
 
-    private RelayClient relay;
+    private Relay relay;
     private OnlineSession session;
     private int currentStage = STAGE_BROWSER;
     private String statusText = "";
@@ -86,7 +88,12 @@ public class OnlineScreen implements Screen, RelayClient.Listener, NetworkSessio
         if (relay != null) {
             relay.close();
         }
-        relay = new RelayClient(getServerUrl(), getPlayerName());
+        String url = getServerUrl();
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            relay = new HttpRelayClient(url, getPlayerName());
+        } else {
+            relay = new RelayClient(url, getPlayerName());
+        }
         relay.setListener(this);
         relay.connect();
         statusText = game.getLocalization().format("online.connecting", getServerUrl());

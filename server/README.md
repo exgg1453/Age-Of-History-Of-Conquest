@@ -1,14 +1,30 @@
-# Lobby server
+# Lobby servers
 
-This is the room directory and message relay for internet play. Without it,
-Age Of History Of Conquest still supports same device and same network
-multiplayer; this server is only needed for the online room list.
+Internet play needs a lobby: something that lists rooms and passes messages
+between players. Neither holds game logic, and the host device stays
+authoritative in both cases.
 
-It holds no game logic. Rooms are kept in memory, and everything a client sends
-is forwarded to the other members of its room. The host device remains
-authoritative for the game itself.
+There are two implementations, and the game picks between them from the address
+you enter on the online screen.
 
-## Running it
+| Folder | Transport | Address form | Host on |
+|---|---|---|---|
+| `netlify-server/` | HTTP polling | `https://your-site.netlify.app` | Netlify |
+| `server/` | WebSocket | `wss://your-app.example.com` | any Node.js host |
+
+## Which one to use
+
+**Netlify** is the easier option and is what the game defaults to. Netlify runs
+serverless functions, which cannot hold a WebSocket open, so that version polls
+about once a second instead. For a turn based game the difference is not
+noticeable, and rooms are stored in Netlify Blobs so nothing else needs setting
+up. See `netlify-server/README.md`.
+
+**The WebSocket server** is lower latency and does not poll, but needs a host
+that keeps a process running, such as Render, Railway, Fly.io or a machine of
+your own.
+
+## Running the WebSocket server
 
 ```
 cd server
@@ -16,34 +32,10 @@ npm install
 npm start
 ```
 
-It listens on `PORT`, defaulting to 8080. Point the game at it by entering the
-address in the online screen, for example `ws://192.168.1.20:8080`.
-
-## Deploying it
-
-Any host that supports Node.js and WebSockets works. The free tiers of Render,
-Railway, Fly.io and Koyeb are all sufficient, since the server is tiny and holds
-only room metadata. There is nothing to configure beyond `PORT`, which those
-platforms set themselves.
-
-A `Dockerfile` is included for hosts that build containers, and a `render.yaml`
-for Render, which will pick the service up from this repository without any
-further setup.
-
-On a plain Linux box:
-
-```
-git clone https://github.com/exgg1453/Age-Of-History-Of-Conquest.git
-cd Age-Of-History-Of-Conquest/server
-./start.sh
-```
-
-Once deployed over HTTPS, use the `wss://` form of the address in the game, for
-example `wss://your-app.onrender.com`.
+It listens on `PORT`, defaulting to 8080. Point the game at `ws://your-ip:8080`
+on a local machine, or `wss://your-app.example.com` once deployed behind HTTPS.
 
 `GET /health` returns the current room and player counts.
-
-## Environment
 
 | Variable | Default | Meaning |
 |---|---|---|
@@ -61,5 +53,5 @@ Server to client: `welcome`, `rooms`, `created`, `joined`, `roomUpdated`,
 `peerJoined`, `peerLeft`, `relay`, `roomClosed`, `error`.
 
 The `data` field of a `relay` message is opaque to the server. It carries the
-same line protocol the local network mode uses, so both transports share the
+same line protocol the local network mode uses, so every transport shares the
 game side code.
